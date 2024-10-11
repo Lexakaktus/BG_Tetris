@@ -1,9 +1,11 @@
-#include <ncurses.h>
-#include <string.h> 
+
 #include "mozg.h"
+// #include <unistd.h>
+
 
 int main(void){
   initscr();
+   timeout(1000);
   // int ** figure = (int **)malloc(5 * sizeof(int *));
   // for (int i = 0; i < 5; i++) {
   //   figure[i] = (int *)malloc(2 * sizeof(int));
@@ -12,16 +14,25 @@ int main(void){
   // }
   // }
   //     figure[0][0]=5;
-      
-int figure[5][2] = {{5,0},
-          {0,0},
-          {1,0},
-          {2,0},
-          {3,0}};
-
+  srand(time(NULL));
+int random=rand()%4;
     UserAction_t UserInput;
     GameInfo_t tetris;
-  tetris.field = (int **)malloc(20 * sizeof(int *));
+int figure_home[6][5][2]/*{y,x}????*/ ={ {{5,0},{0,0},{1,0},{2,0},{2,1}}, {{5,0},{0,0},{0,1},{0,2},{0,3}}, {{5,0},{0,0},{0,1},{1,1},{-1,1}},  {{5,0},{0,0},{0,1},{1,1},{1,0}}};
+int ** figure=(int **)malloc(5 * sizeof(int *));
+  for (int i = 0; i < 5; i++) {
+    figure[i] = (int *)malloc(2 * sizeof(int));}
+
+int ** next=(int **)malloc(5 * sizeof(int *));
+  for (int i = 0; i < 5; i++) {
+    next[i] = (int *)malloc(2 * sizeof(int));}
+
+
+Figuring(figure, figure_home[random]);
+random=rand()%4;
+Figuring(next, figure_home[random]);
+
+  tetris.field = (int **)malloc(20 * sizeof(int *)); //создание постоянного поля
   for (int i = 0; i < 20; i++) {
     tetris.field[i] = (int *)malloc(10 * sizeof(int));
     for (int j = 0; j < 10; j++) {
@@ -29,66 +40,53 @@ int figure[5][2] = {{5,0},
   }
   }
 
-   int ** temp_field = (int **)malloc(20 * sizeof(int *));
+   int ** temp_field = (int **)malloc(20 * sizeof(int *)); //создание временного поля
   for (int i = 0; i < 20; i++) {
     temp_field[i] = (int *)malloc(10 * sizeof(int));
     for (int j = 0; j < 10; j++) {
-    temp_field[i][j] = '.'; //=46
+    temp_field[i][j] = '.'; //=46 //y,x
   }
   }
 
-
-
-for (int i=0; i<MAXROWS;i++){
+  for (int i=0; i<MAXROWS;i++){ // первая печать  поля
     for (int j=0;j<MAXCOLS;j++){
         printw("%c%c", temp_field[i][j],temp_field[i][j]);        
     }
     printw("\n");
 }
+while (getch()!='q')
+{
+zeroing_temp(temp_field);
+refresh(); 
+// getch();
+clear();
+  // zeroing_temp(temp_field);
+  sumField(tetris.field, temp_field );
+  if (sumFigure(temp_field, figure)){
+  //   curtsy(figure, -1);
+  curtsy(figure, -1);
+  sumFigure(tetris.field, figure);
+  Figuring(figure, figure_home[random]);
+  random=rand()%4;
+  Figuring(next, figure_home[random]);
+  }
+  else {
+  curtsy(figure, 1);}
+  for (int i=0; i<MAXROWS;i++){ // первая печать  поля //gjlhfpevtdftncz x,y
+    for (int j=0;j<MAXCOLS;j++){
+        printw("%c%c", temp_field[i][j],temp_field[i][j]);        
+    }
+    printw("\n");
+  }
+  // zeroing_temp(temp_field);
+// sleep(2.509);
 
-refresh(); 
-getch();
-clear();
- for (int i=0; i<MAXROWS;i++){
-    for (int j=0;j<MAXCOLS;j++){
-        printw("%c%c", temp_field[i][j],temp_field[i][j]);
-    }
-    printw("\n");
+
 }
-getch();
-clear();
-sumFigure(temp_field, figure);
- for (int i=0; i<MAXROWS;i++){
-    for (int j=0;j<MAXCOLS;j++){
-        printw("%c%c", temp_field[i][j],temp_field[i][j]);
-    }
-    printw("\n");
-}
-refresh(); 
-getch();
-clear();
+
 endwin();
     return 0;
 }
 
 
-void sumField(int ** Field, int ** FieldTwo ){
-  for (int i = 0; i < 20; i++) {
-    for (int j = 0; j < 10; j++) {
-    Field[i][j] = Field[i][j];
-  }
-  }
-}
 
-int sumFigure(int ** Field, int Figure[][2]){ //оптимизировать эту кашу!!!!
-  int clop=0;
-  for (int i=0;i<MAXROWS&&!clop ;i++){ //Figure[0][0]-1 или -2
-  for (int j=0; j<MAXCOLS&&!clop; j++){
-    for(int k=0;k<MAXFIGURE&&!clop; k++){
-      if (Field[Figure[0][0]+Figure[1][0]][Figure[0][1]+Figure[k][1]]!='.'){
-        clop=1;
-      } else Field[Figure[0][0]+Figure[k][1]][Figure[0][1]+Figure[k][0]]='t';
-    }
-  }}
-  return clop;
-}
