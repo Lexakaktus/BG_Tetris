@@ -41,3 +41,6 @@ void zeroing_temp(int ** Field); //обнуление поля для отрис
 void Figuring(int** figure, int Fdonor[][2]); //заполнение следующей и текущей фигур изначальными //
 // координатами (позже усложнить до одной из 7ми фигур)
 int sumAhalay(int ** Field, int** Figure);
+int moveCols(int** Field,int** Figure, int i);
+int rotateCols(int** Field,int** Figure, int i); //Переименовать
+int stringDel(int** Field);

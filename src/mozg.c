@@ -1,64 +1,153 @@
 #include "mozg.h"
 
-void Figuring(int** figure, int Fdonor[][2]){
-  for(int k=0;k<MAXFIGURE; k++){
-      figure[k][0]=Fdonor[k][0];
-      figure[k][1]=Fdonor[k][1];
-    }
+void Figuring(int** figure, int Fdonor[][2]) {
+  for (int k = 0; k < MAXFIGURE; k++) {
+    figure[k][0] = Fdonor[k][0];
+    figure[k][1] = Fdonor[k][1];
+  }
 }
 
-
-int curtsy(int** Figure, int i){
-  Figure[0][1]+=i;
+int curtsy(int** Figure, int i) {
+  Figure[0][1] += i;
   return 0;
 }
 
-void zeroing_temp(int ** Field){
+void zeroing_temp(int** Field) {
   for (int i = 0; i < 20; i++) {
     for (int j = 0; j < 10; j++) {
-    Field[i][j] = '.';
-  }
+      Field[i][j] = '.';
+    }
   }
 }
 
-int sumAhalay(int ** Field, int** Figure){ //оптимизировать эту кашу!!!! //
-  // int clop=0;
-
-    for(int k=4;k>0; k--){
-       Field[Figure[0][0]+Figure[k][1]][Figure[0][1]+Figure[k][0]]='I';
-    }
-    //   for(int k=1;k<MAXFIGURE; k++){
-    //   Figure[k][0]=0;
-    //   Figure[k][1]=0;
-    // }
-    // Figure[0][0]=0;
-  // }}
+// не используется можно удалять 
+int sumAhalay(int** Field, int** Figure) { 
+  for (int k = 4; k > 0; k--) {
+    Field[Figure[0][0] + Figure[k][1]][Figure[0][1] + Figure[k][0]] = 'I';
+  }
   return 0;
 }
 
-void sumField(int ** Field, int ** FieldTwo ){
+void sumField(int** Field, int** FieldTwo) {
   for (int i = 0; i < 20; i++) {
     for (int j = 0; j < 10; j++) {
-    FieldTwo[i][j] = Field[i][j];
-  }
+      FieldTwo[i][j] = Field[i][j];
+    }
   }
 }
 
-int sumFigure(int ** Field, int** Figure){ //оптимизировать эту кашу!!!!
-  int clop=0;
-  // for (int i=0;i<MAXROWS&&!clop ;i++){ //Figure[0][0]-1 или -2
-  // for (int j=0; j<MAXCOLS&&!clop; j++){
-    for(int k=4;k>0&&!clop; k--){
-      if ((Figure[0][1]+Figure[k][1]>=MAXROWS||Figure[0][1]+Figure[k][1]<0) ///потом поставить проигрыш при втором условии
-      ||
-      Field[Figure[0][1]+Figure[k][1]][Figure[0][0]+Figure[k][0]]!='.'){
-        clop=1;
-      }
-    //    else Field[Figure[0][0]+Figure[k][1]][Figure[0][1]+Figure[k][0]]='I';
+// int sumFigure(int** Field, int** Figure) {  //оптимизировать эту кашу!!!!
+//   int clop = 0;
+//   for (int k = 4; k > 0 && !clop; k--) {
+//     if ((Figure[0][1] + Figure[k][1] >= MAXROWS ||
+//          Figure[0][1] + Figure[k][1] <0) 
+//               ///потом поставить проигрыш при втором условии
+//         || Field[Figure[0][0] + Figure[k][0]][Figure[0][1] + Figure[k][1]] !=
+//                '.') {
+//       clop = 1;
+//     }
+//     //    else Field[Figure[0][0]+Figure[k][1]][Figure[0][1]+Figure[k][0]]='I';
+//   }
+//   for (int k = 4; k > 0 && !clop; k--) {
+//     Field[Figure[0][1] + Figure[k][1]][Figure[0][0] + Figure[k][0]] = 'I';
+//   }
+//   // }}
+//   return clop;
+// }
+int sumFigure(int** Field, int** Figure) {
+    int clop = 0;
+
+    // Проверка на выход за границы поля или столкновение с другой фигурой
+    for (int k = 4; k > 0 && !clop; k--) {
+        int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x
+        int new_y = Figure[0][1] + Figure[k][1];  // Новая координата по y
+
+        // Проверяем вертикальные границы (y) и горизонтальные (x)
+        if (new_y >= MAXROWS || new_y < 0 || new_x >= MAXCOLS || new_x < 0) {
+            clop = 1;  // Если фигура выходит за границы, останавливаемся
+        } 
+        // Проверка на столкновение с уже существующими блоками на поле
+        else if (Field[new_y][new_x] != '.') {  
+            clop = 1;
+        }
     }
-       for(int k=4;k>0&&!clop; k--){
-        Field[Figure[0][1]+Figure[k][1]][Figure[0][0]+Figure[k][0]]='I';
+
+    // Если не было столкновений и выхода за границы, обновляем поле
+    for (int k = 4; k > 0 && !clop; k--) {
+        int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x
+        int new_y = Figure[0][1] + Figure[k][1];  // Новая координата по y
+        Field[new_y][new_x] = 'I';  // Устанавливаем фигуру на поле
     }
-  // }}
+
+    return clop;  // Возвращаем флаг столкновения
+}
+
+
+
+ int moveCols(int** Field,int** Figure, int i) { ///перемещение по горизонтали 
+  int clop = 0;
+  for (int k = 4; k > 0 && !clop; k--) {
+              int new_x = Figure[k][0] + Figure[0][0]; // Новая позиция по горизонтали
+        if (new_x <= 0 || new_x >= MAXCOLS-1 || Field[Figure[0][1]+Figure[k][1]][new_x] != '.') {
+
+            clop = new_x <= 0? 3:new_x >= MAXCOLS-1? 1: 2; // Останавливаем сдвиг, если фигура выходит за пределы
+            // break;
+      // clop = 1;
+    }}
+    if ((clop==3&&i>0)||(clop==1&&i<0)||(clop==0)){
+  Figure[0][0] +=i;}
   return clop;
+
+}
+
+ int rotateCols(int** Field,int** Figure, int i) { ///поворот, убрать и
+  int clop = 0;
+  for (int k = 4; k > 0 && !clop; k--) {
+    // if ((Figure[0][0] + Figure[k][1] >= MAXROWS /*? ||*/ ///тут что-то не так
+    //     /* Figure[1][0] + Figure[1][k] < 0) ?*/ )
+    //     || Field[(Figure[0][0] + -1*Figure[k][1])][Figure[0][1] + Figure[k][0]] != /*???*/
+    //            '.') {
+    //   clop = 1;
+    // }}
+    while (Figure[0][0] - Figure[k][1] >= MAXCOLS) {
+      Figure[0][0]-=1;
+    }
+    while (Figure[0][0] - Figure[k][1] < 0) {
+      Figure[0][0]+=1;
+    }
+        if ((Figure[0][0] + Figure[k][0] >= MAXROWS /*? ||*/ ///тут что-то не так
+        /* Figure[1][0] + Figure[1][k] < 0) ?*/ )
+          || Field[(Figure[0][0] + -1*Figure[k][1])][Figure[0][1] + Figure[k][0]] != /*???*/
+               '.') {
+          clop = 1;
+          } 
+  }
+  for (int k = 4; k > 0 && !clop; k--) {
+        int tempx=Figure[k][0];
+  Figure[k][0] =-Figure[k][1];
+  Figure[k][1]=tempx;
+  }
+  return 0;
+
+}
+
+int stringDel(int** Field){
+  for (int i = 0; i < MAXROWS; i++) { 
+  int zerstring=1;
+    for (int j = 0; j < MAXCOLS; j++) {
+     if(Field[i][j]=='.'){
+      zerstring=0;
+     }
+    }
+    if (zerstring) {
+    for (int n = i; n >0 ;n--) { 
+    for (int k = 0; k < MAXCOLS; k++) {
+      Field[n][k]=Field[n-1][k];
+    }
+    }
+    for (int k = 0; k < MAXCOLS; k++) {
+      Field[0][k]='.';
+    }}
+    // printw("\n");
+  }
 }
