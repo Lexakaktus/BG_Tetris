@@ -9,6 +9,7 @@
 #define MAXROWS 20
 #define MAXCOLS 10
 #define MAXFIGURE 5
+#define COUNTFIGURE 7
 
 
 typedef enum {
@@ -44,3 +45,4 @@ int sumAhalay(int ** Field, int** Figure);
 int moveCols(int** Field,int** Figure, int i);
 int rotateCols(int** Field,int** Figure, int i); //Переименовать
 int stringDel(int** Field);
+UserAction_t Uzvering(UserAction_t action );

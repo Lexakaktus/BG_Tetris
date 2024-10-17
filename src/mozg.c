@@ -13,8 +13,8 @@ int curtsy(int** Figure, int i) {
 }
 
 void zeroing_temp(int** Field) {
-  for (int i = 0; i < 20; i++) {
-    for (int j = 0; j < 10; j++) {
+  for (int i = 0; i < MAXROWS; i++) {
+    for (int j = 0; j < MAXCOLS; j++) {
       Field[i][j] = '.';
     }
   }
@@ -29,8 +29,8 @@ int sumAhalay(int** Field, int** Figure) {
 }
 
 void sumField(int** Field, int** FieldTwo) {
-  for (int i = 0; i < 20; i++) {
-    for (int j = 0; j < 10; j++) {
+  for (int i = 0; i < MAXROWS; i++) {
+    for (int j = 0; j < MAXCOLS; j++) {
       FieldTwo[i][j] = Field[i][j];
     }
   }
@@ -86,7 +86,7 @@ int sumFigure(int** Field, int** Figure) {
 
  int moveCols(int** Field,int** Figure, int i) { ///перемещение по горизонтали 
   int clop = 0;
-  for (int k = 4; k > 0 && !clop; k--) {
+  for (int k = MAXFIGURE-1; k > 0 && !clop; k--) {
               int new_x = Figure[k][0] + Figure[0][0]; // Новая позиция по горизонтали
         if (new_x <= 0 || new_x >= MAXCOLS-1 || Field[Figure[0][1]+Figure[k][1]][new_x] != '.') {
 
@@ -94,6 +94,9 @@ int sumFigure(int** Field, int** Figure) {
             // break;
       // clop = 1;
     }}
+    // if (clop ==2){
+
+    // }    
     if ((clop==3&&i>0)||(clop==1&&i<0)||(clop==0)){
   Figure[0][0] +=i;}
   return clop;
@@ -109,18 +112,23 @@ int sumFigure(int** Field, int** Figure) {
     //            '.') {
     //   clop = 1;
     // }}
-    while (Figure[0][0] - Figure[k][1] >= MAXCOLS) {
+
+        if ((Figure[0][0] + Figure[k][0] >= MAXROWS /*? ||*/ ///тут что-то не так
+    /* Figure[1][0] + Figure[1][k] < 0) ?*/ )
+      || Field[(Figure[0][0] + -1*Figure[k][1])][Figure[0][1] + Figure[k][0]] != /*???*/
+            '.') {
+      clop = 1;
+      } 
+      // && !clop && Field[(Figure[0][0] + -1*Figure[k][1])][Figure[0][1] + Figure[k][0]] != '.'
+    while (Figure[0][0] - Figure[k][1] >= MAXCOLS && !clop) {
+      // moveCols( Field, Figure, 1);
       Figure[0][0]-=1;
     }
-    while (Figure[0][0] - Figure[k][1] < 0) {
+    while (Figure[0][0] - Figure[k][1] < 0 && !clop) {
       Figure[0][0]+=1;
+      // moveCols( Field, Figure, -1);
     }
-        if ((Figure[0][0] + Figure[k][0] >= MAXROWS /*? ||*/ ///тут что-то не так
-        /* Figure[1][0] + Figure[1][k] < 0) ?*/ )
-          || Field[(Figure[0][0] + -1*Figure[k][1])][Figure[0][1] + Figure[k][0]] != /*???*/
-               '.') {
-          clop = 1;
-          } 
+
   }
   for (int k = 4; k > 0 && !clop; k--) {
         int tempx=Figure[k][0];
@@ -150,4 +158,55 @@ int stringDel(int** Field){
     }}
     // printw("\n");
   }
+}
+
+
+UserAction_t Uzvering(UserAction_t action ){
+  UserAction_t push;//=action;
+  int a = getch();
+  switch(a){
+  case 'a':
+    push = Left;
+    break;
+  case KEY_LEFT:
+    push = Left;
+    break;
+  case 'd':
+    push = Right;
+    break;
+  case KEY_RIGHT:
+    push = Right;
+    break;
+  case 'p':
+    push=Pause;
+    break;
+  case 'q':
+    push=Terminate;
+    break;  
+  case 27:      //escape
+    push=Terminate;
+    break;  
+  case '\n':
+    push = Action;
+    break;    
+  case 's':
+    push = Down;
+    break;   
+  case KEY_DOWN:
+    push = Down;
+    break;       
+  case '\\':
+    push = Start;
+    break;
+  case 'w':
+  push = Up;
+  break;  
+  case KEY_UP:
+  push = Up;
+  break;   
+  default:
+  push=Start;
+  break;
+  }
+  return push;
 }

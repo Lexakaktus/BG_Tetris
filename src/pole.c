@@ -17,14 +17,18 @@ init_pair(3, COLOR_YELLOW, COLOR_BLACK); // Цветовая пара 3: жел�
 
 
   srand(time(NULL));
-  int random = rand() % 4;
+  int random = rand() % COUNTFIGURE;
   UserAction_t UserInput;
   GameInfo_t tetris;
-  int figure_home[6][5][2] /*{y,x}????*/ = {
-      {{5, 0}, {0, 0}, {1, 0}, {2, 0}, {2, 1}},
-      {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}},
-      {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {-1, 1}},
-      {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 0}}};
+  int figure_home[COUNTFIGURE][MAXFIGURE][2] /*{x,y}*/ = {
+      {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},//   -.
+      {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}}, // |  I 
+      {{5, 0}, {0, 0}, {0, 1}, {1, 0}, {-1, 0}},// .|.
+      {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 0}},/// ::
+      {{5, 0}, {0, 0}, {-1, 0}, {-1, 1}, {1, 0}}, // .-
+      {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {-1, 0}},//Z
+      {{5, 0}, {0, 0}, {0, 1}, {-1, 1}, {1, 0}} //!Z
+      };
   int **figure = (int **)malloc(5 * sizeof(int *));
   for (int i = 0; i < 5; i++) {
     figure[i] = (int *)malloc(2 * sizeof(int));
@@ -36,23 +40,23 @@ init_pair(3, COLOR_YELLOW, COLOR_BLACK); // Цветовая пара 3: жел�
   }
 
   Figuring(figure, figure_home[random]);
-  random = rand() % 4;
+  random = rand() % COUNTFIGURE;
   Figuring(next, figure_home[random]);
 
   tetris.field =
-      (int **)malloc(20 * sizeof(int *));  //создание постоянного поля
-  for (int i = 0; i < 20; i++) {
-    tetris.field[i] = (int *)malloc(10 * sizeof(int));
-    for (int j = 0; j < 10; j++) {
+      (int **)malloc(MAXROWS * sizeof(int *));  //создание постоянного поля
+  for (int i = 0; i < MAXROWS; i++) {
+    tetris.field[i] = (int *)malloc(MAXCOLS * sizeof(int));
+    for (int j = 0; j < MAXCOLS; j++) {
       tetris.field[i][j] = '.';
     }
   }
 
   int **temp_field =
-      (int **)malloc(20 * sizeof(int *));  //создание временного поля
-  for (int i = 0; i < 20; i++) {
-    temp_field[i] = (int *)malloc(10 * sizeof(int));
-    for (int j = 0; j < 10; j++) {
+      (int **)malloc(MAXROWS * sizeof(int *));  //создание временного поля
+  for (int i = 0; i < MAXROWS; i++) {
+    temp_field[i] = (int *)malloc(MAXCOLS * sizeof(int));
+    for (int j = 0; j < MAXCOLS; j++) {
       temp_field[i][j] = '.';  //=46 //y,x
     }
   }
