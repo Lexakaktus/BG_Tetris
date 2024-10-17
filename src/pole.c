@@ -9,8 +9,8 @@ int main(void) {
   // keypad(stdscr, true);
 
   start_color();
-init_pair(1, COLOR_RED, COLOR_BLACK);    // Цветовая пара 1: красный
-init_pair(2, COLOR_GREEN, COLOR_BLACK);  // Цветовая пара 2: зеленый
+init_pair(1, COLOR_RED, COLOR_YELLOW);    // Цветовая пара 1: красный
+init_pair(2, COLOR_GREEN, COLOR_GREEN);  // Цветовая пара 2: зеленый
 init_pair(3, COLOR_YELLOW, COLOR_BLACK); // Цветовая пара 3: желтый
 
 
@@ -108,15 +108,15 @@ init_pair(3, COLOR_YELLOW, COLOR_BLACK); // Цветовая пара 3: жел�
       for (int j = 0; j < MAXCOLS; j++) {
         // printw("%c%c", temp_field[i][j], temp_field[i][j]);
                 switch (temp_field[i][j]) {
-            case '.': // Пример: символ 'X' печатается красным
+            case '.': // Пример: символ 'X' печатается красным 
                 attron(COLOR_PAIR(1));
-                printw("%c%c", temp_field[i][j], temp_field[i][j]);
-                attroff(COLOR_PAIR(3));
+               printw("%c%c", temp_field[i][j], temp_field[i][j]);
+                attroff(COLOR_PAIR(1));
                 break;
             case 'I': // Пример: символ 'O' печатается зеленым
                 attron(COLOR_PAIR(2));
                 printw("%c%c", temp_field[i][j], temp_field[i][j]);
-                attroff(COLOR_PAIR(1));
+                attroff(COLOR_PAIR(2));
                 break;
             default:  // Другие символы печатаются желтым
                 attron(COLOR_PAIR(3));
