@@ -11,13 +11,13 @@
 #define MAXFIGURE 5
 #define COUNTFIGURE 7
 
-// typedef enum {
-//     Start,  //0
-//     Moving,
-//     Pause,
-//     Gameover,
-//     Hello=-1 //временно
-// } fsm_t;
+typedef enum {
+    Start,  //0
+    Moving,
+    Pause,
+    Gameover,
+    Hello=-1 //временно
+} fsm_t;
 
 
 typedef enum {
@@ -50,7 +50,7 @@ int curtsy(int** Figure, int i); //понижение фигуры
 void zeroing_temp(int ** Field); //обнуление поля для отрисовки(да и другого при желании)
 void Figuring(int** figure, int Fdonor[][2]); //заполнение следующей и текущей фигур изначальными //
 // координатами (позже усложнить до одной из 7ми фигур)
+int sumAhalay(int ** Field, int** Figure);
 int moveCols(int** Field,int** Figure, int i);
 int rotateCols(int** Field,int** Figure, int i); //Переименовать
 int stringDel(int** Field);
-UserAction_t Uzvering(UserAction_t action );

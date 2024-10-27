@@ -1,4 +1,4 @@
-#include "mozg.h"
+#include "backend.h"
 
 void Figuring(int** figure, int Fdonor[][2]) {
   for (int k = 0; k < MAXFIGURE; k++) {
@@ -18,14 +18,6 @@ void zeroing_temp(int** Field) {
       Field[i][j] = '.';
     }
   }
-}
-
-// не используется можно удалять 
-int sumAhalay(int** Field, int** Figure) { 
-  for (int k = 4; k > 0; k--) {
-    Field[Figure[0][0] + Figure[k][1]][Figure[0][1] + Figure[k][0]] = 'I';
-  }
-  return 0;
 }
 
 void sumField(int** Field, int** FieldTwo) {
@@ -115,12 +107,6 @@ return clop;
 int rotateCols(int** Field,int** Figure, int i) { ///поворот, убрать и
 int clop = 0;
 for (int k = 4; k > 0 && !clop; k--) {
-  // if ((Figure[0][0] + Figure[k][1] >= MAXROWS /*? ||*/ ///тут что-то не так
-  //     /* Figure[1][0] + Figure[1][k] < 0) ?*/ )
-  //     || Field[(Figure[0][0] + -1*Figure[k][1])][Figure[0][1] + Figure[k][0]] != /*???*/
-  //            '.') {
-  //   clop = 1;
-  // }}
 
       if ((Figure[0][0] + Figure[k][0] >= MAXROWS /*? ||*/ ///тут что-то не так
   /* Figure[1][0] + Figure[1][k] < 0) ?*/ )
@@ -170,52 +156,3 @@ int stringDel(int** Field){
 }
 
 
-UserAction_t Uzvering(UserAction_t action ){
-  UserAction_t push;//=action;
-  int a = getch();
-  switch(a){
-  case 'a':
-    push = Left;
-    break;
-  case KEY_LEFT:
-    push = Left;
-    break;
-  case 'd':
-    push = Right;
-    break;
-  case KEY_RIGHT:
-    push = Right;
-    break;
-  case 'p':
-    push=Pause;
-    break;
-  case 'q':
-    push=Terminate;
-    break;  
-  case 27:      //escape
-    push=Terminate;
-    break;  
-  case '\n':
-    push = Action;
-    break;    
-  case 's':
-    push = Down;
-    break;   
-  case KEY_DOWN:
-    push = Down;
-    break;       
-  case '\\':
-    push = Start;
-    break;
-  case 'w':
-  push = Up;
-  break;  
-  case KEY_UP:
-  push = Up;
-  break;   
-  default:
-  push=Start;
-  break;
-  }
-  return push;
-}

@@ -5,8 +5,18 @@
 int main(void) {
   initscr();
   timeout(300);
+  // timeout(-1);
   // noecho() 
   // keypad(stdscr, true);
+// WINDOW* rertr = newwin(20, 10, 0, 11);
+//   refresh();
+//   box(rertr, 0, 0);
+//   wrefresh(rertr);
+//         mvwaddstr(rertr, 8, 3, "SS");
+//       mvwaddstr(rertr, 10, 3, "ER");
+//         // wattroff(rertr, COLOR_PAIR(COLOR_WORDS));
+//   wrefresh(rertr);
+
 
   start_color();
 init_pair(1, COLOR_RED, COLOR_YELLOW);    // Цветовая пара 1: красный
@@ -61,12 +71,24 @@ init_pair(3, COLOR_YELLOW, COLOR_BLACK); // Цветовая пара 3: жел�
     }
   }
 
-  for (int i = 0; i < MAXROWS; i++) {  // первая печать  поля
-    for (int j = 0; j < MAXCOLS; j++) {
-      printw("%c%c", temp_field[i][j], temp_field[i][j]);
-    }
-    printw("\n");
-  }
+// WINDOW* rertr = newwin(20, 20, 0, 11);
+//   refresh();
+//   box(rertr, 0, 0);
+//   wrefresh(rertr);
+//         mvwaddnstr(rertr, 8, 3, temp_field[1],-1);
+//       mvwaddnstr(rertr, 10, 3, temp_field[2], -1);
+        // wattroff(rertr, COLOR_PAIR(COLOR_WORDS));
+  // wrefresh(rertr);
+  // getch();
+  // wrefresh(rertr);
+  // getch();
+  // for (int i = 0; i < MAXROWS; i++) {  // первая печать  поля
+  //   for (int j = 0; j < MAXCOLS; j++) {
+  //     printw("%c%c", temp_field[i][j], temp_field[i][j]);
+  //   }
+  //   printw("\n");
+  // }
+
   int a=0;
   while ((a=getch())!='q') {
     // int d=a;

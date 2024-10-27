@@ -1,16 +1,12 @@
-
-#include <ncurses.h>
-#include <string.h> 
-#include<unistd.h>
-#include"mozg.h"
+#include "backend.h"
+#include "front.h"
 
 
-#include <stdlib.h>
 int main(void) {
 
   initscr();
   timeout(300);
-  noecho() ;
+//   noecho() ;
   keypad(stdscr, true);
 WINDOW* board = newwin(20, 10, 0, 0);
   refresh();
@@ -18,17 +14,7 @@ WINDOW* board = newwin(20, 10, 0, 0);
   wrefresh(board);
         mvwaddstr(board, 8, 3, "PRESS");
       mvwaddstr(board, 10, 3, "ENTER");
-        // wattroff(board, COLOR_PAIR(COLOR_WORDS));
   wrefresh(board);
-
-WINDOW* rertr = newwin(20, 10, 0, 11);
-  refresh();
-  box(rertr, 0, 0);
-  wrefresh(rertr);
-        mvwaddstr(rertr, 8, 3, "SS");
-      mvwaddstr(rertr, 10, 3, "ER");
-        // wattroff(rertr, COLOR_PAIR(COLOR_WORDS));
-  wrefresh(rertr);
 
   start_color();
 init_pair(1, COLOR_RED, COLOR_BLACK);    // Цветовая пара 1: красный
@@ -86,7 +72,7 @@ init_pair(3, COLOR_YELLOW, COLOR_BLACK); // Цветовая пара 3: жел�
 
 
 UserAction_t action = Start;
-// fsm_t fsm=Start;
+fsm_t fsm=Start;
     while (action!=Terminate){
     // int xmax=0;
     // zeroing_temp(temp_field);
