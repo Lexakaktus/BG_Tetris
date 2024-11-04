@@ -12,7 +12,7 @@ int main(void) {
   timeout(300);
   noecho() ;
   keypad(stdscr, true);
-WINDOW* board = newwin(20, 10, 0, 0);
+WINDOW* board = newwin(20, 20, 0, 0);
   refresh();
   box(board, 0, 0);
   wrefresh(board);
@@ -21,7 +21,7 @@ WINDOW* board = newwin(20, 10, 0, 0);
         // wattroff(board, COLOR_PAIR(COLOR_WORDS));
   wrefresh(board);
 
-WINDOW* rertr = newwin(20, 10, 0, 11);
+WINDOW* rertr = newwin(20, 10, 0, 21);
   refresh();
   box(rertr, 0, 0);
   wrefresh(rertr);
@@ -88,11 +88,11 @@ init_pair(3, COLOR_YELLOW, COLOR_BLACK); // Цветовая пара 3: жел�
 UserAction_t action = Start;
 // fsm_t fsm=Start;
     while (action!=Terminate){
-    // int xmax=0;
-    // zeroing_temp(temp_field);
     refresh();     
     
      action=Uzvering(action);
+     mvwprintw(rertr, 10,5, "%d", action);
+     wrefresh(rertr);
     }
 // // getch();
 // sleep(10);

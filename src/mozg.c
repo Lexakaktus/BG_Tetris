@@ -219,3 +219,18 @@ UserAction_t Uzvering(UserAction_t action ){
   }
   return push;
 }
+
+//возможно убрать score внутрь функции
+int fileScore(char* name, char* score,  GameInfo_t* info){ //добавить сразу замену счёта в файле или игре(смотря что больше) и в конце закрывать файл
+  FILE *fp;
+  strcat(name, ".txt");
+  // if ((fp = fopen("test", "w"))==NULL) {
+  // printf("Cannot open file.\n");
+  // }
+  fp = fopen(name, "r+"); //добавить проверок на всякое
+  fgets(score, 100, fp);
+  int fs=atoi(score);
+  if (fs>=info->high_score){
+    info->high_score=fs;
+  } 
+}

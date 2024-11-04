@@ -14,11 +14,8 @@ int main(void) {
 //   wrefresh(rertr);
 //         mvwaddstr(rertr, 8, 3, "SS");
 //       mvwaddstr(rertr, 10, 3, "ER");
-<<<<<<< HEAD
 //         // wattroff(rertr, COLOR_PAIR(COLOR_WORDS));
-=======
-//         // wattroff(rertr, COLOR_PAIR(COLOR_WORDS));q
->>>>>>> e6f9250 (g)
+
 //   wrefresh(rertr);
 
 
