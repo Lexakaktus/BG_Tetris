@@ -33,6 +33,7 @@ typedef enum {
 
 typedef struct {
     int **field; ///поле для отрисовки
+    int **figure;
     int **next;  ///следующая фигура
     int score;  ///счёт игры
     int high_score; ///счёт из файла "ИмяИгрока" или максимальный в игре
@@ -41,7 +42,7 @@ typedef struct {
     int pause;
 } GameInfo_t;
 
-void sumField(int ** Field, int ** FieldTwo );//прибавление поля с приклеившимися фигурами ///
+void sumField(int ** Field, int ** FieldTwo);//прибавление поля с приклеившимися фигурами ///
 /// к полю для отрисовки использовать перед sumfigure!!! 
 
 int sumFigure(int ** Field, int**  figure); //прибавление фигуры к полю перед отрисовкой
@@ -54,3 +55,7 @@ int moveCols(int** Field,int** Figure, int i);
 int rotateCols(int** Field,int** Figure, int i); //Переименовать
 int stringDel(int** Field);
 UserAction_t Uzvering(UserAction_t action );
+int fileScore(char* name, char* score,  GameInfo_t* info);
+
+
+void initg();

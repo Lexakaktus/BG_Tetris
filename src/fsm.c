@@ -10,9 +10,9 @@ int main(void) {
 
   initscr();
   timeout(300);
-  noecho() ;
+  noecho();
   keypad(stdscr, true);
-WINDOW* board = newwin(20, 20, 0, 0);
+ WINDOW* board = newwin(20, 20, 0, 0);
   refresh();
   box(board, 0, 0);
   wrefresh(board);
@@ -21,19 +21,19 @@ WINDOW* board = newwin(20, 20, 0, 0);
         // wattroff(board, COLOR_PAIR(COLOR_WORDS));
   wrefresh(board);
 
-WINDOW* rertr = newwin(20, 10, 0, 21);
+ WINDOW* infopole = newwin(20, 10, 0, 21);
   refresh();
-  box(rertr, 0, 0);
-  wrefresh(rertr);
-        mvwaddstr(rertr, 8, 3, "SS");
-      mvwaddstr(rertr, 10, 3, "ER");
-        // wattroff(rertr, COLOR_PAIR(COLOR_WORDS));
-  wrefresh(rertr);
+  box(infopole, 0, 0);
+  wrefresh(infopole);
+        mvwaddstr(infopole, 8, 3, "SS");
+      mvwaddstr(infopole, 10, 3, "ER");
+        // wattroff(infopole, COLOR_PAIR(COLOR_WORDS));
+  wrefresh(infopole);
 
   start_color();
-init_pair(1, COLOR_RED, COLOR_BLACK);    // Цветовая пара 1: красный
-init_pair(2, COLOR_GREEN, COLOR_BLACK);  // Цветовая пара 2: зеленый
-init_pair(3, COLOR_YELLOW, COLOR_BLACK); // Цветовая пара 3: желтый
+  init_pair(1, COLOR_RED, COLOR_BLACK);    // Цветовая пара 1: красный
+  init_pair(2, COLOR_GREEN, COLOR_BLACK);  // Цветовая пара 2: зеленый
+  init_pair(3, COLOR_YELLOW, COLOR_BLACK); // Цветовая пара 3: желтый
 
 
 
@@ -87,12 +87,19 @@ init_pair(3, COLOR_YELLOW, COLOR_BLACK); // Цветовая пара 3: жел�
 
 UserAction_t action = Start;
 // fsm_t fsm=Start;
+     char* score= (char*)calloc(10, sizeof(char));
+     char* name= (char*)calloc(10, sizeof(char));
+     scanf("%s", name);
+     fileScore(name, score, &tetris);
     while (action!=Terminate){
     refresh();     
     
      action=Uzvering(action);
-     mvwprintw(rertr, 10,5, "%d", action);
-     wrefresh(rertr);
+
+    //  strcat(name, "score");
+     mvwprintw(infopole, 15,3, "%d",next[0][0]);
+     mvwprintw(infopole, 11,3, "%d",tetris.high_score);
+     wrefresh(infopole);
     }
 // // getch();
 // sleep(10);

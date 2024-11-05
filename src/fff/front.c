@@ -1,3 +1,5 @@
+#include "mozg.h"
+
 UserAction_t Uzvering(UserAction_t action ){
   UserAction_t push;//=action;
   int a = getch();
