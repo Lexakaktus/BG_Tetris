@@ -1,22 +1,31 @@
 #include "mozg.h"
 
-void Figuring(int** figure, int Fdonor[][2]) { 
+void Figuring(int** figure, int Fdonor[][2]) { //не изменено
   for (int k = 0; k < MAXFIGURE; k++) {
     figure[k][0] = Fdonor[k][0];
     figure[k][1] = Fdonor[k][1];
   }
 }
 
-int curtsy(int** Figure, int i) { //перемещение фигуры по вертикали
-      int clop=0;
-      for (int k = 4; k > 0 && !clop; k--) {
-        // int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x
-        int new_y = Figure[0][1] + Figure[k][1]+1;  // Новая координата по y
-        if (new_y>=MAXROWS) clop=1;
-      }
-  if(!clop){
-  Figure[0][1] += i;}
-  return clop;
+int curtsy2(int** Field, int** Figure, int i) {
+    int clop = 0;
+    int** tempFigure=createcopy(&tempFigure);
+    //     int** tempFigure = malloc(MAXFIGURE * sizeof(int*));
+    // for (int k = 0; k < MAXFIGURE; k++) {
+    //     tempFigure[k] = malloc(2 * sizeof(int));
+    // }
+    copyFigure(tempFigure, Figure);
+
+    if (i < 0 || !checkCollision(Field, tempFigure)) {
+        tempFigure[0][1] += i;
+        clop = checkCollision(Field, tempFigure);
+        if (!clop) {
+            copyFigure(Figure, tempFigure);
+        }
+    }
+    deletecopy(tempFigure); 
+
+    return clop;
 }
 
 void zeroing_temp(int** Field) { //"обнуление" поля
@@ -30,7 +39,7 @@ void zeroing_temp(int** Field) { //"обнуление" поля
 // не используется можно удалять 
 int sumAhalay(int** Field, int** Figure) { 
   for (int k = 4; k > 0; k--) {
-    Field[Figure[0][0] + Figure[k][1]][Figure[0][1] + Figure[k][0]] = 'I';
+    Field[Figure[0][1] + Figure[k][1]][Figure[0][0] + Figure[k][0]] = '0';
   }
   return 0;
 }
@@ -307,16 +316,83 @@ int FigureDown(int** Field, int** Figure){
       return clop;
 }
 
+int FigureDown2( int** Figure){
+  int clop=0;
+   for (int k = 4; k > 0 && !clop; k--){     
+        int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x
+        int new_y = Figure[0][1] + Figure[k][1];  // Новая координата по y
+        if (new_y<=MAXROWS-1) clop=1;
+      }
+      return clop;
+}
 
+
+
+void copyFigure(int** dest, int** src) {
+    for (int k = 0; k < MAXFIGURE; k++) {
+        dest[k][0] = src[k][0];
+        dest[k][1] = src[k][1];
+    }
+}
 
 int checkCollision(int** Field, int** Figure) {
-    for (int k = 0; k < MAXFIGURE; k++) {
-        int new_x = Figure[k][0];
-        int new_y = Figure[k][1];
-        if (new_y >= MAXROWS || new_y < 0 || new_x >= MAXCOLS || new_x < 0 ||
-            Field[new_y][new_x] != '.') {
-            return 1;
+    for (int k = 4; k > 0; k--) {
+        int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x
+        int new_y = Figure[0][1] + Figure[k][1];  // Новая координата по y
+
+        // Проверка на выход за границы или на столкновение с другими фигурами
+        if (new_y >= MAXROWS || new_y < 0 || new_x >= MAXCOLS || new_x < 0 || Field[new_y][new_x] != '.') {
+            return 1;  // Столкновение произошло
         }
     }
-    return 0;
+    return 0;  // Столкновений нет
+}
+
+int** createcopy(){
+    int** tempFigure = malloc(MAXFIGURE * sizeof(int*));
+    for (int k = 0; k < MAXFIGURE; k++) {
+        tempFigure[k] = malloc(2 * sizeof(int));
+    }
+    return tempFigure;
+}
+int deletecopy(int**copy){
+    for (int k = 0; k < MAXFIGURE; k++) {
+        free(copy[k]);
+    }
+    free(copy);
+}
+
+int rotateCols2(int** Field, int** Figure) {
+    int clop = 0;
+    int** tempFigure = createcopy();
+    copyFigure(tempFigure, Figure);
+
+    for (int k = 1; k < MAXFIGURE; k++) {
+        int tempx = tempFigure[k][0];
+        tempFigure[k][0] = -tempFigure[k][1];
+        tempFigure[k][1] = tempx;
+    }
+
+    clop = checkCollision(Field, tempFigure);
+    if (!clop) {
+        copyFigure(Figure, tempFigure);
+    }
+
+    deletecopy(tempFigure);
+    return clop;
+}
+
+int moveCols2(int** Field, int** Figure, int i) {
+    int clop = 0;
+    int** tempFigure = createcopy();
+    copyFigure(tempFigure, Figure);
+
+    tempFigure[0][0] += i;
+    clop = checkCollision(Field, tempFigure);
+    if (!clop) {
+        copyFigure(Figure, tempFigure);
+    }
+
+    deletecopy(tempFigure);
+    return clop;
 }

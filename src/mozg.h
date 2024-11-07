@@ -33,6 +33,7 @@ typedef enum {
 
 typedef struct {
     int **field; ///поле для отрисовки
+    int **temp_field;
     int **figure;
     int **next;  ///следующая фигура
     int score;  ///счёт игры
@@ -46,7 +47,7 @@ void sumField(int ** Field, int ** FieldTwo);//прибавление поля �
 /// к полю для отрисовки использовать перед sumfigure!!! 
 
 int sumFigure(int ** Field, int**  figure); //прибавление фигуры к полю перед отрисовкой
-int subFigure(int** Field, int** Figure); //вычитание фигуры из поля обратноdq
+int subFigure(int** Field, int** Figure); //вычитание фигуры из поля обратноd
 int curtsy(int** Figure, int i); //понижение фигуры
 void zeroing_temp(int ** Field); //обнуление поля для отрисовки(да и другого при желании)
 void Figuring(int** figure, int Fdonor[][2]); //заполнение следующей и текущей фигур изначальными //
@@ -56,6 +57,18 @@ int rotateCols(int** Field,int** Figure, int i); //Переименовать
 int stringDel(int** Field);
 UserAction_t Uzvering(UserAction_t action );
 int fileScore(char* name, char* score,  GameInfo_t* info);
-
+int FigureDown(int** Field,int** Figure);
 
 void initg();
+
+
+
+int FigureDown2(int** Figure);
+
+
+int checkCollision(int** Field, int** Figure);
+void copyFigure(int** dest, int** src);
+int** createcopy();
+int deletecopy(int**copy);
+int curtsy2(int** Field, int** Figure, int i);
+int rotateCols2(int** Field, int** Figure);

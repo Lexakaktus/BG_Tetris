@@ -95,64 +95,67 @@ UserAction_t action = Start;
 
 
     int xmax=0;
-    zeroing_temp(temp_field);
+    // zeroing_temp(temp_field);
     refresh();
     // getch();
 
     // clear();
     
     // zeroing_temp(temp_field);
-    sumField(tetris.field, temp_field);
+    // sumField(tetris.field, temp_field);
 
+    subFigure(tetris.field, tetris.figure);
+    
+      if (xmax=FigureDown(tetris.field,tetris.figure)==1) {
 
+      // curtsy(tetris.figure, -1);
+      sumFigure(tetris.field, tetris.figure);
+      Figuring(tetris.figure, figure_home[random]);
+      random = rand() % 4;
+      Figuring(tetris.next, figure_home[random]);
+    } else if (xmax==0) {
+      subFigure(tetris.field, tetris.figure);
+      // curtsy(tetris.figure, 1);
+    }
+    curtsy2(tetris.field,tetris.figure, 1);
     if (action==Left){
       xmax=moveCols(tetris.field,tetris.figure, -1);
     } else if (action==Right){
       xmax=moveCols(tetris.field,tetris.figure, 1);
     }else if (action==Action){
-      xmax=rotateCols(tetris.field,tetris.figure, 1);
-      if (xmax)curtsy(tetris.figure, -1);
+      xmax=rotateCols2(tetris.field,tetris.figure);
+      // if (xmax)curtsy(tetris.figure, -1);
     //   if (xmax==2){moveCols(tetris.field,tetris.figure, 1);}
     }
-    if (sumFigure(temp_field, tetris.figure)) {
-      if (xmax){
-        //  if (xmax==3) /*moveCols(tetris.field,figure, 1);*/ figure[0][0]+=1;
-        //  if (xmax==1) figure[0][0]-=1; //moveCols(tetris.field,figure, -1);
-      } else {
-      curtsy(tetris.figure, -1);
-      sumFigure(tetris.field, tetris.figure);
-      Figuring(tetris.figure, figure_home[random]);
-      random = rand() % 4;
-      Figuring(tetris.next, figure_home[random]);}
-    } else {
-      curtsy(tetris.figure, 1);
-    }
+    sumFigure(tetris.field, tetris.figure);
+
+    // subFigure(tetris.field, tetris.figure);
     stringDel(tetris.field);
     wmove(board, 0, 0);
     for (int i = 0; i < MAXROWS;
          i++) {  // первая печать  поля //gjlhfpevtdftncz x,y
       for (int j = 0; j < MAXCOLS; j++) {
         // printw("%c%c", temp_field[i][j], temp_field[i][j]);
-                switch (temp_field[i][j]) {
+                switch (tetris.field[i][j]) {
             case '.': // Пример: символ 'X' печатается красным 
                 wattron(board,COLOR_PAIR(1));
-               wprintw(board,"%c%c", temp_field[i][j], temp_field[i][j]);
+               wprintw(board,"%c%c", tetris.field[i][j], tetris.field[i][j]);
                 wattroff(board,COLOR_PAIR(1));
                 break;
             case 'I': // Пример: символ 'O' печатается зеленым
                 wattron(board,COLOR_PAIR(2));
-                wprintw(board,"%c%c", temp_field[i][j], temp_field[i][j]);
+                wprintw(board,"%c%c", tetris.field[i][j], tetris.field[i][j]);
                 wattroff(board,COLOR_PAIR(2));
                 break;
             default:  // Другие символы печатаются желтым
                 wattron(board,COLOR_PAIR(3));
-                wprintw(board,"%c%c", temp_field[i][j], temp_field[i][j]);
+                wprintw(board,"%c%c", tetris.field[i][j], tetris.field[i][j]);
                 wattroff(board,COLOR_PAIR(3));
                 break;
         }
       }
     //   wprintw(board,"\n");
-     
+    //  subFigure(tetris.field, tetris.figure);
     }
    wrefresh(board);
    action=Uzvering(action);
