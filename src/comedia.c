@@ -1,8 +1,8 @@
 
 #include <ncurses.h>
 #include <string.h> 
-#include<unistd.h>
-#include"mozg.h"
+#include <unistd.h>
+#include  "mozg.h"
 
 
 #include <stdlib.h>
@@ -76,14 +76,14 @@ int main(void) {
     }
   }
 
-  int **temp_field =
-      (int **)malloc(MAXROWS * sizeof(int *));  //создание временного поля
-  for (int i = 0; i < MAXROWS; i++) {
-    temp_field[i] = (int *)malloc(MAXCOLS * sizeof(int));
-    for (int j = 0; j < MAXCOLS; j++) {
-      temp_field[i][j] = '.';  //=46 //y,x
-    }
-  }
+  // int **temp_field =
+  //     (int **)malloc(MAXROWS * sizeof(int *));  //создание временного поля
+  // for (int i = 0; i < MAXROWS; i++) {
+  //   temp_field[i] = (int *)malloc(MAXCOLS * sizeof(int));
+  //   for (int j = 0; j < MAXCOLS; j++) {
+  //     temp_field[i][j] = '.';  //=46 //y,x
+  //   }
+  // }
 
 
 

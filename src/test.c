@@ -3,13 +3,7 @@
 START_TEST(tetris1) {
  GameInfo_t tetris;
  tetris.field
-  int codec = s21_create_matrix(1, 1, &m);
-  if (codec) {
-    int code = s21_calc_complements(&m, &result);
-    ck_assert_int_eq(code, CALC_ERROR);
-    s21_remove_matrix(&result);
-  }
-  s21_remove_matrix(&m);
+ 
 }
 END_TEST
 
