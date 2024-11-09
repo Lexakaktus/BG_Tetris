@@ -16,9 +16,9 @@ int main(void) {
   refresh();
   box(board, 0, 0);
   wrefresh(board);
-        mvwaddstr(board, 8, 3, "PRESS");
-      mvwaddstr(board, 10, 3, "ENTER");
-        // wattroff(board, COLOR_PAIR(COLOR_WORDS));
+  mvwaddstr(board, 8, 3, "PRESS");
+  mvwaddstr(board, 10, 3, "ENTER");
+      // wattroff(board, COLOR_PAIR(COLOR_WORDS));
   wrefresh(board);
  WINDOW* infopole = newwin(20, 10, 0, 21);
   refresh();
@@ -40,7 +40,7 @@ int main(void) {
   int random = rand() % COUNTFIGURE;
   UserAction_t UserInput;
   GameInfo_t tetris;
-  int figure_home[COUNTFIGURE][MAXFIGURE][2] /*{x,y}*/ = {
+  int figure_home[COUNTFIGURE][COUNTCOORDINATE][2] /*{x,y}*/ = {
       {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},//   -.
       {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}}, // |  I 
       {{5, 0}, {0, 0}, {0, 1}, {1, 0}, {-1, 0}},// .|.
@@ -49,14 +49,14 @@ int main(void) {
       {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {-1, 0}},//Z
       {{5, 0}, {0, 0}, {0, 1}, {-1, 1}, {1, 0}} //!Z
       };
-  tetris.figure = (int **)malloc(5 * sizeof(int *));
-  for (int i = 0; i < 5; i++) {
-    tetris.figure[i] = (int *)malloc(2 * sizeof(int));
+  tetris.figure = (int **)malloc(COUNTCOORDINATE * sizeof(int *));
+  for (int i = 0; i < COUNTCOORDINATE; i++) {
+    tetris.figure[i] = (int *)malloc(COUNTDIMENSION * sizeof(int));
   }
 
-  tetris.next = (int **)malloc(5 * sizeof(int *));
-  for (int i = 0; i < 5; i++) {
-    tetris.next[i] = (int *)malloc(2 * sizeof(int));
+  tetris.next = (int **)malloc(COUNTCOORDINATE * sizeof(int *));
+  for (int i = 0; i < COUNTCOORDINATE; i++) {
+    tetris.next[i] = (int *)malloc(COUNTDIMENSION * sizeof(int));
   }
 
   Figuring(tetris.figure, figure_home[random]);
@@ -95,78 +95,37 @@ UserAction_t action = Start;
 
 
     int xmax=0;
-    // zeroing_temp(temp_field);
     refresh();
-    // getch();
-
-    // clear();
-    
-    // zeroing_temp(temp_field);
-    // sumField(tetris.field, temp_field);
 
     subFigure(tetris.field, tetris.figure);
     
-      if (xmax=FigureDown(tetris.field,tetris.figure)==1) {
-
-      // curtsy(tetris.figure, -1);
+   if (xmax=FigureDown2(tetris.field,tetris.figure)==1) {
       sumFigure(tetris.field, tetris.figure);
+      stringDel(tetris.field);
       Figuring(tetris.figure, figure_home[random]);
       random = rand() % 4;
       Figuring(tetris.next, figure_home[random]);
     } else if (xmax==0) {
       subFigure(tetris.field, tetris.figure);
-      // curtsy(tetris.figure, 1);
     }
     curtsy2(tetris.field,tetris.figure, 1);
     if (action==Left){
-      xmax=moveCols(tetris.field,tetris.figure, -1);
+      xmax=moveCols2(tetris.field,tetris.figure, -1);
     } else if (action==Right){
-      xmax=moveCols(tetris.field,tetris.figure, 1);
+      xmax=moveCols2(tetris.field,tetris.figure, 1);
     }else if (action==Action){
       xmax=rotateCols2(tetris.field,tetris.figure);
-      // if (xmax)curtsy(tetris.figure, -1);
-    //   if (xmax==2){moveCols(tetris.field,tetris.figure, 1);}
     }
     sumFigure(tetris.field, tetris.figure);
+    fieldprint(board, tetris );
 
-    // subFigure(tetris.field, tetris.figure);
-    stringDel(tetris.field);
-    wmove(board, 0, 0);
-    for (int i = 0; i < MAXROWS;
-         i++) {  // первая печать  поля //gjlhfpevtdftncz x,y
-      for (int j = 0; j < MAXCOLS; j++) {
-        // printw("%c%c", temp_field[i][j], temp_field[i][j]);
-                switch (tetris.field[i][j]) {
-            case '.': // Пример: символ 'X' печатается красным 
-                wattron(board,COLOR_PAIR(1));
-               wprintw(board,"%c%c", tetris.field[i][j], tetris.field[i][j]);
-                wattroff(board,COLOR_PAIR(1));
-                break;
-            case 'I': // Пример: символ 'O' печатается зеленым
-                wattron(board,COLOR_PAIR(2));
-                wprintw(board,"%c%c", tetris.field[i][j], tetris.field[i][j]);
-                wattroff(board,COLOR_PAIR(2));
-                break;
-            default:  // Другие символы печатаются желтым
-                wattron(board,COLOR_PAIR(3));
-                wprintw(board,"%c%c", tetris.field[i][j], tetris.field[i][j]);
-                wattroff(board,COLOR_PAIR(3));
-                break;
-        }
-      }
-    //   wprintw(board,"\n");
-    //  subFigure(tetris.field, tetris.figure);
-    }
-   wrefresh(board);
    action=Uzvering(action);
-
-    //  strcat(name, "score");
-    //  mvwprintw(infopole, 15,3, "%d",next[0][0]);
-     mvwprintw(infopole, 10,1, "%s","username");
-     mvwprintw(infopole, 11,2, "%s",name);
-     mvwprintw(infopole, 13,1, "%s","highScor");
-     mvwprintw(infopole, 14,3, "%03d",tetris.high_score);
-     wrefresh(infopole);
+  infoprint(infopole,tetris,  name );
+    //  mvwprintw(infopole, 10,1, "%s","username");
+    //  mvwprintw(infopole, 11,2, "%s",name);
+    //  mvwprintw(infopole, 13,1, "%s","highScor");
+    //  mvwprintw(infopole, 14,3, "%03d",tetris.high_score);
+    //  wrefresh(infopole);
      refresh();
     }
 // // getch();

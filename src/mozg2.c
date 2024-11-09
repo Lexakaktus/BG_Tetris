@@ -1,7 +1,7 @@
 #include "mozg.h"
 
 void Figuring(int** figure, int Fdonor[][2]) { //не изменено
-  for (int k = 0; k < MAXFIGURE; k++) {
+  for (int k = 0; k < COUNTCOORDINATE; k++) {
     figure[k][0] = Fdonor[k][0];
     figure[k][1] = Fdonor[k][1];
   }
@@ -10,10 +10,6 @@ void Figuring(int** figure, int Fdonor[][2]) { //не изменено
 int curtsy2(int** Field, int** Figure, int i) {
     int clop = 0;
     int** tempFigure=createcopy(&tempFigure);
-    //     int** tempFigure = malloc(MAXFIGURE * sizeof(int*));
-    // for (int k = 0; k < MAXFIGURE; k++) {
-    //     tempFigure[k] = malloc(2 * sizeof(int));
-    // }
     copyFigure(tempFigure, Figure);
 
     if (i < 0 || !checkCollision(Field, tempFigure)) {
@@ -84,20 +80,6 @@ int sumFigure(int** Field, int** Figure) { //добавление фигуры �
 int subFigure(int** Field, int** Figure) { //стирание фигуры с поля ( непроверенное!)
     int clop = 0;
 
-    // Проверка на выход за границы поля или столкновение с другой фигурой
-    // for (int k = 4; k > 0 && !clop; k--) {
-    //     int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x
-    //     int new_y = Figure[0][1] + Figure[k][1];  // Новая координата по y
-
-    //     // Проверяем вертикальные границы (y) и горизонтальные (x)
-    //     if (new_y >= MAXROWS || new_y < 0 || new_x >= MAXCOLS || new_x < 0) {
-    //         clop = 1;  // Если фигура выходит за границы, останавливаемся
-    //     } 
-    //     // Проверка на столкновение с уже существующими блоками на поле
-    //     // else if (Field[new_y][new_x] != '.') {  
-    //     //     clop = 1;
-    //     // }
-    // }
 
     // Если не было столкновений и выхода за границы, обновляем поле
     for (int k = 4; k > 0 ; k--) {
@@ -112,17 +94,12 @@ int subFigure(int** Field, int** Figure) { //стирание фигуры с п
 
 int moveCols(int** Field,int** Figure, int i) { ///перемещение по горизонтали 
 int clop = 0;
-for (int k = MAXFIGURE-1; k > 0 && !clop; k--) {
+for (int k = COUNTCOORDINATE-1; k > 0 && !clop; k--) {
             int new_x = Figure[k][0] + Figure[0][0]; // Новая позиция по горизонтали
       if (new_x <= 0 || new_x >= MAXCOLS-1 || Field[Figure[0][1]+Figure[k][1]][new_x] != '.') {
 
           clop = new_x <= 0? 3:new_x >= MAXCOLS-1? 1: 2; // Останавливаем сдвиг, если фигура выходит за пределы
-          // break;
-    // clop = 1;
   }}
-  // if (clop ==2){
-
-  // }    
   if ((clop==3&&i>0)||(clop==1&&i<0)||(clop==0)){
 Figure[0][0] +=i;}
 return clop;
@@ -139,16 +116,6 @@ int rotateCols(int** Field,int** Figure, int i) { ///поворот, убрат�
             '.') {
       clop = 1;
       } 
-      // && !clop && Field[(Figure[0][0] + -1*Figure[k][1])][Figure[0][1] + Figure[k][0]] != '.'
-    // while (Figure[0][0] - Figure[k][1] >= MAXCOLS && !clop) {
-    //   // moveCols( Field, Figure, 1);
-    //   Figure[0][0]-=1;
-    // }
-    // while (Figure[0][0] - Figure[k][1] < 0 && !clop) {
-    //   Figure[0][0]+=1;
-    //   // moveCols( Field, Figure, -1);
-    // }
-
   }
   for (int k = 4; k > 0 && !clop; k--) {
         int tempx=Figure[k][0];
@@ -156,27 +123,6 @@ int rotateCols(int** Field,int** Figure, int i) { ///поворот, убрат�
   Figure[k][1]=tempx;
   }
 
-    //   for (int k = 4; k > 0 && !clop; k--) {
-    //     int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x
-    //     int new_y = Figure[0][1] + Figure[k][1];  // Новая координата по y
-
-    //     // Проверяем вертикальные границы (y) и горизонтальные (x)
-    //     if (new_y >= MAXROWS || new_y < 0 || new_x >= MAXCOLS || new_x < 0) {
-    //         clop = 1;  // Если фигура выходит за границы, останавливаемся
-    //     } 
-    //     if ( new_x >= MAXCOLS || new_x < 0) {
-    //         clop = 2;  // Если фигура выходит за границы, останавливаемся
-    //     } 
-    //     // Проверка на столкновение с уже существующими блоками на поле
-    //     else if (Field[new_y][new_x] != '.') {  
-    //         clop = 1;
-    //     }
-    // }
-  //   for (int k = 4; k > 0 && clop; k--) {
-  //       int tempx=Figure[k][0];
-  // Figure[k][0] =Figure[k][1];
-  // Figure[k][1]=-tempx;
-  // }
   
   return clop;
 }
@@ -316,12 +262,12 @@ int FigureDown(int** Field, int** Figure){
       return clop;
 }
 
-int FigureDown2( int** Figure){
+int FigureDown2(int** Field, int** Figure){
   int clop=0;
    for (int k = 4; k > 0 && !clop; k--){     
         int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x
-        int new_y = Figure[0][1] + Figure[k][1];  // Новая координата по y
-        if (new_y<=MAXROWS-1) clop=1;
+        int new_y = Figure[0][1] + Figure[k][1]+1;  // Новая координата по y
+        if (new_y==MAXROWS||Field[new_y][new_x] != '.') clop=1;//!!!!
       }
       return clop;
 }
@@ -329,34 +275,35 @@ int FigureDown2( int** Figure){
 
 
 void copyFigure(int** dest, int** src) {
-    for (int k = 0; k < MAXFIGURE; k++) {
+    for (int k = 0; k < COUNTCOORDINATE; k++) {
         dest[k][0] = src[k][0];
         dest[k][1] = src[k][1];
     }
 }
 
 int checkCollision(int** Field, int** Figure) {
-    for (int k = 4; k > 0; k--) {
+  int clop=0;
+    for (int k = 4; k > 0&&!clop; k--) {
         int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x
         int new_y = Figure[0][1] + Figure[k][1];  // Новая координата по y
 
         // Проверка на выход за границы или на столкновение с другими фигурами
         if (new_y >= MAXROWS || new_y < 0 || new_x >= MAXCOLS || new_x < 0 || Field[new_y][new_x] != '.') {
-            return 1;  // Столкновение произошло
+            clop=1;  // Столкновение произошло
         }
     }
-    return 0;  // Столкновений нет
+    return clop;  
 }
 
 int** createcopy(){
-    int** tempFigure = malloc(MAXFIGURE * sizeof(int*));
-    for (int k = 0; k < MAXFIGURE; k++) {
+    int** tempFigure = malloc(COUNTCOORDINATE * sizeof(int*));
+    for (int k = 0; k < COUNTCOORDINATE; k++) {
         tempFigure[k] = malloc(2 * sizeof(int));
     }
     return tempFigure;
 }
 int deletecopy(int**copy){
-    for (int k = 0; k < MAXFIGURE; k++) {
+    for (int k = 0; k < COUNTCOORDINATE; k++) {
         free(copy[k]);
     }
     free(copy);
@@ -367,7 +314,7 @@ int rotateCols2(int** Field, int** Figure) {
     int** tempFigure = createcopy();
     copyFigure(tempFigure, Figure);
 
-    for (int k = 1; k < MAXFIGURE; k++) {
+    for (int k = 1; k < COUNTCOORDINATE; k++) {
         int tempx = tempFigure[k][0];
         tempFigure[k][0] = -tempFigure[k][1];
         tempFigure[k][1] = tempx;
@@ -395,4 +342,53 @@ int moveCols2(int** Field, int** Figure, int i) {
 
     deletecopy(tempFigure);
     return clop;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//енто чисто отрисовка
+int fieldprint(WINDOW* board, GameInfo_t tetris ){
+      wmove(board, 0, 0);
+    for (int i = 0; i < MAXROWS;
+         i++) {  // первая печать  поля //gjlhfpevtdftncz x,y
+      for (int j = 0; j < MAXCOLS; j++) {
+        // printw("%c%c", temp_field[i][j], temp_field[i][j]);
+                switch (tetris.field[i][j]) {
+            case '.': // Пример: символ 'X' печатается красным 
+                wattron(board,COLOR_PAIR(1));
+               wprintw(board,"%c%c", tetris.field[i][j], tetris.field[i][j]);
+                wattroff(board,COLOR_PAIR(1));
+                break;
+            case 'I': // Пример: символ 'O' печатается зеленым
+                wattron(board,COLOR_PAIR(2));
+                wprintw(board,"%c%c", tetris.field[i][j], tetris.field[i][j]);
+                wattroff(board,COLOR_PAIR(2));
+                break;
+            default:  // Другие символы печатаются желтым
+                wattron(board,COLOR_PAIR(3));
+                wprintw(board,"%c%c", tetris.field[i][j], tetris.field[i][j]);
+                wattroff(board,COLOR_PAIR(3));
+                break;
+        }
+      }
+    }
+   wrefresh(board);
+}
+
+int infoprint(WINDOW* infopole, GameInfo_t tetris, char* name ){
+     mvwprintw(infopole, 10,1, "%s","username");
+     mvwprintw(infopole, 11,2, "%s",name);
+     mvwprintw(infopole, 13,1, "%s","highScor");
+     mvwprintw(infopole, 14,3, "%03d",tetris.high_score);
+     wrefresh(infopole);
 }

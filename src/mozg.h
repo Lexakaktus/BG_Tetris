@@ -8,8 +8,9 @@
 
 #define MAXROWS 20
 #define MAXCOLS 10
-#define MAXFIGURE 5
+#define COUNTCOORDINATE 5
 #define COUNTFIGURE 7
+#define COUNTDIMENSION 2
 
 // typedef enum {
 //     Start,  //0
@@ -63,8 +64,8 @@ void initg();
 
 
 
-int FigureDown2(int** Figure);
-
+// int FigureDown2(int** Figure);
+int FigureDown2(int** Field, int** Figure);
 
 int checkCollision(int** Field, int** Figure);
 void copyFigure(int** dest, int** src);
@@ -72,3 +73,14 @@ int** createcopy();
 int deletecopy(int**copy);
 int curtsy2(int** Field, int** Figure, int i);
 int rotateCols2(int** Field, int** Figure);
+int moveCols2(int** Field, int** Figure, int i);
+
+
+
+
+
+
+
+
+int fieldprint(WINDOW* board, GameInfo_t tetris );
+int infoprint(WINDOW* infopole, GameInfo_t tetris, char* name );

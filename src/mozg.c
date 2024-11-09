@@ -1,7 +1,7 @@
 #include "mozg.h"
 
 void Figuring(int** figure, int Fdonor[][2]) { 
-  for (int k = 0; k < MAXFIGURE; k++) {
+  for (int k = 0; k < COUNTCOORDINATE; k++) {
     figure[k][0] = Fdonor[k][0];
     figure[k][1] = Fdonor[k][1];
   }
@@ -103,7 +103,7 @@ int subFigure(int** Field, int** Figure) { //стирание фигуры с п
 
 int moveCols(int** Field,int** Figure, int i) { ///перемещение по горизонтали 
 int clop = 0;
-for (int k = MAXFIGURE-1; k > 0 && !clop; k--) {
+for (int k = COUNTCOORDINATE-1; k > 0 && !clop; k--) {
             int new_x = Figure[k][0] + Figure[0][0]; // Новая позиция по горизонтали
       if (new_x <= 0 || new_x >= MAXCOLS-1 || Field[Figure[0][1]+Figure[k][1]][new_x] != '.') {
 
@@ -310,7 +310,7 @@ int FigureDown(int** Field, int** Figure){
 
 
 int checkCollision(int** Field, int** Figure) {
-    for (int k = 0; k < MAXFIGURE; k++) {
+    for (int k = 0; k < COUNTCOORDINATE; k++) {
         int new_x = Figure[k][0];
         int new_y = Figure[k][1];
         if (new_y >= MAXROWS || new_y < 0 || new_x >= MAXCOLS || new_x < 0 ||
