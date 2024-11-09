@@ -16,17 +16,19 @@ int main(void) {
   refresh();
   box(board, 0, 0);
   wrefresh(board);
-  mvwaddstr(board, 8, 3, "PRESS");
-  mvwaddstr(board, 10, 3, "ENTER");
-      // wattroff(board, COLOR_PAIR(COLOR_WORDS));
+  mvwaddstr(board, 2, 3, "Hello, enter");
+  mvwaddstr(board, 3, 3, "your username");
+  mvwaddstr(board, 6, 1, "Pss, the SQUARE ");
+  mvwaddstr(board, 7, 3, " ...rotates... ");
+  // wattroff(board, COLOR_PAIR(COLOR_WORDS));
   wrefresh(board);
- WINDOW* infopole = newwin(20, 10, 0, 21);
+ WINDOW* infopole = newwin(20, 13, 0, 21);
   refresh();
   box(infopole, 0, 0);
   wrefresh(infopole);
-        mvwaddstr(infopole, 8, 3, "SS");
-      mvwaddstr(infopole, 10, 3, "ER");
-        // wattroff(infopole, COLOR_PAIR(COLOR_WORDS));
+  mvwaddstr(infopole, 8, 3, "SS");
+  mvwaddstr(infopole, 10, 3, "ER");
+  // wattroff(infopole, COLOR_PAIR(COLOR_WORDS));
   wrefresh(infopole);
   start_color();
   init_pair(1, COLOR_RED, COLOR_BLACK);    // Цветовая пара 1: красный
@@ -40,6 +42,8 @@ int main(void) {
   int random = rand() % COUNTFIGURE;
   UserAction_t UserInput;
   GameInfo_t tetris;
+  tetris.score=0;
+  tetris.high_score=0;
   int figure_home[COUNTFIGURE][COUNTCOORDINATE][2] /*{x,y}*/ = {
       {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},//   -.
       {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}}, // |  I 
@@ -98,10 +102,14 @@ UserAction_t action = Start;
     refresh();
 
     subFigure(tetris.field, tetris.figure);
-    
+    refresh();
    if (xmax=FigureDown2(tetris.field,tetris.figure)==1) {
       sumFigure(tetris.field, tetris.figure);
-      stringDel(tetris.field);
+      if (tetris.figure[0][1]<=1){
+        action=Terminate;
+      }
+      scoring(&tetris);
+      // stringDel(tetris.field);
       Figuring(tetris.figure, figure_home[random]);
       random = rand() % 4;
       Figuring(tetris.next, figure_home[random]);
@@ -117,17 +125,16 @@ UserAction_t action = Start;
       xmax=rotateCols2(tetris.field,tetris.figure);
     }
     sumFigure(tetris.field, tetris.figure);
-    fieldprint(board, tetris );
 
-   action=Uzvering(action);
-  infoprint(infopole,tetris,  name );
-    //  mvwprintw(infopole, 10,1, "%s","username");
-    //  mvwprintw(infopole, 11,2, "%s",name);
-    //  mvwprintw(infopole, 13,1, "%s","highScor");
-    //  mvwprintw(infopole, 14,3, "%03d",tetris.high_score);
-    //  wrefresh(infopole);
+    fieldprint(board, tetris );
+    infoprint(infopole,tetris,  name );
+    if (action!=Terminate)
+    action=Uzvering(action);
+    
      refresh();
     }
+
+    fileScoreinput( name,  &tetris);
 // // getch();
 // sleep(10);
     endwin();

@@ -344,6 +344,51 @@ int moveCols2(int** Field, int** Figure, int i) {
     return clop;
 }
 
+int scoring(GameInfo_t* tetris){
+  int a=stringDel(tetris->field);
+  switch (a) {
+    case 1:
+    tetris->score+=100;
+    break;
+    case 2:
+    tetris->score+=300;
+    break;
+    case 3:
+    tetris->score+=700;
+    break;
+    case 4:
+    tetris->score+=1500;
+    break;
+    default:
+    break;
+  }
+  if (tetris->score>tetris->high_score){
+    tetris->high_score=tetris->score;
+  }
+  return 0;
+}
+
+//score deletai
+int fileScoreinput(char* name,  GameInfo_t* info){ //добавить сразу замену счёта в файле или игре(смотря что больше) и в конце закрывать файл
+  FILE *fp;
+  // strcat(name, ".txt");
+  
+  if ((fp = fopen(name, "r+"))==NULL){
+    fp = fopen(name, "w+");
+  } //добавить проверок на всякое
+  // fgets(score, 100, fp);
+  int fs;//=atoi(score);
+  // if (fs<info->high_score){
+  //   fs=info->high_score;
+  // } 
+  // itoa(info->high_score, score,10);
+  // fputs(score, fp);
+  fprintf(fp, "%d",info->high_score );
+   fclose (fp);
+  return 0;
+}
+
+
 
 
 
@@ -366,7 +411,7 @@ int fieldprint(WINDOW* board, GameInfo_t tetris ){
                 switch (tetris.field[i][j]) {
             case '.': // Пример: символ 'X' печатается красным 
                 wattron(board,COLOR_PAIR(1));
-               wprintw(board,"%c%c", tetris.field[i][j], tetris.field[i][j]);
+                wprintw(board,"%c%c", tetris.field[i][j], tetris.field[i][j]);
                 wattroff(board,COLOR_PAIR(1));
                 break;
             case 'I': // Пример: символ 'O' печатается зеленым
@@ -386,9 +431,11 @@ int fieldprint(WINDOW* board, GameInfo_t tetris ){
 }
 
 int infoprint(WINDOW* infopole, GameInfo_t tetris, char* name ){
+     mvwprintw(infopole, 7,1, "%s","score");
+     mvwprintw(infopole, 8,2, "%d",tetris.score);
      mvwprintw(infopole, 10,1, "%s","username");
      mvwprintw(infopole, 11,2, "%s",name);
      mvwprintw(infopole, 13,1, "%s","highScor");
-     mvwprintw(infopole, 14,3, "%03d",tetris.high_score);
+     mvwprintw(infopole, 14,3, "%d",tetris.high_score);
      wrefresh(infopole);
 }

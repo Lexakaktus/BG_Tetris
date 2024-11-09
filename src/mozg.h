@@ -74,8 +74,8 @@ int deletecopy(int**copy);
 int curtsy2(int** Field, int** Figure, int i);
 int rotateCols2(int** Field, int** Figure);
 int moveCols2(int** Field, int** Figure, int i);
-
-
+int scoring(GameInfo_t* tetris);
+int fileScoreinput(char* name, GameInfo_t* info);
 
 
 

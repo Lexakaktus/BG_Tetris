@@ -254,9 +254,6 @@ int fileScore(char* name, char* score,  GameInfo_t* info){ //добавить с
   FILE *fp;
   strcat(name, ".txt");
 
-  // if ((fp = fopen("test", "w"))==NULL) {
-  // printf("Cannot open file.\n");
-  // }
   if ((fp = fopen(name, "r+"))==NULL){
     fp = fopen(name, "w+");
   } //добавить проверок на всякое
@@ -265,6 +262,7 @@ int fileScore(char* name, char* score,  GameInfo_t* info){ //добавить с
   if (fs>=info->high_score){
     info->high_score=fs;
   } 
+   fclose (fp);
   return 0;
 }
 
