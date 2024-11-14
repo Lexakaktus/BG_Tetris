@@ -2,7 +2,7 @@
 
 START_TEST(tetris1) {
  GameInfo_t tetris;
- tetris.field
+ 
  
 }
 END_TEST

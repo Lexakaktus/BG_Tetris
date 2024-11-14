@@ -19,7 +19,8 @@ all: install
 # 	ar rcs s21_matrix.a *.o
 # 	ranlib s21_matrix.a
 install: clean
-	$(CC) $(SRC) -o tetris 
+	# $(CC) $(SRC) -o tetris 
+	gcc comedia.c mozg2.c -lncurses
 gcov_report:
 	rm -rf test-test_*.gc* test-s21_tests.gc*
 	lcov -t "result" -o res.info -c -d . --rc branch_coverage=0

@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 int main(void) {
-
+ // отсюда отрисовка
   initscr();
   timeout(300);
   // noecho();
@@ -34,7 +34,7 @@ int main(void) {
   init_pair(1, COLOR_RED, COLOR_BLACK);    // Цветовая пара 1: красный
   init_pair(2, COLOR_GREEN, COLOR_BLACK);  // Цветовая пара 2: зеленый
   init_pair(3, COLOR_YELLOW, COLOR_BLACK); // Цветовая пара 3: желтый
-
+  // досюда отрисовка
 
 
 
@@ -44,7 +44,7 @@ int main(void) {
   GameInfo_t tetris;
   tetris.score=0;
   tetris.high_score=0;
-  int figure_home[COUNTFIGURE][COUNTCOORDINATE][2] /*{x,y}*/ = {
+  const int figure_home[COUNTFIGURE][COUNTCOORDINATE][2] /*{x,y}*/ = {
       {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},//   -.
       {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}}, // |  I 
       {{5, 0}, {0, 0}, {0, 1}, {1, 0}, {-1, 0}},// .|.
@@ -53,41 +53,13 @@ int main(void) {
       {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {-1, 0}},//Z
       {{5, 0}, {0, 0}, {0, 1}, {-1, 1}, {1, 0}} //!Z
       };
-  tetris.figure = (int **)malloc(COUNTCOORDINATE * sizeof(int *));
-  for (int i = 0; i < COUNTCOORDINATE; i++) {
-    tetris.figure[i] = (int *)malloc(COUNTDIMENSION * sizeof(int));
-  }
-
-  tetris.next = (int **)malloc(COUNTCOORDINATE * sizeof(int *));
-  for (int i = 0; i < COUNTCOORDINATE; i++) {
-    tetris.next[i] = (int *)malloc(COUNTDIMENSION * sizeof(int));
-  }
-
+  tetris.figure = createcopy();
+  tetris.next = createcopy();
   Figuring(tetris.figure, figure_home[random]);
   random = rand() % COUNTFIGURE;
   Figuring(tetris.next, figure_home[random]);
 
-  tetris.field =
-      (int **)malloc(MAXROWS * sizeof(int *));  //создание постоянного поля
-  for (int i = 0; i < MAXROWS; i++) {
-    tetris.field[i] = (int *)malloc(MAXCOLS * sizeof(int));
-    for (int j = 0; j < MAXCOLS; j++) {
-      tetris.field[i][j] = '.';
-    }
-  }
-
-  // int **temp_field =
-  //     (int **)malloc(MAXROWS * sizeof(int *));  //создание временного поля
-  // for (int i = 0; i < MAXROWS; i++) {
-  //   temp_field[i] = (int *)malloc(MAXCOLS * sizeof(int));
-  //   for (int j = 0; j < MAXCOLS; j++) {
-  //     temp_field[i][j] = '.';  //=46 //y,x
-  //   }
-  // }
-
-
-
-
+  tetris.field =createpole();
 
 UserAction_t action = Start;
 // fsm_t fsm=Start;
@@ -95,23 +67,21 @@ UserAction_t action = Start;
      char* name= (char*)calloc(10, sizeof(char));
      scanf("%s", name);
      fileScore(name, score, &tetris);
-     noecho();
+     noecho();//отрисовочное
     while (action!=Terminate){
 
 
     int xmax=0;
-    refresh();
+    refresh();//отрисовочное
 
     subFigure(tetris.field, tetris.figure);
-    refresh();
-   if (xmax=FigureDown2(tetris.field,tetris.figure)==1) {
+   if (xmax=FigureDown2(tetris.field,tetris.figure)==1) { //проверка на падение фигуры
       sumFigure(tetris.field, tetris.figure);
-      if (tetris.figure[0][1]<=1){
+      if (tetris.figure[0][1]<=1){ //проверка на проигрыш
         action=Terminate;
       }
-      scoring(&tetris);
-      // stringDel(tetris.field);
-      Figuring(tetris.figure, figure_home[random]);
+      scoring(&tetris);//удаление строк и подсчёт очков
+      Figuring(tetris.figure, figure_home[random]); 
       random = rand() % 4;
       Figuring(tetris.next, figure_home[random]);
     } else if (xmax==0) {
@@ -126,19 +96,22 @@ UserAction_t action = Start;
       xmax=rotateCols2(tetris.field,tetris.figure);
     }
     sumFigure(tetris.field, tetris.figure);
-
+    // отсюда отрисовка
     fieldprint(board, tetris );
     infoprint(infopole,tetris,  name );
     if (action!=Terminate)
     action=Uzvering(action);
     
      refresh();
+    // досюда отрисовка(фронтенд)
     }
 
     fileScoreinput( name,  &tetris);
 // // getch();
 // sleep(10);
     endwin();
+
+    printf("%s %d", "you lose\n your score: ", tetris.high_score);
   return 0;
 }
 

@@ -48,7 +48,7 @@ int sumFigure(int ** Field, int**  figure); //прибавление фигур�
 int subFigure(int** Field, int** Figure); //вычитание фигуры из поля обратноd
 int curtsy(int** Figure, int i); //понижение фигуры
 void zeroing_temp(int ** Field); //обнуление поля для отрисовки(да и другого при желании)
-void Figuring(int** figure, int Fdonor[][2]); //заполнение следующей и текущей фигур изначальными //
+void Figuring(int** figure, const int Fdonor[][2]); //заполнение следующей и текущей фигур изначальными //
 // координатами (позже усложнить до одной из 7ми фигур)
 int moveCols(int** Field,int** Figure, int i);
 int rotateCols(int** Field,int** Figure, int i); //Переименовать
@@ -72,7 +72,7 @@ int rotateCols2(int** Field, int** Figure);
 int moveCols2(int** Field, int** Figure, int i);
 int scoring(GameInfo_t* tetris);
 int fileScoreinput(char* name, GameInfo_t* info);
-
+int** createpole();
 
 
 

@@ -1,6 +1,6 @@
 #include "mozg.h"
 
-void Figuring(int** figure, int Fdonor[][2]) { //не изменено
+void Figuring(int** figure,const  int Fdonor[][2]) { //не изменено
   for (int k = 0; k < COUNTCOORDINATE; k++) {
     figure[k][0] = Fdonor[k][0];
     figure[k][1] = Fdonor[k][1];
@@ -301,6 +301,17 @@ int** createcopy(){
         tempFigure[k] = malloc(2 * sizeof(int));
     }
     return tempFigure;
+}
+int** createpole(){
+    int** tempFigure =
+      (int **)malloc(MAXROWS * sizeof(int *));  //создание постоянного поля
+  for (int i = 0; i < MAXROWS; i++) {
+    tempFigure[i] = (int *)malloc(MAXCOLS * sizeof(int));
+    for (int j = 0; j < MAXCOLS; j++) {
+      tempFigure[i][j] = '.';
+    }
+  }
+  return tempFigure;
 }
 int deletecopy(int**copy){
     for (int k = 0; k < COUNTCOORDINATE; k++) {
