@@ -1,8 +1,5 @@
 #include <ncurses.h>
 #include <string.h> 
-
-
-
 #include <stdlib.h>
 #include <time.h>
 
@@ -12,13 +9,13 @@
 #define COUNTFIGURE 7
 #define COUNTDIMENSION 2
 
-// typedef enum {
-//     Start,  //0
-//     Moving,
-//     Pause,
-//     Gameover,
-//     Hello=-1 //временно
-// } fsm_t;
+typedef enum {
+    Init=10,  //0
+    Moving,
+    Paus,
+    Gameover,
+    Hello=-1 //временно
+} fsm_t;
 
 
 typedef enum {
@@ -56,7 +53,6 @@ void Figuring(int** figure, int Fdonor[][2]); //заполнение следу�
 int moveCols(int** Field,int** Figure, int i);
 int rotateCols(int** Field,int** Figure, int i); //Переименовать
 int stringDel(int** Field);
-UserAction_t Uzvering(UserAction_t action );
 int fileScore(char* name, char* score,  GameInfo_t* info);
 int FigureDown(int** Field,int** Figure);
 
@@ -64,7 +60,7 @@ void initg();
 
 
 
-// int FigureDown2(int** Figure);
+
 int FigureDown2(int** Field, int** Figure);
 
 int checkCollision(int** Field, int** Figure);
@@ -81,6 +77,6 @@ int fileScoreinput(char* name, GameInfo_t* info);
 
 
 
-
+UserAction_t Uzvering(UserAction_t action );
 int fieldprint(WINDOW* board, GameInfo_t tetris );
 int infoprint(WINDOW* infopole, GameInfo_t tetris, char* name );

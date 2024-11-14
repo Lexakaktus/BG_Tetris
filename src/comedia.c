@@ -10,7 +10,7 @@ int main(void) {
 
   initscr();
   timeout(300);
-  noecho();
+  // noecho();
   keypad(stdscr, true);
  WINDOW* board = newwin(20, 20, 0, 0);
   refresh();
@@ -95,6 +95,7 @@ UserAction_t action = Start;
      char* name= (char*)calloc(10, sizeof(char));
      scanf("%s", name);
      fileScore(name, score, &tetris);
+     noecho();
     while (action!=Terminate){
 
 
