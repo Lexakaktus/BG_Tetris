@@ -44,20 +44,12 @@ int main(void) {
   GameInfo_t tetris;
   tetris.score=0;
   tetris.high_score=0;
-  const int figure_home[COUNTFIGURE][COUNTCOORDINATE][2] /*{x,y}*/ = {
-      {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},//   -.
-      {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}}, // |  I 
-      {{5, 0}, {0, 0}, {0, 1}, {1, 0}, {-1, 0}},// .|.
-      {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 0}},/// ::
-      {{5, 0}, {0, 0}, {-1, 0}, {-1, 1}, {1, 0}}, // .-
-      {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {-1, 0}},//Z
-      {{5, 0}, {0, 0}, {0, 1}, {-1, 1}, {1, 0}} //!Z
-      };
+
   tetris.figure = createcopy();
   tetris.next = createcopy();
-  Figuring(tetris.figure, figure_home[random]);
+  Figuring(tetris.figure, random);
   random = rand() % COUNTFIGURE;
-  Figuring(tetris.next, figure_home[random]);
+  Figuring(tetris.next, random);
 
   tetris.field =createpole();
 
@@ -81,11 +73,11 @@ UserAction_t action = Start;
         action=Terminate;
       }
       scoring(&tetris);//удаление строк и подсчёт очков
-      Figuring(tetris.figure, figure_home[random]); 
+      Figuring(tetris.figure, random); 
       random = rand() % 4;
-      Figuring(tetris.next, figure_home[random]);
+      Figuring(tetris.next,  random);
     } else if (xmax==0) {
-      subFigure(tetris.field, tetris.figure);
+      // subFigure(tetris.field, tetris.figure);
     }
     curtsy2(tetris.field,tetris.figure, 1);
     if (action==Left){

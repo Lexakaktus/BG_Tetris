@@ -1,9 +1,9 @@
 #include "mozg.h"
 
-void Figuring(int** figure,const  int Fdonor[][2]) { //не изменено
+void Figuring(int** figure, int index) { //не изменено
   for (int k = 0; k < COUNTCOORDINATE; k++) {
-    figure[k][0] = Fdonor[k][0];
-    figure[k][1] = Fdonor[k][1];
+    figure[k][0] = figure_home[index][k][0];
+    figure[k][1] = figure_home[index][k][1];
   }
 }
 
