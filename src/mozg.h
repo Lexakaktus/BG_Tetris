@@ -2,12 +2,15 @@
 #include <string.h> 
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h> 
 
 #define MAXROWS 20
 #define MAXCOLS 10
 #define COUNTCOORDINATE 5
 #define COUNTFIGURE 7
 #define COUNTDIMENSION 2
+#define FALL_DELAY 500
+
 
  static const int figure_home[COUNTFIGURE][COUNTCOORDINATE][2] /*{x,y}*/ = {
       {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},//   -.

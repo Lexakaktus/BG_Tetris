@@ -37,7 +37,7 @@ int main(void) {
   // досюда отрисовка
 
 
-
+  clock_t lastFallTime = clock(); //для отслеживания таймера падения
   srand(time(NULL));
   int random = rand() % COUNTFIGURE;
   UserAction_t UserInput;
@@ -47,6 +47,7 @@ int main(void) {
 
   tetris.figure = createcopy();
   tetris.next = createcopy();
+  random = rand() % COUNTFIGURE;//второй раз потому что первая фигура всегда одна и та же
   Figuring(tetris.figure, random);
   random = rand() % COUNTFIGURE;
   Figuring(tetris.next, random);
@@ -61,12 +62,29 @@ UserAction_t action = Start;
      fileScore(name, score, &tetris);
      noecho();//отрисовочное
     while (action!=Terminate){
-
+      clock_t currentTime = clock();//обновление времени с последнего падения
 
     int xmax=0;
     refresh();//отрисовочное
 
+
+        //      while (1) {
+        // currentTime = clock();  // Получаем текущее время
+
+        // // Выводим отладочную информацию в левый верхний угол экрана
+        // clear();  // Очистка экрана перед выводом
+        // mvprintw(0, 0, "currentTime: %ld", currentTime);
+        // mvprintw(1, 0, "lastFallTime: %ld", lastFallTime);
+        // mvprintw(2, 0, "difference: %ld", currentTime - lastFallTime);
+        // if ((currentTime - lastFallTime) * 1000000 / CLOCKS_PER_SEC >= FALL_DELAY) {
+        //     curtsy2(tetris.field, tetris.figure, 1); // Спускаем фигуру вниз
+        //     mvprintw(4, 0, "Falling figure!");
+        //     usleep(100000000);
+        //     lastFallTime = currentTime;  // Обновляем время последнего падения
+        // }else { mvprintw(4, 0, "Waiting for fall...");}
+        // refresh(); } 
     subFigure(tetris.field, tetris.figure);
+
    if (xmax=FigureDown2(tetris.field,tetris.figure)==1) { //проверка на падение фигуры
       sumFigure(tetris.field, tetris.figure);
       if (tetris.figure[0][1]<=1){ //проверка на проигрыш
@@ -79,7 +97,11 @@ UserAction_t action = Start;
     } else if (xmax==0) {
       // subFigure(tetris.field, tetris.figure);
     }
-    curtsy2(tetris.field,tetris.figure, 1);
+          if ((currentTime - lastFallTime)  >= FALL_DELAY) {
+            curtsy2(tetris.field, tetris.figure, 1); // Спускаем фигуру вниз
+            lastFallTime = currentTime;  // Обновляем время последнего падения
+        }
+    // curtsy2(tetris.field,tetris.figure, 1);
     if (action==Left){
       xmax=moveCols2(tetris.field,tetris.figure, -1);
     } else if (action==Right){
