@@ -157,6 +157,7 @@ int stringDel(int** Field){ //удаляет заполненные строки
 UserAction_t Uzvering(UserAction_t action ){ //переименовать 
   UserAction_t push;//=action;
   int a = getch();
+  if (action!=Pause){
   switch(a){
   case 'a':
     push = Left;
@@ -200,6 +201,10 @@ UserAction_t Uzvering(UserAction_t action ){ //переименовать
   default:
     push=Start;
     break;
+  }} else if (a!='p'){
+    push=Pause;
+  } else {
+    push=Start;
   }
   return push;
 }
@@ -448,5 +453,7 @@ int infoprint(WINDOW* infopole, GameInfo_t tetris, char* name ){
      mvwprintw(infopole, 11,2, "%s",name);
      mvwprintw(infopole, 13,1, "%s","highScor");
      mvwprintw(infopole, 14,3, "%d",tetris.high_score);
+     mvwprintw(infopole, 0,1, "%s","LEVEL");
+     mvwprintw(infopole, 2,3, "%d",tetris.level);
      wrefresh(infopole);
 }

@@ -26,8 +26,8 @@ int main(void) {
   refresh();
   box(infopole, 0, 0);
   wrefresh(infopole);
-  mvwaddstr(infopole, 8, 3, "SS");
-  mvwaddstr(infopole, 10, 3, "ER");
+  // mvwaddstr(infopole, 8, 3, "SS");
+  // mvwaddstr(infopole, 10, 3, "ER");
   // wattroff(infopole, COLOR_PAIR(COLOR_WORDS));
   wrefresh(infopole);
   start_color();
@@ -44,6 +44,7 @@ int main(void) {
   GameInfo_t tetris;
   tetris.score=0;
   tetris.high_score=0;
+  tetris.level=0;
 
   tetris.figure = createcopy();
   tetris.next = createcopy();
@@ -62,27 +63,11 @@ UserAction_t action = Start;
      fileScore(name, score, &tetris);
      noecho();//отрисовочное
     while (action!=Terminate){
+      if (action!=Pause){
       clock_t currentTime = clock();//обновление времени с последнего падения
 
     int xmax=0;
     refresh();//отрисовочное
-
-
-        //      while (1) {
-        // currentTime = clock();  // Получаем текущее время
-
-        // // Выводим отладочную информацию в левый верхний угол экрана
-        // clear();  // Очистка экрана перед выводом
-        // mvprintw(0, 0, "currentTime: %ld", currentTime);
-        // mvprintw(1, 0, "lastFallTime: %ld", lastFallTime);
-        // mvprintw(2, 0, "difference: %ld", currentTime - lastFallTime);
-        // if ((currentTime - lastFallTime) * 1000000 / CLOCKS_PER_SEC >= FALL_DELAY) {
-        //     curtsy2(tetris.field, tetris.figure, 1); // Спускаем фигуру вниз
-        //     mvprintw(4, 0, "Falling figure!");
-        //     usleep(100000000);
-        //     lastFallTime = currentTime;  // Обновляем время последнего падения
-        // }else { mvprintw(4, 0, "Waiting for fall...");}
-        // refresh(); } 
     subFigure(tetris.field, tetris.figure);
 
    if (xmax=FigureDown2(tetris.field,tetris.figure)==1) { //проверка на падение фигуры
@@ -91,13 +76,15 @@ UserAction_t action = Start;
         action=Terminate;
       }
       scoring(&tetris);//удаление строк и подсчёт очков
+      if (tetris.level<10){
+      tetris.level=tetris.score/600;}
       Figuring(tetris.figure, random); 
       random = rand() % 4;
       Figuring(tetris.next,  random);
     } else if (xmax==0) {
       // subFigure(tetris.field, tetris.figure);
     }
-          if ((currentTime - lastFallTime)  >= FALL_DELAY) {
+          if ((currentTime - lastFallTime)  >= (FALL_DELAY-(50*tetris.level))) {
             curtsy2(tetris.field, tetris.figure, 1); // Спускаем фигуру вниз
             lastFallTime = currentTime;  // Обновляем время последнего падения
         }
@@ -112,12 +99,12 @@ UserAction_t action = Start;
     sumFigure(tetris.field, tetris.figure);
     // отсюда отрисовка
     fieldprint(board, tetris );
-    infoprint(infopole,tetris,  name );
+    infoprint(infopole,tetris,  name );}
     if (action!=Terminate)
     action=Uzvering(action);
     
      refresh();
-    // досюда отрисовка(фронтенд)
+    // досюда отрисовка(фронтенд)}
     }
 
     fileScoreinput( name,  &tetris);

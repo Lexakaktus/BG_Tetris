@@ -1,5 +1,5 @@
 #include "test.h"
-
+// #include "mozg.h"
 START_TEST(tetris1) {
  GameInfo_t tetris;
  
@@ -29,17 +29,18 @@ Suite* test_tetris(void) {
 
 
 int main() {
-  Suite* s[] = {test_create_suite(),
-                test_remove_suite(),
-                test_eq_suite(),
-                test_sub_suite(),
-                test_sum_suite(),
-                test_mult_matrix_suite(),
-                test_mult_number_suite(),
-                test_transpose_suite(),
+  Suite* s[] = {
+    // test_create_suite(),
+  //               test_remove_suite(),
+  //               test_eq_suite(),
+  //               test_sub_suite(),
+  //               test_sum_suite(),
+  //               test_mult_matrix_suite(),
+  //               test_mult_number_suite(),
+  //               test_transpose_suite(),
                 test_calc_complements_suite(),
-                test_determinant_suite(),
-                test_inverse_suite(),
+                // test_determinant_suite(),
+                // test_inverse_suite(),
                 NULL};
 
   printf("\nTESTS MODULE\n\n");
