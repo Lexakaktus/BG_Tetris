@@ -9,7 +9,7 @@
 #define COUNTCOORDINATE 5
 #define COUNTFIGURE 7
 #define COUNTDIMENSION 2
-#define FALL_DELAY 500
+#define FALL_DELAY 50000
 
 
  static const int figure_home[COUNTFIGURE][COUNTCOORDINATE][2] /*{x,y}*/ = {
@@ -93,3 +93,4 @@ int** createpole();
 UserAction_t Uzvering(UserAction_t action );
 int fieldprint(WINDOW* board, GameInfo_t tetris );
 int infoprint(WINDOW* infopole, GameInfo_t tetris, char* name );
+int nfigprint(WINDOW *infopole,GameInfo_t tetris);
