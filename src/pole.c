@@ -19,22 +19,22 @@ int main(void) {
   //   wrefresh(rertr);
 
   start_color();
-  init_pair(1, COLOR_RED, COLOR_YELLOW); // Цветовая пара 1: красный
-  init_pair(2, COLOR_GREEN, COLOR_GREEN); // Цветовая пара 2: зеленый
-  init_pair(3, COLOR_YELLOW, COLOR_BLACK); // Цветовая пара 3: желтый
+  init_pair(1, COLOR_RED, COLOR_YELLOW);  // Цветовая пара 1: красный
+  init_pair(2, COLOR_GREEN, COLOR_GREEN);  // Цветовая пара 2: зеленый
+  init_pair(3, COLOR_YELLOW, COLOR_BLACK);  // Цветовая пара 3: желтый
 
   srand(time(NULL));
   int random = rand() % COUNTFIGURE;
   UserAction_t UserInput;
   GameInfo_t tetris;
   int figure_home[COUNTFIGURE][MAXFIGURE][2] /*{x,y}*/ = {
-      {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},  //   -.
-      {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}},  // |  I
-      {{5, 0}, {0, 0}, {0, 1}, {1, 0}, {-1, 0}},  // .|.
-      {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 0}},   /// ::
-      {{5, 0}, {0, 0}, {-1, 0}, {-1, 1}, {1, 0}}, // .-
-      {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {-1, 0}},  // Z
-      {{5, 0}, {0, 0}, {0, 1}, {-1, 1}, {1, 0}}   //! Z
+      {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},   //   -.
+      {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}},   // |  I
+      {{5, 0}, {0, 0}, {0, 1}, {1, 0}, {-1, 0}},   // .|.
+      {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 0}},    /// ::
+      {{5, 0}, {0, 0}, {-1, 0}, {-1, 1}, {1, 0}},  // .-
+      {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {-1, 0}},   // Z
+      {{5, 0}, {0, 0}, {0, 1}, {-1, 1}, {1, 0}}    //! Z
   };
   int **figure = (int **)malloc(5 * sizeof(int *));
   for (int i = 0; i < 5; i++) {
@@ -51,7 +51,7 @@ int main(void) {
   Figuring(next, figure_home[random]);
 
   tetris.field =
-      (int **)malloc(MAXROWS * sizeof(int *)); // создание постоянного поля
+      (int **)malloc(MAXROWS * sizeof(int *));  // создание постоянного поля
   for (int i = 0; i < MAXROWS; i++) {
     tetris.field[i] = (int *)malloc(MAXCOLS * sizeof(int));
     for (int j = 0; j < MAXCOLS; j++) {
@@ -60,11 +60,11 @@ int main(void) {
   }
 
   int **temp_field =
-      (int **)malloc(MAXROWS * sizeof(int *)); // создание временного поля
+      (int **)malloc(MAXROWS * sizeof(int *));  // создание временного поля
   for (int i = 0; i < MAXROWS; i++) {
     temp_field[i] = (int *)malloc(MAXCOLS * sizeof(int));
     for (int j = 0; j < MAXCOLS; j++) {
-      temp_field[i][j] = '.'; //=46 //y,x
+      temp_field[i][j] = '.';  //=46 //y,x
     }
   }
 
@@ -124,25 +124,25 @@ int main(void) {
     }
     stringDel(tetris.field);
     for (int i = 0; i < MAXROWS;
-         i++) { // первая печать  поля //gjlhfpevtdftncz x,y
+         i++) {  // первая печать  поля //gjlhfpevtdftncz x,y
       for (int j = 0; j < MAXCOLS; j++) {
         // printw("%c%c", temp_field[i][j], temp_field[i][j]);
         switch (temp_field[i][j]) {
-        case '.': // Пример: символ 'X' печатается красным
-          attron(COLOR_PAIR(1));
-          printw("%c%c", temp_field[i][j], temp_field[i][j]);
-          attroff(COLOR_PAIR(1));
-          break;
-        case 'I': // Пример: символ 'O' печатается зеленым
-          attron(COLOR_PAIR(2));
-          printw("%c%c", temp_field[i][j], temp_field[i][j]);
-          attroff(COLOR_PAIR(2));
-          break;
-        default: // Другие символы печатаются желтым
-          attron(COLOR_PAIR(3));
-          printw("%c%c", temp_field[i][j], temp_field[i][j]);
-          attroff(COLOR_PAIR(3));
-          break;
+          case '.':  // Пример: символ 'X' печатается красным
+            attron(COLOR_PAIR(1));
+            printw("%c%c", temp_field[i][j], temp_field[i][j]);
+            attroff(COLOR_PAIR(1));
+            break;
+          case 'I':  // Пример: символ 'O' печатается зеленым
+            attron(COLOR_PAIR(2));
+            printw("%c%c", temp_field[i][j], temp_field[i][j]);
+            attroff(COLOR_PAIR(2));
+            break;
+          default:  // Другие символы печатаются желтым
+            attron(COLOR_PAIR(3));
+            printw("%c%c", temp_field[i][j], temp_field[i][j]);
+            attroff(COLOR_PAIR(3));
+            break;
         }
       }
       printw("\n");

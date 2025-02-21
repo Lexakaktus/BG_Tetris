@@ -1,7 +1,8 @@
-#include "mozg.h"
 #include <check.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "mozg.h"
 
 START_TEST(test_Figuring) {
   int **figure = createpole();
@@ -88,7 +89,7 @@ START_TEST(test_moveCols) {
 
   // Сдвиг вправо
   int clop = moveCols(field, figure, 1);
-  ck_assert_int_eq(clop, 0); // Столкновений быть не должно
+  ck_assert_int_eq(clop, 0);  // Столкновений быть не должно
 
   deletecopy(field);
 }
@@ -101,7 +102,7 @@ START_TEST(test_rotateCols) {
 
   // Поворот фигуры
   int clop = rotateCols(field, figure, 1);
-  ck_assert_int_eq(clop, 0); // Столкновений быть не должно
+  ck_assert_int_eq(clop, 0);  // Столкновений быть не должно
 
   deletecopy(field);
 }
@@ -135,7 +136,7 @@ START_TEST(test_checkCollision) {
   // Проверим столкновение
   int clop = checkCollision(field, figure);
 
-  ck_assert_int_eq(clop, 0); // Столкновений нет
+  ck_assert_int_eq(clop, 0);  // Столкновений нет
 
   deletecopy(field);
 }

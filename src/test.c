@@ -38,8 +38,7 @@ int main() {
   printf("\nTESTS MODULE\n\n");
   SRunner *sr;
   sr = srunner_create(s[0]);
-  for (int i = 1; s[i] != NULL; i++)
-    srunner_add_suite(sr, s[i]);
+  for (int i = 1; s[i] != NULL; i++) srunner_add_suite(sr, s[i]);
 
   srunner_set_fork_status(sr, CK_FORK);
   srunner_run_all(sr, CK_NORMAL);

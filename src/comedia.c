@@ -1,10 +1,10 @@
-
-#include "mozg.h"
+//в принципе все принты символов(чаров) можно заменить на принты конкретно чего надо (строка-%s)
 #include <ncurses.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-#include <stdlib.h>
+#include "mozg.h"
 int main(void) {
   // отсюда отрисовка
   initscr();
@@ -32,25 +32,24 @@ int main(void) {
   // wattroff(infopole, COLOR_PAIR(COLOR_WORDS));
   // wrefresh(infopole);
   start_color();
-  init_pair(1, COLOR_RED, COLOR_BLACK); // Цветовая пара 1: красный
-  init_pair(2, COLOR_GREEN, COLOR_BLACK); // Цветовая пара 2: зеленый
-  init_pair(3, COLOR_YELLOW, COLOR_BLACK); // Цветовая пара 3: желтый
+  init_pair(1, COLOR_RED, COLOR_BLACK);  // Цветовая пара 1: красный
+  init_pair(2, COLOR_GREEN, COLOR_BLACK);  // Цветовая пара 2: зеленый
+  init_pair(3, COLOR_YELLOW, COLOR_BLACK);  // Цветовая пара 3: желтый
   // досюда отрисовка
 
-  clock_t lastFallTime = clock(); // для отслеживания таймера падения
+  clock_t lastFallTime = clock();  // для отслеживания таймера падения
   srand(time(NULL));
   int random = rand() % COUNTFIGURE;
   UserAction_t UserInput;
-  GameInfo_t tetris;
+  static GameInfo_t tetris;  //!!!!
   tetris.score = 0;
   tetris.high_score = 0;
   tetris.level = 0;
 
   tetris.figure = createcopy();
   tetris.next = createcopy();
-  random =
-      rand() %
-      COUNTFIGURE; // второй раз потому что первая фигура всегда одна и та же
+  random = rand() % COUNTFIGURE;
+  // второй раз потому что первая фигура всегда одна и та же
   Figuring(tetris.figure, random);
   random = rand() % COUNTFIGURE;
   Figuring(tetris.next, random);
@@ -63,30 +62,30 @@ int main(void) {
   char *name = (char *)calloc(10, sizeof(char));
   scanf("%s", name);
   fileScore(name, score, &tetris);
-  noecho(); // отрисовочное
+  noecho();  // отрисовочное
   while (action != Terminate) {
     if (action != Pause) {
-      clock_t currentTime = clock(); // обновление времени с последнего падения
+      clock_t currentTime = clock();  // обновление времени с последнего падения
 
       int xmax = 0;
       // wrefresh(infopole);
       // wrefresh(board);
       // wclear(infopole);
-      refresh(); // отрисовочное
+      refresh();  // отрисовочное
       subFigure(tetris.field, tetris.figure);
 
       if (xmax = FigureDown2(tetris.field, tetris.figure) ==
-                 1) { // проверка на падение фигуры
+                 1) {  // проверка на падение фигуры
         sumFigure(tetris.field, tetris.figure);
-        if (tetris.figure[0][1] <= 1) { // проверка на проигрыш
+        if (tetris.figure[0][1] <= 1) {  // проверка на проигрыш
           action = Terminate;
         }
-        scoring(&tetris); // удаление строк и подсчёт очков
+        scoring(&tetris);  // удаление строк и подсчёт очков
         if (tetris.level < 10) {
           tetris.level = tetris.score / 600;
         } else {
           tetris.level = 10;
-          }
+        }
         Figuring(tetris.figure, random);
         random = rand() % COUNTFIGURE;
         Figuring(tetris.next, random);
@@ -94,9 +93,10 @@ int main(void) {
         // subFigure(tetris.field, tetris.figure);
       }
       // timeout((FALL_DELAY - (30 * tetris.level))*2);
-      if ((currentTime - lastFallTime) >= (FALL_DELAY - (3000 * tetris.level))) {
-        curtsy2(tetris.field, tetris.figure, 1); // Спускаем фигуру вниз
-        lastFallTime = currentTime; // Обновляем время последнего падения
+      if ((currentTime - lastFallTime) >=
+          (FALL_DELAY - (3000 * tetris.level))) {
+        curtsy2(tetris.field, tetris.figure, 1);  // Спускаем фигуру вниз
+        lastFallTime = currentTime;  // Обновляем время последнего падения
       }
       // curtsy2(tetris.field,tetris.figure, 1);
       if (action == Left) {
@@ -111,8 +111,7 @@ int main(void) {
       fieldprint(board, tetris);
       infoprint(infopole, tetris, name);
     }
-    if (action != Terminate)
-      action = Uzvering(action);
+    if (action != Terminate) action = Uzvering(action);
 
     // refresh();
     // досюда отрисовка(фронтенд)}
