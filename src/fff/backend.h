@@ -1,56 +1,73 @@
-#include <ncurses.h>
-#include <string.h> 
+#ifndef BACKEND_H
+#define BACKEND_H
 
+#include "libspec.h"
 
-
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
+#include <unistd.h>
 
 #define MAXROWS 20
 #define MAXCOLS 10
-#define MAXFIGURE 5
+#define COUNTCOORDINATE 5
 #define COUNTFIGURE 7
+#define COUNTDIMENSION 2
+#define FALL_DELAY 50000
+
+static const int figure_home[COUNTFIGURE][COUNTCOORDINATE][2] /*{x,y}*/ = {
+    {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},   //   -.
+    {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}},   // |  I
+    {{5, 0}, {0, 0}, {0, 1}, {1, 0}, {-1, 0}},   // .|.
+    {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 0}},    /// ::
+    {{5, 0}, {0, 0}, {-1, 0}, {-1, 1}, {1, 0}},  // .-
+    {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {-1, 0}},   // Z
+    {{5, 0}, {0, 0}, {0, 1}, {-1, 1}, {1, 0}}    //! Z
+};
 
 typedef enum {
-    Start,  //0
-    Moving,
-    Pause,
-    Gameover,
-    Hello=-1 //временно
+  Init = 10,  // 0
+  Moving,
+  Paus,
+  Gameover,
+  Hello = -1  // временно
 } fsm_t;
 
 
-typedef enum {
-    Start,  //0
-    Pause,
-    Terminate,
-    Left,
-    Right,
-    Up,
-    Down,
-    Action  //7
-} UserAction_t;
+void sumField(
+    int** Field,
+    int** FieldTwo);  // прибавление поля с приклеившимися фигурами ///
+/// к полю для отрисовки использовать перед sumfigure!!!
 
-typedef struct {
-    int **field; ///поле для отрисовки
-    int **next;  ///следующая фигура
-    int score;  ///счёт игры
-    int high_score; ///счёт из файла "ИмяИгрока" или максимальный в игре
-    int level;
-    int speed;
-    int pause;
-} GameInfo_t;
-
-void sumField(int ** Field, int ** FieldTwo );//прибавление поля с приклеившимися фигурами ///
-/// к полю для отрисовки использовать перед sumfigure!!! 
-
-int sumFigure(int ** Field, int**  figure); //прибавление фигуры к полю перед отрисовкой
-int subFigure(int** Field, int** Figure); //вычитание фигуры из поля обратноdq
-int curtsy(int** Figure, int i); //понижение фигуры
-void zeroing_temp(int ** Field); //обнуление поля для отрисовки(да и другого при желании)
-void Figuring(int** figure, int Fdonor[][2]); //заполнение следующей и текущей фигур изначальными //
+int sumFigure(int** Field,
+              int** figure);  // прибавление фигуры к полю перед отрисовкой
+int subFigure(int** Field, int** Figure);  // вычитание фигуры из поля обратноd
+int curtsy(int** Figure, int i);  // понижение фигуры
+void zeroing_temp(
+    int** Field);  // обнуление поля для отрисовки(да и другого при желании)
+void Figuring(
+    int** figure,
+    int index);  // заполнение следующей и текущей фигур изначальными //
 // координатами (позже усложнить до одной из 7ми фигур)
-int sumAhalay(int ** Field, int** Figure);
-int moveCols(int** Field,int** Figure, int i);
-int rotateCols(int** Field,int** Figure, int i); //Переименовать
+
 int stringDel(int** Field);
+int fileScore(char* name, char* score, GameInfo_t* info);
+int FigureDown(int** Field, int** Figure);
+
+
+int FigureDown2(int** Field, int** Figure);
+
+int checkCollision(int** Field, int** Figure);
+void copyFigure(int** dest, int** src);
+int** createcopy();
+int deletecopy(int** copy);
+int curtsy2(int** Field, int** Figure, int i);
+int rotateCols2(int** Field, int** Figure);
+int moveCols2(int** Field, int** Figure, int i);
+int scoring(GameInfo_t* tetris);
+int fileScoreinput(char* name, GameInfo_t* info);
+int** createpole();
+
+
+#endif
