@@ -34,7 +34,6 @@ typedef enum {
   Hello = -1  // временно
 } fsm_t;
 
-
 void sumField(
     int** Field,
     int** FieldTwo);  // прибавление поля с приклеившимися фигурами ///

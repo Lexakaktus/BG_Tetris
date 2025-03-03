@@ -2,9 +2,7 @@
 #include "front.h"
 
 GameInfo_t updateCurrentState(UserAction_t * action) {
-  static 
-  
-  int random =0;
+  static int random = 0;
   static int flag=1;
   static GameInfo_t tetris={0};
   if (flag ) {
@@ -26,7 +24,6 @@ GameInfo_t updateCurrentState(UserAction_t * action) {
       static clock_t lastFallTime = 0;
       clock_t currentTime = clock();  // обновление времени с последнего падения
       int xmax = 0;//??
-
       subFigure(tetris.field, tetris.figure);
       if ((currentTime - lastFallTime) >=
           (FALL_DELAY - (3000 * tetris.level))) {
@@ -48,11 +45,7 @@ GameInfo_t updateCurrentState(UserAction_t * action) {
         }
         Figuring(tetris.figure, random);
         random = rand() % COUNTFIGURE;
-        Figuring(tetris.next, random);
-      } else if (xmax == 0) {
-        // subFigure(tetris.field, tetris.figure);
-      }
-      // curtsy2(tetris.field,tetris.figure, 1);
+        Figuring(tetris.next, random);}
       if (*action == Left) {
         xmax = moveCols2(tetris.field, tetris.figure, -1);
       } else if (*action == Right) {
@@ -124,8 +117,6 @@ int main(void) {
       infoprint(infopole, tetris, name);
     }
     if (action != Terminate) action = Uzvering(action);
-
-    // refresh();
     // досюда отрисовка(фронтенд)}
   }
   

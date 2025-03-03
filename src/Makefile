@@ -1,7 +1,7 @@
 K?=autoreport
 CC=gcc  -Wall -Wextra -Werror -std=c11
 #UBUNTU_FLAGS = -lsubunit -lpthread -lrt -lgcov -lm
-SRC = s21_matrix.c s21_det.c
+SRC =  
 OS = $(shell uname)
 ifeq ($(OS), Darwin)
 	det_OS = -lcheck
@@ -13,14 +13,16 @@ endif
 
 # all:  clean s21_matrix.a test gcov_report style_test
 #test gcov_report
-all: install
+all: install play
 # s21_matrix.a:
 # 	$(CC)  s21*.c -c
 # 	ar rcs s21_matrix.a *.o
 # 	ranlib s21_matrix.a
 install: clean
-	# $(CC) $(SRC) -o tetris 
-	gcc comedia.c mozg2.c -lncurses
+# $(CC) $(SRC) -o tetris 
+	gcc fff/*.c -lncurses -o tetris 
+play:
+	./tetris
 gcov_report:
 	rm -rf test-test_*.gc* test-s21_tests.gc*
 	lcov -t "result" -o res.info -c -d . --rc branch_coverage=0

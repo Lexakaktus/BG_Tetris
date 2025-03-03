@@ -13,7 +13,6 @@ typedef enum {
 
 typedef struct {
   int** field;  /// поле для отрисовки
-  int** temp_field;
   int** figure;
   int** next;      /// следующая фигура
   int score;       /// счёт игры
