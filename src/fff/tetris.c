@@ -12,7 +12,7 @@ GameInfo_t updateCurrentState(UserAction_t * action) {
     tetris.level = 0;
 
     tetris.field = createpole();
-    tetris.figure = createcopy();
+    tetris.figure = createcopy(); // заменить
     tetris.next = createcopy();  
     random = rand() % COUNTFIGURE;
     // второй раз потому что первая фигура всегда одна и та же
@@ -20,6 +20,7 @@ GameInfo_t updateCurrentState(UserAction_t * action) {
     random = rand() % COUNTFIGURE;
     Figuring(tetris.next, random);
     flag=0;
+    //update(&tetris, 0);
   } 
       static clock_t lastFallTime = 0;
       clock_t currentTime = clock();  // обновление времени с последнего падения
@@ -100,7 +101,7 @@ int main(void) {
 
  
   // fsm_t fsm=Start;
-  char *score = (char *)calloc(10, sizeof(char));
+  char *score = (char *)calloc(10, sizeof(char));//для счёта
   char *name = (char *)calloc(10, sizeof(char));
   scanf("%s", name);
   fileScore(name, score, &tetris);
@@ -123,8 +124,8 @@ int main(void) {
   fileScoreinput(name, &tetris);
 
   endwin();
-  printf("%s %s %d\n", name, "\n", tetris.high_score);
-  printf("%s %d", "you lose\nyour score: ", tetris.score);
+  printf("%s %s %d\n", name, "\n", tetris.high_score);//убрать
+  printf("%s %d", "you lose\nyour score: ", tetris.score);//убрать
   return 0;
 }
 

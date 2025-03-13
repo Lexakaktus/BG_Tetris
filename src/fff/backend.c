@@ -268,3 +268,20 @@ int fileScoreinput(
   return 0;
 }
 
+
+int ** updatefigure(){
+  static int** figure;
+  figure = createcopy();
+  return figure;
+}
+
+
+//flag==0->остаётся инфо, 1 инфо меняется
+GameInfo_t update(GameInfo_t * info, int flag){ 
+  static GameInfo_t tetris={0};
+  if (flag){
+    *info=tetris;
+  } else {
+    tetris = *info;
+  }
+}
