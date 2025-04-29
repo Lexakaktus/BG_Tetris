@@ -28,7 +28,9 @@ static const int figure_home[COUNTFIGURE][COUNTCOORDINATE][2] /*{x,y}*/ = {
 
 typedef enum {
   Init = 10,  // 0
+  Spawn,
   Moving,
+  Attaching,
   Paus,
   Gameover,
   Hello = -1  // временно

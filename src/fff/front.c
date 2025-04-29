@@ -1,6 +1,6 @@
 #include "front.h"
 
-UserAction_t Uzvering(UserAction_t action) {  // переименовать //и отправить на фронт!!!
+UserAction_t Uzvering(UserAction_t action) {  // переименовать //и отправить на контроллер!!!
   UserAction_t push;                          //=action;
   int a = getch();
   if (action != Pause) {
