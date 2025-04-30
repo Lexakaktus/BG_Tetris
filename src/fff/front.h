@@ -12,9 +12,12 @@
 
 
 
-UserAction_t Uzvering(UserAction_t action ); // void userInput
+UserAction_t Uzvering(UserAction_t action, bool * hold ); // void userInput
 int infoprint(WINDOW* infopole, GameInfo_t tetris, char* name);
 int nfigprint(WINDOW* infopole, GameInfo_t tetris);
 int fieldprint(WINDOW* board, GameInfo_t tetris);
+
+void drawUI(WINDOW **board, WINDOW **infopole);
+int gameprint(WINDOW *board,WINDOW *infopole, GameInfo_t tetris, char *name );
 
 #endif

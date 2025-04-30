@@ -10,7 +10,7 @@ void Figuring(int **figure, int index) {  // не изменено
 
 int curtsy2(int **Field, int **Figure, int i) {//бэк спуск фигуры
   int clop = 0;
-  int **tempFigure = createcopy(&tempFigure);
+  int **tempFigure = createcopy();
   copyFigure(tempFigure, Figure);
 
   if (i < 0 || !checkCollision(Field, tempFigure)) {
@@ -25,7 +25,7 @@ int curtsy2(int **Field, int **Figure, int i) {//бэк спуск фигуры
   return clop;
 }
 
-void zeroing_temp(int **Field) {  //"обнуление" поля
+void zeroing_temp(int **Field) {  //"обнуление" поля //использовать в клине (gameover)
   for (int i = 0; i < MAXROWS; i++) {
     for (int j = 0; j < MAXCOLS; j++) {
       Field[i][j] = '.';
@@ -124,6 +124,7 @@ int fileScore(
   if (fs >= info->high_score) {
     info->high_score = fs;
   }
+  get_set_info(info, PUSH);
   fclose(fp);
   return 0;
 }
@@ -176,7 +177,7 @@ int **createpole() {//а очищается??
     for (int j = 0; j < MAXCOLS; j++) {
       tempFigure[i][j] = '.';
     }
-  }
+  } //вызывать здесь zeroing_temp
   return tempFigure;
 }
 int deletecopy(int **copy) {
@@ -184,6 +185,7 @@ int deletecopy(int **copy) {
     free(copy[k]);
   }
   free(copy);
+  return 0;
 }
 
 int rotateCols2(int **Field, int **Figure) {
@@ -242,6 +244,7 @@ int scoring(GameInfo_t *tetris) {
   if (tetris->score > tetris->high_score) {
     tetris->high_score = tetris->score;
   }
+  get_set_info(tetris, PUSH);
   return 0;
 }
 
@@ -271,17 +274,36 @@ int fileScoreinput(
 
 int ** updatefigure(){
   static int** figure;
-  figure = createcopy();
+  static int flag=1;
+  if (flag){
+    figure = createcopy();
+    flag=0;
+  }
+  // figure = createcopy();
   return figure;
 }
 
 
 //flag==0->остаётся инфо, 1 инфо меняется
-GameInfo_t update(GameInfo_t * info, int flag){ 
-  static GameInfo_t tetris={0};
-  if (flag){
-    *info=tetris;
-  } else {
-    tetris = *info;
-  }
+// GameInfo_t update(GameInfo_t * info, int flag){ 
+//   static GameInfo_t tetris={0};
+//   if (flag){
+//     *info=tetris;
+//   } else {
+//     tetris = *info;
+//   }
+// }
+
+void zeroing_all(GameInfo_t* x ){
+  zeroing_temp(x->field);
+  x->score=0;
+  x->speed=0;
+  x->level=0;
+  x->pause=0;
+  Figuring(x->next, rand()%COUNTFIGURE);
+  get_set_info(x, PUSH);
+  
 }
+
+
+

@@ -1,6 +1,8 @@
 #include "backend.h"
 #include "front.h"
 
+
+
 GameInfo_t updateCurrentState(UserAction_t * action) {
   static int random = 0;
   static int flag=1;
@@ -58,43 +60,15 @@ GameInfo_t updateCurrentState(UserAction_t * action) {
       } 
       sumFigure(tetris.field, tetris.figure);
   return tetris;    
-  }
-
+}
 int main(void) {
   // отсюда отрисовка
-  initscr();
-  timeout(1);
-  curs_set(0);
-  // noecho();
-  keypad(stdscr, true);
-  WINDOW *board = newwin(20, 20, 0, 0);
-  refresh();
-  // nodelay (board, 1);//////////////
-  box(board, 0, 0);
-  wrefresh(board);
-  mvwaddstr(board, 2, 3, "Hello, enter");
-  mvwaddstr(board, 3, 3, "your username");
-  mvwaddstr(board, 6, 1, "Pss, the SQUARE ");
-  mvwaddstr(board, 7, 3, " ...rotates... ");
-  // wattroff(board, COLOR_PAIR(COLOR_WORDS));
-  wrefresh(board);
-  WINDOW *infopole = newwin(20, 13, 0, 21);
-  // refresh();
-  box(infopole, 0, 0);
-  wrefresh(infopole);
-  // mvwaddstr(infopole, 8, 3, "SS");
-  // mvwaddstr(infopole, 10, 3, "ER");
-  // wattroff(infopole, COLOR_PAIR(COLOR_WORDS));
-  // wrefresh(infopole);
-  start_color();
-  init_pair(1, COLOR_RED, COLOR_BLACK);  // Цветовая пара 1: красный
-  init_pair(2, COLOR_GREEN, COLOR_BLACK);  // Цветовая пара 2: зеленый
-  init_pair(3, COLOR_YELLOW, COLOR_BLACK);  // Цветовая пара 3: желтый
-  // досюда отрисовка
+  WINDOW *board, *infopole;
+  drawUI(&board, &infopole);
   
   // clock_t lastFallTime = clock();  // для отслеживания таймера падения
   srand(time(NULL));
-   static UserAction_t action = Start;
+  static UserAction_t action = Start;
   GameInfo_t tetris=updateCurrentState(&action);
 
 
