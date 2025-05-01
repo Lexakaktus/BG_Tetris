@@ -1,47 +1,48 @@
-#include "front.h"
+#include "../../inc/front.h"
 
-UserAction_t Uzvering(UserAction_t action, bool * hold) {  // переименовать //и отправить на контроллер!!!
-  static UserAction_t push;                          //=action;
-  push=action;
+UserAction_t Uzvering(
+    UserAction_t action,
+    bool *hold) {  // переименовать //и отправить на контроллер!!!
+  static UserAction_t push;  //=action;
+  push = action;
   int a = getch();
   // if (action != Pause) {
-    switch (a) {
-      case 'a':
-      case KEY_LEFT:
-        action = Left;
-        break;
-      case 'd':
-      case KEY_RIGHT:
-        action = Right;
-        break;
-      case 'p':
-        action = Pause;
-        break;
-      case 'q':
-        action = Terminate;
-        break;
-      case 27:  // escape
-        action = Terminate;
-        break;
-      case '\n':
-        action = Action;
-        break;
-      case 's':
-      case KEY_DOWN:
-        action = Down;
-        break;
-      case '\\':
-        action = Start;
-        break;
-      case 'w':
-      case KEY_UP:
-        action = Up;
-        break;
-      default:
-        action = -1;
-        break;
-    
-    }
+  switch (a) {
+    case 'a':
+    case KEY_LEFT:
+      action = Left;
+      break;
+    case 'd':
+    case KEY_RIGHT:
+      action = Right;
+      break;
+    case 'p':
+      action = Pause;
+      break;
+    case 'q':
+      action = Terminate;
+      break;
+    case 27:  // escape
+      action = Terminate;
+      break;
+    case '\n':
+      action = Action;
+      break;
+    case 's':
+    case KEY_DOWN:
+      action = Down;
+      break;
+    case '\\':
+      action = Start;
+      break;
+    case 'w':
+    case KEY_UP:
+      action = Up;
+      break;
+    default:
+      action = -1;
+      break;
+  }
   // } else if (a != 'p' && a != 'q') {
   //   push = Pause;
   // } else if (a == 'q') {
@@ -49,10 +50,10 @@ UserAction_t Uzvering(UserAction_t action, bool * hold) {  // переимено
   // } else {
   //   push = Start;
   // }
-  * hold = (push==action&&push!=Up);
+  *hold = (push == action && push != Up);
   return action;
 }
-int nfigprint(WINDOW *infopole, GameInfo_t tetris) { //фронт
+int nfigprint(WINDOW *infopole, GameInfo_t tetris) {  // фронт
   int x = tetris.next[0][0] - 3;
   int y = tetris.next[0][1] + 1;
 
@@ -120,34 +121,34 @@ int fieldprint(WINDOW *board, GameInfo_t tetris) {
 }
 
 void drawUI(WINDOW **board, WINDOW **infopole) {
-    initscr();
-    timeout(1);
-    curs_set(0);
-    keypad(stdscr, true);
-    noecho();
+  initscr();
+  timeout(1);
+  curs_set(0);
+  keypad(stdscr, true);
+  noecho();
 
-    // Создаем игровое поле
-    *board = newwin(20, 20, 0, 0);
-    box(*board, 0, 0);
-    mvwaddstr(*board, 2, 3, "Hello, enter");
-    mvwaddstr(*board, 3, 3, "your username");
-    mvwaddstr(*board, 6, 1, "Pss, the SQUARE ");
-    mvwaddstr(*board, 7, 3, " ...rotates... ");
-    wrefresh(*board);
+  // Создаем игровое поле
+  *board = newwin(20, 20, 0, 0);
+  box(*board, 0, 0);
+  mvwaddstr(*board, 2, 3, "Hello, enter");
+  mvwaddstr(*board, 3, 3, "your username");
+  mvwaddstr(*board, 6, 1, "Pss, the SQUARE ");
+  mvwaddstr(*board, 7, 3, " ...rotates... ");
+  wrefresh(*board);
 
-    // Создаем информационное поле
-    *infopole = newwin(20, 13, 0, 21);
-    box(*infopole, 0, 0);
-    wrefresh(*infopole);
+  // Создаем информационное поле
+  *infopole = newwin(20, 13, 0, 21);
+  box(*infopole, 0, 0);
+  wrefresh(*infopole);
 
-    // Цвета
-    start_color();
-    init_pair(1, COLOR_RED, COLOR_BLACK);
-    init_pair(2, COLOR_GREEN, COLOR_BLACK);
-    init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+  // Цвета
+  start_color();
+  init_pair(1, COLOR_RED, COLOR_BLACK);
+  init_pair(2, COLOR_GREEN, COLOR_BLACK);
+  init_pair(3, COLOR_YELLOW, COLOR_BLACK);
 }
 
-int gameprint(WINDOW *board,WINDOW *infopole, GameInfo_t tetris, char *name ){
+int gameprint(WINDOW *board, WINDOW *infopole, GameInfo_t tetris, char *name) {
   fieldprint(board, tetris);
   infoprint(infopole, tetris, name);
   // refresh();

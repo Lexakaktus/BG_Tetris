@@ -1,5 +1,6 @@
 #ifndef LIBSPEC_H
 #define LIBSPEC_H
+#include <stdbool.h>
 typedef enum {
   Start,  // 0
   Pause,
@@ -22,7 +23,6 @@ typedef struct {
   int pause;
 } GameInfo_t;
 
-GameInfo_t get_set_info(GameInfo_t * info, int push);
 void userInput(UserAction_t action, bool hold);
 GameInfo_t updateCurrentState();
 
