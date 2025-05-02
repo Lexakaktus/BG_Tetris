@@ -4,22 +4,21 @@ CC=gcc  -Wall -Wextra -Werror -std=c11
 SRC =  brick_game/backend/*.c 
 FRONT= gui/cli/*.c  brick_game/tetris/*.c  
 OS = $(shell uname)
+DIST_DIR = dist_Tetris
 ifeq ($(OS), Darwin)
 	det_OS = -lcheck
 else
 	det_OS = -lcheck -lsubunit -lpthread -lrt -lgcov -lm
 endif
 
-#s21_supporting_functions.c 
-
-# all:  clean s21_matrix.a test gcov_report style_test
-#test gcov_report
 all: clean install play
  
-install: clean
-	 $(CC) $(SRC)$(FRONT) -o tetris -lncurses
-# gcc fff/*.c -lncurses -o tetris 
+install: clean 
+	 mkdir build
+	 $(CC) $(SRC)$(FRONT) -o build/game -lncurses
 
+uninstall:
+	rm -r build
 play:
 	./tetris
 gcov_report:
@@ -39,6 +38,19 @@ commit:
 	git commit -m '$(K)'    
 	git push origin develop
 
+
+dist:
+	mkdir -p $(DIST_DIR)
+	cp -a brick_game $(DIST_DIR)
+	cp -a gui $(DIST_DIR)
+	cp -a tests $(DIST_DIR)
+	cp -a *.c $(DIST_DIR)
+	cp -a *.h $(DIST_DIR)
+	cp -a Documentation.html $(DIST_DIR)
+	#hfhfh
+	tar -czf dist_Tetris.tar.gz $(DIST_DIR)
+	rm -rf $(DIST_DIR)
+	
 
 style_test:
 	clang-format --style=Google -n */*.c   */*.h
