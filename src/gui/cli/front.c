@@ -2,7 +2,7 @@
 
 UserAction_t Uzvering(
     UserAction_t action,
-    bool *hold) {  // переименовать //и отправить на контроллер!!!
+    bool *hold) { 
   static UserAction_t push;  //=action;
   push = action;
   int a = getch();
@@ -43,55 +43,51 @@ UserAction_t Uzvering(
       action = -1;
       break;
   }
-  // } else if (a != 'p' && a != 'q') {
-  //   push = Pause;
-  // } else if (a == 'q') {
-  //   push = Terminate;
-  // } else {
-  //   push = Start;
-  // }
   *hold = (push == action && push != Up);
   return action;
 }
-int nfigprint(WINDOW *infopole, GameInfo_t tetris) {  // фронт
+
+
+int NewFigurePrint(WINDOW *info_window, GameInfo_t tetris) {  // фронт
   int x = tetris.next[0][0] - 3;
   int y = tetris.next[0][1] + 1;
 
   for (int i = 1; i < COUNTCOORDINATE; i++) {
-    //  wclrtoeol(infopole);
-    mvwprintw(infopole, i, 1, "%c   ", ' ');
+    //  wclrtoeol(info_window);
+    mvwprintw(info_window, i, 1, "%c   ", ' ');
   }
-  mvwprintw(infopole, y, x, "%c", '*');
+  mvwprintw(info_window, y, x, "%c", '*');
   for (int i = 2; i < COUNTCOORDINATE; i++) {
-    //  wclrtoeol(infopole);
-    // mvwprintw(infopole, y+tetris.next[i][1], 1, "%c   ", ' ');
-    mvwprintw(infopole, y + tetris.next[i][1], x + tetris.next[i][0], "%c",
+    //  wclrtoeol(info_window);
+    // mvwprintw(info_window, y+tetris.next[i][1], 1, "%c   ", ' ');
+    mvwprintw(info_window, y + tetris.next[i][1], x + tetris.next[i][0], "%c",
               '*');
   }
   return 0;
 }
 
-int infoprint(WINDOW *infopole, GameInfo_t tetris, char *name) {
-  // wclear(infopole);
-  box(infopole, 0, 0);
+int InfoPrint(WINDOW *info_window, GameInfo_t tetris, char *name) {
+  // wclear(info_window);
+  box(info_window, 0, 0);
+  
   // clear();
-  // wrefresh(infopole);
-  nfigprint(infopole, tetris);
+  // wrefresh(info_window);
+  NewFigurePrint(info_window, tetris);
 
-  mvwprintw(infopole, 7, 1, "%s", "score");
-  mvwprintw(infopole, 8, 2, "%d", tetris.score);
-  mvwprintw(infopole, 10, 1, "%s", "username");
-  mvwprintw(infopole, 11, 2, "%s", name);
-  mvwprintw(infopole, 13, 1, "%s", "highScor");
-  mvwprintw(infopole, 14, 3, "%d", tetris.high_score);
-  mvwprintw(infopole, 5, 1, "%s", "LEVEL");
-  mvwprintw(infopole, 6, 3, "%d", tetris.level);
-  wrefresh(infopole);
+  mvwprintw(info_window, 7, 1, "%s", "score");
+  mvwprintw(info_window, 8, 2, "%d", tetris.score);
+  mvwprintw(info_window, 10, 1, "%s", "username");
+  mvwprintw(info_window, 11, 2, "%s", name);
+  mvwprintw(info_window, 13, 1, "%s", "highScor");
+  mvwprintw(info_window, 14, 3, "%d", tetris.high_score);
+  mvwprintw(info_window, 5, 1, "%s", "LEVEL");
+  mvwprintw(info_window, 6, 3, "%d", tetris.level);
+  wrefresh(info_window);
   return 0;
 }
 
 // енто чисто отрисовка
-int fieldprint(WINDOW *board, GameInfo_t tetris) {
+int FieldPrint(WINDOW *board, GameInfo_t tetris) {
   wmove(board, 0, 0);
   for (int i = 0; i < MAXROWS;
        i++) {  // первая печать  поля //gjlhfpevtdftncz x,y
@@ -120,7 +116,7 @@ int fieldprint(WINDOW *board, GameInfo_t tetris) {
   return 0;
 }
 
-void drawUI(WINDOW **board, WINDOW **infopole) {
+void Draw(WINDOW **board, WINDOW **info_window) {
   initscr();
   timeout(1);
   curs_set(0);
@@ -137,9 +133,9 @@ void drawUI(WINDOW **board, WINDOW **infopole) {
   wrefresh(*board);
 
   // Создаем информационное поле
-  *infopole = newwin(20, 13, 0, 21);
-  box(*infopole, 0, 0);
-  wrefresh(*infopole);
+  *info_window = newwin(20, 13, 0, 21);
+  box(*info_window, 0, 0);
+  wrefresh(*info_window);
 
   // Цвета
   start_color();
@@ -148,9 +144,9 @@ void drawUI(WINDOW **board, WINDOW **infopole) {
   init_pair(3, COLOR_YELLOW, COLOR_BLACK);
 }
 
-int gameprint(WINDOW *board, WINDOW *infopole, GameInfo_t tetris, char *name) {
-  fieldprint(board, tetris);
-  infoprint(infopole, tetris, name);
+int GamePrint(WINDOW *board, WINDOW *info_window, GameInfo_t tetris, char *name) {
+  FieldPrint(board, tetris);
+  InfoPrint(info_window, tetris, name);
   // refresh();
   return 0;
 }

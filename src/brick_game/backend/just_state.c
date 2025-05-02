@@ -1,114 +1,108 @@
 #include "../../inc/backend.h"
-void Hellostate(UserAction_t signal, fsm_t *state) {  // not include!!!
+void HelloState(UserAction_t signal, FSM *state) {  // not include!!!
   if (signal == Terminate) {
-    *state = Gameover;
+    *state = GameOver;
   } else if (signal == Action) {
     *state = Spawn;
   }
 }
 
-void Spawnstate(GameInfo_t *info, fsm_t *state) {  // not include!!!
+void SpawnState(GameInfo_t *info, FSM *state) {  // not include!!!
   static int random = -1;                          // наблюдаем
-  int **figure = updatefigure();
+  int **figure = UpdateFigure();
   if (random == -1) {
     random = rand() % COUNTFIGURE;
   }
   Figuring(figure, random);
   random = rand() % COUNTFIGURE;
   Figuring(info->next, random);
-  sumFigure(info->field, figure);
+  SumFigure(info->field, figure);
   *state = Moving; /* code */
 }
 
-void Movingstate(GameInfo_t *info, fsm_t *state, UserAction_t signal) {
-  get_set_info(info, PULL);
-  static clock_t lastFallTime = 0;
-  int **figure = updatefigure();
-  clock_t currentTime = clock();  // обновление времени с последнего падения
-  subFigure(info->field, figure);
+void MovingState(GameInfo_t *info, FSM *state, UserAction_t signal) {
+  GetSetInfo(info, PULL);
+  static clock_t last_fall_time = 0;
+  int **figure = UpdateFigure();
+  clock_t current_time = clock();  // обновление времени с последнего падения
+  SubFigure(info->field, figure);
   if (signal == Left) {
-    moveCols2(info->field, figure, -1);
+    MoveCols(info->field, figure, -1);
   } else if (signal == Right) {
     //   info->field[19][9]='R';
-    moveCols2(info->field, figure, 1);
+    MoveCols(info->field, figure, 1);
   } else if (signal == Action) {
     // info->field[19][9]='B';
-    rotateCols2(info->field, figure);
+    RotateCols(info->field, figure);
   } else if (signal == Down) {
-    while (curtsy2(info->field, figure, 1) == 0);
+    while (Curtsy(info->field, figure, 1) == 0);
   }
-  if ((currentTime - lastFallTime) >=
+  if ((current_time - last_fall_time) >=
       ((clock_t)(FALL_DELAY - (3000 * info->level)))) {
-    curtsy2(info->field, figure, 1);  // Спускаем фигуру вниз
-    lastFallTime = currentTime;  // Обновляем время последнего падения
+    Curtsy(info->field, figure, 1);  // Спускаем фигуру вниз
+    last_fall_time = current_time;  // Обновляем время последнего падения
   }
-  if (FigureDown2(info->field, figure) != 0) {
+  if (FigureDown(info->field, figure) != 0) {
     *state = Attaching;
   }
-  sumFigure(info->field, figure);
+  SumFigure(info->field, figure);
 }
 
-void Attachingstate(GameInfo_t *info, fsm_t *state) {
+void AttachingState(GameInfo_t *info, FSM *state) {
   if (info->field[0][5] == 'I') {
-    *state = Gameover;
+    *state = GameOver;
   } else {
-    scoring(info);
+    Scoring(info);
     if (info->level <
         10) {  // поправить, может привести к багу с временно 11ым уровнем
       info->level = info->score / 600;
     } else {
       info->level = 10;
     }
-    get_set_info(info, PUSH);  // не в хедере!!!
+    GetSetInfo(info, PUSH);  // не в хедере!!!
     *state = Spawn;
   }
 }
 
-void Gameoverstate(GameInfo_t *info, fsm_t *state, UserAction_t signal) {
+void GameOverState(GameInfo_t *info, FSM *state, UserAction_t signal) {
   // info->field[19][9]='G';
-  static clock_t LoseTime = 0;
-  clock_t currentTime = clock();
-  if (LoseTime == 0) {
-    LoseTime = currentTime;
+  static clock_t lose_time = 0;
+  clock_t current_time = clock();
+  if (lose_time == 0) {
+    lose_time = current_time;
   }
   if (signal == Start) {
     // info->score=0;
-    zeroing_all(info);
+    ZeroingAll(info);
     *state = Hello;
-    // clean_info(функция обнуления значений, мб кроме хайскор((не чистка
-    // памяти)))
-  } else if (signal == Terminate || currentTime - LoseTime > QUIT_DELAY) {
+  } else if (signal == Terminate || current_time - lose_time > QUIT_DELAY) {
     *state = Goodbye;
   }
 }
 
-fsm_t just_state(UserAction_t signal, GameInfo_t *info, bool hold) {
-  // hold = 0;
-  static fsm_t state = Hello;
-  get_set_info(info, PULL);
-  // static int random = 0; ->in spawnstate
-  // info->field = createpole();
-  // info->figure = createcopy();
-  // info->next = createcopy();
+FSM JustState(UserAction_t signal, GameInfo_t *info, bool hold) {
+  hold=0;
+  static FSM state = Hello;
+  GetSetInfo(info, PULL);
   switch (state) {
     case Hello:
-      Hellostate(signal, &state);
+      HelloState(signal, &state);
       break;
     case Spawn:
       // если спавнится одна и та же первая фигура добавить ещё этап рандома
-      Spawnstate(info, &state);
+      SpawnState(info, &state);
       break;
     case Moving:
-      Movingstate(info, &state, signal);
+      MovingState(info, &state, signal);
       break;
     case Attaching:
-      Attachingstate(info, &state);
+      AttachingState(info, &state);
       break;
-    case Gameover:
+    case GameOver:
       /* code */
       ////рисовка окна проигрыша
       //
-      Gameoverstate(info, &state, signal);
+      GameOverState(info, &state, signal);
       break;
     default:
       if (hold) {

@@ -1,5 +1,18 @@
 #include "../../inc/backend.h"
 
+
+//mayby rename figurehome https://google.github.io/styleguide/cppguide.html#Constant_Names
+static const int figure_home[COUNTFIGURE][COUNTCOORDINATE][2] /*{x,y}*/ = {
+    {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},   //   -.
+    {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}},   // |  I
+    {{5, 0}, {0, 0}, {0, 1}, {1, 0}, {-1, 0}},   // .|.
+    {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 0}},    /// ::
+    {{5, 0}, {0, 0}, {-1, 0}, {-1, 1}, {1, 0}},  // .-
+    {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {-1, 0}},   // Z
+    {{5, 0}, {0, 0}, {0, 1}, {-1, 1}, {1, 0}}    //! Z
+};
+
+
 void Figuring(int **figure, int index) {  // не изменено
   for (int k = 0; k < COUNTCOORDINATE; k++) {
     figure[k][0] = figure_home[index][k][0];
@@ -7,178 +20,187 @@ void Figuring(int **figure, int index) {  // не изменено
   }
 }
 
-int curtsy2(int **Field, int **Figure, int i) {  // бэк спуск фигуры
+int Curtsy(int **field, int **figure, int i) {  // бэк спуск фигуры
   int clop = 0;
-  int **tempFigure = createcopy();
-  copyFigure(tempFigure, Figure);
+  int **temp_figure = CreateCopy();
+  CopyFigure(temp_figure, figure);
   if (i < 1) {
     clop = BAD_ARGUMENT;
   }
-  if (!checkCollision(Field, tempFigure) && clop == 0) {
-    tempFigure[0][1] += i;
-    clop = checkCollision(Field, tempFigure);
+  if (!CheckCollision(field, temp_figure) && clop == 0) {
+    temp_figure[0][1] += i;
+    clop = CheckCollision(field, temp_figure);
     if (!clop) {
-      copyFigure(Figure, tempFigure);
+      CopyFigure(figure, temp_figure);
     }
   }  // else clop=BAD_ARGUMENT;
-  deletecopy(&tempFigure);
+  DeleteCopy(&temp_figure);
 
   return clop;
 }
 
-void zeroing_temp(
-    int **Field) {  //"обнуление" поля //использовать в клине (gameover)
+//"обнуление" поля //использовать в клине (gameover)
+void ZeroingTemp(
+    int **field) {  
   for (int i = 0; i < MAXROWS; i++) {
     for (int j = 0; j < MAXCOLS; j++) {
-      Field[i][j] = '.';
+      field[i][j] = '.';
     }
   }
 }
 
-int sumFigure(int **Field, int **Figure) {  // добавление фигуры на полев
+ // добавление фигуры на поле
+int SumFigure(int **field, int **figure) {
   int clop = 0;
 
   // Проверка на выход за границы поля или столкновение с другой фигурой
   for (int k = 4; k > 0 && !clop; k--) {
-    int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x
-    int new_y = Figure[0][1] + Figure[k][1];  // Новая координата по y
+    int new_x = figure[0][0] + figure[k][0];  // Новая координата по x
+    int new_y = figure[0][1] + figure[k][1];  // Новая координата по y
 
     // Проверяем вертикальные границы (y) и горизонтальные (x)
     if (new_y >= MAXROWS || new_y < 0 || new_x >= MAXCOLS || new_x < 0) {
       clop = 1;  // Если фигура выходит за границы, останавливаемся
     }
     // Проверка на столкновение с уже существующими блоками на поле
-    else if (Field[new_y][new_x] != '.') {
+    else if (field[new_y][new_x] != '.') {
       clop = 1;
     }
   }
   // Если не было столкновений и выхода за границы, обновляем поле
   for (int k = 4; k > 0 && !clop; k--) {
-    int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x
-    int new_y = Figure[0][1] + Figure[k][1];  // Новая координата по y
-    Field[new_y][new_x] = 'I';  // Устанавливаем фигуру на поле
+    int new_x = figure[0][0] + figure[k][0];  // Новая координата по x
+    int new_y = figure[0][1] + figure[k][1];  // Новая координата по y
+    field[new_y][new_x] = 'I';  // Устанавливаем фигуру на поле
   }
 
   return clop;  // Возвращаем флаг столкновения
 }
 
-int subFigure(int **Field,
-              int **Figure) {  // стирание фигуры с поля
+ // стирание фигуры с поля
+int SubFigure(int **field,
+              int **figure) { 
   int clop = 0;
   // Если не было столкновений и выхода за границы, обновляем поле
   for (int k = 4; k > 0; k--) {
-    int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x
-    int new_y = Figure[0][1] + Figure[k][1];
+    int new_x = figure[0][0] + figure[k][0];  // Новая координата по x
+    int new_y = figure[0][1] + figure[k][1];
     if (!(new_y >= MAXROWS || new_y < 0 || new_x >= MAXCOLS || new_x < 0))
-      Field[new_y][new_x] = '.';  // возвращаем отсутствие фигуры
+      field[new_y][new_x] = '.';  // возвращаем отсутствие фигуры
   }
 
   return clop;  // Возвращаем флаг столкновения//откуда оно здесь?//начать
                 // следить за клопом
 }
 
-int stringDel(
-    int **Field) {  // удаляет заполненные строки и возвращает их количество
-  int delcounter = 0;
+ // удаляет заполненные строки и возвращает их количество
+int StringDel(    int **field) { 
+  int del_counter = 0;
   for (int i = 0; i < MAXROWS; i++) {
-    int zerstring = 1;
+    int zer_string = 1;
 
     for (int j = 0; j < MAXCOLS; j++) {
-      if (Field[i][j] == '.') {
-        zerstring = 0;
+      if (field[i][j] == '.') {
+        zer_string = 0;
       }
     }
-    if (zerstring) {
+    if (zer_string) {
       for (int n = i; n > 0; n--) {
         for (int k = 0; k < MAXCOLS; k++) {
-          Field[n][k] = Field[n - 1][k];
+          field[n][k] = field[n - 1][k];
         }
       }
       for (int k = 0; k < MAXCOLS; k++) {
-        Field[0][k] = '.';
+        field[0][k] = '.';
       }
-      delcounter++;
+      del_counter++;
     }
     // printw("\n");
   }
-  return delcounter;
+  return del_counter;
 }
 
 // возможно убрать score внутрь функции
-int fileScore(
-    char *name, char *score,
-    GameInfo_t *info) {  // добавить сразу замену счёта в файле или игре(смотря
+ // добавить сразу замену счёта в файле или игре(смотря
                          // что больше) и в конце закрывать файл
+int FileScore(
+    char *name,
+    GameInfo_t *info) { 
+  char *score = (char *)calloc(10, sizeof(char));
   FILE *fp;
-  strcat(name, ".txt");
-
-  // if ((fp = fopen("test", "w"))==NULL) {
-  // printf("Cannot open file.\n");
-  // }
-  if ((fp = fopen(name, "r+")) == NULL) {
-    fp = fopen(name, "w+");
+  char filename[64];
+  // strcat(name, ".txt");
+  snprintf(filename, sizeof(filename), "%s.txt", name);
+  if ((fp = fopen(filename, "r+")) == NULL) {
+    fp = fopen(filename, "w+");
   }  // добавить проверок на всякое
-  fgets(score, 100, fp);
+  fgets(score, 10, fp);
   int fs = atoi(score);
   if (fs >= info->high_score) {
     info->high_score = fs;
   }
-  get_set_info(info, PUSH);
+  GetSetInfo(info, PUSH);
+  free(score);
   fclose(fp);
   return 0;
 }
 
-int FigureDown2(int **Field, int **Figure) {
+int FigureDown(int **field, int **figure) {
   int clop = 0;
   for (int k = 4; k > 0 && !clop; k--) {
-    int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x
-    int new_y = Figure[0][1] + Figure[k][1] + 1;  // Новая координата по y
-    if (new_y == MAXROWS || Field[new_y][new_x] != '.') clop = 1;  //!!!!
+    int new_x = figure[0][0] + figure[k][0];  // Новая координата по x
+    int new_y = figure[0][1] + figure[k][1] + 1;  // Новая координата по y
+    if (new_y == MAXROWS || field[new_y][new_x] != '.') clop = 1;  //!!!!
   }
   return clop;
 }
 
-void copyFigure(int **dest, int **src) {
+void CopyFigure(int **dest, int **src) {
   for (int k = 0; k < COUNTCOORDINATE; k++) {
     dest[k][0] = src[k][0];
     dest[k][1] = src[k][1];
   }
 }
 
-int checkCollision(int **Field, int **Figure) {
+int CheckCollision(int **field, int **figure) {
   int clop = 0;
   for (int k = 4; k > 0 && !clop; k--) {
-    int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x
-    int new_y = Figure[0][1] + Figure[k][1];  // Новая координата по y
+    int new_x = figure[0][0] + figure[k][0];  // Новая координата по x
+    int new_y = figure[0][1] + figure[k][1];  // Новая координата по y
 
     // Проверка на выход за границы или на столкновение с другими фигурами
     if (new_y >= MAXROWS || new_y < 0 || new_x >= MAXCOLS || new_x < 0 ||
-        Field[new_y][new_x] != '.') {
+        field[new_y][new_x] != '.') {
       clop = 1;  // Столкновение произошло
     }
   }
   return clop;
 }
 
-int **createcopy() {
-  int **tempFigure = malloc(COUNTCOORDINATE * sizeof(int *));
+//добавить проверку на маллок
+int **CreateCopy() {
+  int **temp_figure = malloc(COUNTCOORDINATE * sizeof(int *));
   for (int k = 0; k < COUNTCOORDINATE; k++) {
-    tempFigure[k] = malloc(2 * sizeof(int));
+    temp_figure[k] = malloc(2 * sizeof(int));
   }
-  return tempFigure;
+  return temp_figure;
 }
-int **createpole() {  // а очищается??
-  int **tempFigure =
+
+
+//добавить проверку на маллок
+int **CreateField() {  // а очищается??
+  int **field =
       (int **)malloc(MAXROWS * sizeof(int *));  // создание постоянного поля
   for (int i = 0; i < MAXROWS; i++) {
-    tempFigure[i] = (int *)malloc(MAXCOLS * sizeof(int));
+    field[i] = (int *)malloc(MAXCOLS * sizeof(int));
     for (int j = 0; j < MAXCOLS; j++) {
-      tempFigure[i][j] = '.';
+      field[i][j] = '.';
     }
-  }  // вызывать здесь zeroing_temp
-  return tempFigure;
+  } 
+  return field;
 }
-int deletecopy(int ***copy) {
+
+int DeleteCopy(int ***copy) {
   for (int k = 0; k < COUNTCOORDINATE; k++) {
     free((*copy)[k]);
   }
@@ -187,7 +209,7 @@ int deletecopy(int ***copy) {
   return 0;
 }
 
-int deletepole(int ***copy) {
+int DeleteField(int ***copy) {
   for (int k = 0; k < MAXCOLS; k++) {
     free((*copy)[k]);
   }
@@ -196,43 +218,43 @@ int deletepole(int ***copy) {
   return 0;
 }
 
-int rotateCols2(int **Field, int **Figure) {
+int RotateCols(int **field, int **figure) {
   int clop = 0;
-  int **tempFigure = createcopy();
-  copyFigure(tempFigure, Figure);
+  int **temp_figure = CreateCopy();
+  CopyFigure(temp_figure, figure);
 
   for (int k = 1; k < COUNTCOORDINATE; k++) {
-    int tempx = tempFigure[k][0];
-    tempFigure[k][0] = -tempFigure[k][1];
-    tempFigure[k][1] = tempx;
+    int temp_x = temp_figure[k][0];
+    temp_figure[k][0] = -temp_figure[k][1];
+    temp_figure[k][1] = temp_x;
   }
 
-  clop = checkCollision(Field, tempFigure);
+  clop = CheckCollision(field, temp_figure);
   if (!clop) {
-    copyFigure(Figure, tempFigure);
+    CopyFigure(figure, temp_figure);
   }
 
-  deletecopy(&tempFigure);
+  DeleteCopy(&temp_figure);
   return clop;
 }
 
-int moveCols2(int **Field, int **Figure, int i) {
+int MoveCols(int **field, int **figure, int i) {
   int clop = 0;
-  int **tempFigure = createcopy();
-  copyFigure(tempFigure, Figure);
+  int **temp_figure = CreateCopy();
+  CopyFigure(temp_figure, figure);
 
-  tempFigure[0][0] += i;
-  clop = checkCollision(Field, tempFigure);
+  temp_figure[0][0] += i;
+  clop = CheckCollision(field, temp_figure);
   if (!clop) {
-    copyFigure(Figure, tempFigure);
+    CopyFigure(figure, temp_figure);
   }
 
-  deletecopy(&tempFigure);
+  DeleteCopy(&temp_figure);
   return clop;
 }
 
-int scoring(GameInfo_t *tetris) {
-  int a = stringDel(tetris->field);
+int Scoring(GameInfo_t *tetris) {
+  int a = StringDel(tetris->field);
   switch (a) {
     case 1:
       tetris->score += 100;
@@ -252,20 +274,20 @@ int scoring(GameInfo_t *tetris) {
   if (tetris->score > tetris->high_score) {
     tetris->high_score = tetris->score;
   }
-  get_set_info(tetris, PUSH);
+  GetSetInfo(tetris, PUSH);
   return 0;
 }
 
 // score deletai
-int fileScoreinput(
+int FileScoreInput(
     char *name,
-    GameInfo_t *info) {  // добавить сразу замену счёта в файле или игре(смотря
-                         // что больше) и в конце закрывать файл
+    GameInfo_t *info) {  
   FILE *fp;
   // strcat(name, ".txt");
-
-  if ((fp = fopen(name, "r+")) == NULL) {
-    fp = fopen(name, "w+");
+  char filename[64];
+  snprintf(filename, sizeof(filename), "%s.txt", name);
+  if ((fp = fopen(filename, "r+")) == NULL) {
+    fp = fopen(filename, "w+");
   }  // добавить проверок на всякое
   // fgets(score, 100, fp);
   // int fs=atoi(score);
@@ -279,38 +301,29 @@ int fileScoreinput(
   return 0;
 }
 
-int **updatefigure() {
+int **UpdateFigure() {
   static int **figure;
   static int flag = 1;
   if (flag) {
-    figure = createcopy();
+    figure = CreateCopy();
     flag = 0;
   }
-  // figure = createcopy();
+  // figure = CreateCopy();
   return figure;
 }
 
-// flag==0->остаётся инфо, 1 инфо меняется
-//  GameInfo_t update(GameInfo_t * info, int flag){
-//    static GameInfo_t tetris={0};
-//    if (flag){
-//      *info=tetris;
-//    } else {
-//      tetris = *info;
-//    }
-//  }
 
-void zeroing_all(GameInfo_t *x) {
-  zeroing_temp(x->field);
-  x->score = 0;
-  x->speed = 0;
-  x->level = 0;
-  x->pause = 0;
-  Figuring(x->next, rand() % COUNTFIGURE);
-  get_set_info(x, PUSH);
+void ZeroingAll(GameInfo_t *tetris) {
+  ZeroingTemp(tetris->field);
+  tetris->score = 0;
+  tetris->speed = 0;
+  tetris->level = 0;
+  tetris->pause = 0;
+  Figuring(tetris->next, rand() % COUNTFIGURE);
+  GetSetInfo(tetris, PUSH);
 }
 
-GameInfo_t get_set_info(GameInfo_t *info, int push) {  // not included
+GameInfo_t GetSetInfo(GameInfo_t *info, int push) {  // not included
   static GameInfo_t game_info;
   // static int** figure;
   if (push) {
@@ -321,12 +334,14 @@ GameInfo_t get_set_info(GameInfo_t *info, int push) {  // not included
   return game_info;
 }
 
-int init_tetris(GameInfo_t* tetris){
+int InitTetris(GameInfo_t* tetris){
   tetris->pause = 0;
   tetris->score = 0;
   tetris->high_score = 0;
+  FileScore("user", tetris);
   tetris->level = 0;
-  tetris->field = createpole();
-  tetris->next = createcopy();
+  tetris->field = CreateField();
+  tetris->next = CreateCopy();
+  
   return 0;//поменять на возможный вывод ошибок
 }

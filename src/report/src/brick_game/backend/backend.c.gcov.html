@@ -31,18 +31,18 @@
             <td class="headerValue">res.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntryMed">89.7&nbsp;%</td>
-            <td class="headerCovTableEntry">194</td>
-            <td class="headerCovTableEntry">174</td>
+            <td class="headerCovTableEntryHi">97.5&nbsp;%</td>
+            <td class="headerCovTableEntry">198</td>
+            <td class="headerCovTableEntry">193</td>
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-05-02 00:34:31</td>
+            <td class="headerValue">2025-05-02 04:21:21</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntryHi">90.9&nbsp;%</td>
+            <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
             <td class="headerCovTableEntry">22</td>
-            <td class="headerCovTableEntry">20</td>
+            <td class="headerCovTableEntry">22</td>
           </tr>
                   <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
                 </table>
@@ -62,336 +62,351 @@
 <pre class="source">
 <span id="L1"><span class="lineNum">       1</span>              : #include &quot;../../inc/backend.h&quot;</span>
 <span id="L2"><span class="lineNum">       2</span>              : </span>
-<span id="L3"><span class="lineNum">       3</span> <span class="tlaGNC">          27 : void Figuring(int **figure, int index) {  // не изменено</span></span>
-<span id="L4"><span class="lineNum">       4</span> <span class="tlaGNC">         162 :   for (int k = 0; k &lt; COUNTCOORDINATE; k++) {</span></span>
-<span id="L5"><span class="lineNum">       5</span> <span class="tlaGNC">         135 :     figure[k][0] = figure_home[index][k][0];</span></span>
-<span id="L6"><span class="lineNum">       6</span> <span class="tlaGNC">         135 :     figure[k][1] = figure_home[index][k][1];</span></span>
-<span id="L7"><span class="lineNum">       7</span>              :   }</span>
-<span id="L8"><span class="lineNum">       8</span> <span class="tlaGNC">          27 : }</span></span>
-<span id="L9"><span class="lineNum">       9</span>              : </span>
-<span id="L10"><span class="lineNum">      10</span> <span class="tlaGNC">          42 : int curtsy2(int **Field, int **Figure, int i) {  // бэк спуск фигуры</span></span>
-<span id="L11"><span class="lineNum">      11</span> <span class="tlaGNC">          42 :   int clop = 0;</span></span>
-<span id="L12"><span class="lineNum">      12</span> <span class="tlaGNC">          42 :   int **tempFigure = createcopy();</span></span>
-<span id="L13"><span class="lineNum">      13</span> <span class="tlaGNC">          42 :   copyFigure(tempFigure, Figure);</span></span>
-<span id="L14"><span class="lineNum">      14</span> <span class="tlaGNC">          42 :   if (i &lt; 1) {</span></span>
-<span id="L15"><span class="lineNum">      15</span> <span class="tlaGNC">           1 :     clop = BAD_ARGUMENT;</span></span>
-<span id="L16"><span class="lineNum">      16</span>              :   }</span>
-<span id="L17"><span class="lineNum">      17</span> <span class="tlaGNC">          42 :   if (!checkCollision(Field, tempFigure) &amp;&amp; clop == 0) {</span></span>
-<span id="L18"><span class="lineNum">      18</span> <span class="tlaGNC">          41 :     tempFigure[0][1] += i;</span></span>
-<span id="L19"><span class="lineNum">      19</span> <span class="tlaGNC">          41 :     clop = checkCollision(Field, tempFigure);</span></span>
-<span id="L20"><span class="lineNum">      20</span> <span class="tlaGNC">          41 :     if (!clop) {</span></span>
-<span id="L21"><span class="lineNum">      21</span> <span class="tlaGNC">          39 :       copyFigure(Figure, tempFigure);</span></span>
-<span id="L22"><span class="lineNum">      22</span>              :     }</span>
-<span id="L23"><span class="lineNum">      23</span>              :   }  // else clop=BAD_ARGUMENT;</span>
-<span id="L24"><span class="lineNum">      24</span> <span class="tlaGNC">          42 :   deletecopy(&amp;tempFigure);</span></span>
-<span id="L25"><span class="lineNum">      25</span>              : </span>
-<span id="L26"><span class="lineNum">      26</span> <span class="tlaGNC">          42 :   return clop;</span></span>
-<span id="L27"><span class="lineNum">      27</span>              : }</span>
-<span id="L28"><span class="lineNum">      28</span>              : </span>
-<span id="L29"><span class="lineNum">      29</span> <span class="tlaGNC">           9 : void zeroing_temp(</span></span>
-<span id="L30"><span class="lineNum">      30</span>              :     int **Field) {  //&quot;обнуление&quot; поля //использовать в клине (gameover)</span>
-<span id="L31"><span class="lineNum">      31</span> <span class="tlaGNC">         189 :   for (int i = 0; i &lt; MAXROWS; i++) {</span></span>
-<span id="L32"><span class="lineNum">      32</span> <span class="tlaGNC">        1980 :     for (int j = 0; j &lt; MAXCOLS; j++) {</span></span>
-<span id="L33"><span class="lineNum">      33</span> <span class="tlaGNC">        1800 :       Field[i][j] = '.';</span></span>
-<span id="L34"><span class="lineNum">      34</span>              :     }</span>
-<span id="L35"><span class="lineNum">      35</span>              :   }</span>
-<span id="L36"><span class="lineNum">      36</span> <span class="tlaGNC">           9 : }</span></span>
-<span id="L37"><span class="lineNum">      37</span>              : </span>
-<span id="L38"><span class="lineNum">      38</span> <span class="tlaGNC">          11 : int sumFigure(int **Field, int **Figure) {  // добавление фигуры на полев</span></span>
-<span id="L39"><span class="lineNum">      39</span> <span class="tlaGNC">          11 :   int clop = 0;</span></span>
-<span id="L40"><span class="lineNum">      40</span>              : </span>
-<span id="L41"><span class="lineNum">      41</span>              :   // Проверка на выход за границы поля или столкновение с другой фигурой</span>
-<span id="L42"><span class="lineNum">      42</span> <span class="tlaGNC">          55 :   for (int k = 4; k &gt; 0 &amp;&amp; !clop; k--) {</span></span>
-<span id="L43"><span class="lineNum">      43</span> <span class="tlaGNC">          44 :     int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x</span></span>
-<span id="L44"><span class="lineNum">      44</span> <span class="tlaGNC">          44 :     int new_y = Figure[0][1] + Figure[k][1];  // Новая координата по y</span></span>
-<span id="L45"><span class="lineNum">      45</span>              : </span>
-<span id="L46"><span class="lineNum">      46</span>              :     // Проверяем вертикальные границы (y) и горизонтальные (x)</span>
-<span id="L47"><span class="lineNum">      47</span> <span class="tlaGNC">          44 :     if (new_y &gt;= MAXROWS || new_y &lt; 0 || new_x &gt;= MAXCOLS || new_x &lt; 0) {</span></span>
-<span id="L48"><span class="lineNum">      48</span> <span class="tlaUNC">           0 :       clop = 1;  // Если фигура выходит за границы, останавливаемся</span></span>
-<span id="L49"><span class="lineNum">      49</span>              :     }</span>
-<span id="L50"><span class="lineNum">      50</span>              :     // Проверка на столкновение с уже существующими блоками на поле</span>
-<span id="L51"><span class="lineNum">      51</span> <span class="tlaGNC">          44 :     else if (Field[new_y][new_x] != '.') {</span></span>
-<span id="L52"><span class="lineNum">      52</span> <span class="tlaUNC">           0 :       clop = 1;</span></span>
-<span id="L53"><span class="lineNum">      53</span>              :     }</span>
-<span id="L54"><span class="lineNum">      54</span>              :   }</span>
-<span id="L55"><span class="lineNum">      55</span>              :   // Если не было столкновений и выхода за границы, обновляем поле</span>
-<span id="L56"><span class="lineNum">      56</span> <span class="tlaGNC">          55 :   for (int k = 4; k &gt; 0 &amp;&amp; !clop; k--) {</span></span>
-<span id="L57"><span class="lineNum">      57</span> <span class="tlaGNC">          44 :     int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x</span></span>
-<span id="L58"><span class="lineNum">      58</span> <span class="tlaGNC">          44 :     int new_y = Figure[0][1] + Figure[k][1];  // Новая координата по y</span></span>
-<span id="L59"><span class="lineNum">      59</span> <span class="tlaGNC">          44 :     Field[new_y][new_x] = 'I';  // Устанавливаем фигуру на поле</span></span>
-<span id="L60"><span class="lineNum">      60</span>              :   }</span>
-<span id="L61"><span class="lineNum">      61</span>              : </span>
-<span id="L62"><span class="lineNum">      62</span> <span class="tlaGNC">          11 :   return clop;  // Возвращаем флаг столкновения</span></span>
-<span id="L63"><span class="lineNum">      63</span>              : }</span>
-<span id="L64"><span class="lineNum">      64</span>              : </span>
-<span id="L65"><span class="lineNum">      65</span> <span class="tlaGNC">           7 : int subFigure(int **Field,</span></span>
-<span id="L66"><span class="lineNum">      66</span>              :               int **Figure) {  // стирание фигуры с поля</span>
-<span id="L67"><span class="lineNum">      67</span> <span class="tlaGNC">           7 :   int clop = 0;</span></span>
-<span id="L68"><span class="lineNum">      68</span>              :   // Если не было столкновений и выхода за границы, обновляем поле</span>
-<span id="L69"><span class="lineNum">      69</span> <span class="tlaGNC">          35 :   for (int k = 4; k &gt; 0; k--) {</span></span>
-<span id="L70"><span class="lineNum">      70</span> <span class="tlaGNC">          28 :     int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x</span></span>
-<span id="L71"><span class="lineNum">      71</span> <span class="tlaGNC">          28 :     int new_y = Figure[0][1] + Figure[k][1];</span></span>
-<span id="L72"><span class="lineNum">      72</span> <span class="tlaGNC">          28 :     if (!(new_y &gt;= MAXROWS || new_y &lt; 0 || new_x &gt;= MAXCOLS || new_x &lt; 0))</span></span>
-<span id="L73"><span class="lineNum">      73</span> <span class="tlaGNC">          28 :       Field[new_y][new_x] = '.';  // возвращаем отсутствие фигуры</span></span>
-<span id="L74"><span class="lineNum">      74</span>              :   }</span>
-<span id="L75"><span class="lineNum">      75</span>              : </span>
-<span id="L76"><span class="lineNum">      76</span> <span class="tlaGNC">           7 :   return clop;  // Возвращаем флаг столкновения//откуда оно здесь?//начать</span></span>
-<span id="L77"><span class="lineNum">      77</span>              :                 // следить за клопом</span>
+<span id="L3"><span class="lineNum">       3</span>              : </span>
+<span id="L4"><span class="lineNum">       4</span>              : //mayby rename figurehome https://google.github.io/styleguide/cppguide.html#Constant_Names</span>
+<span id="L5"><span class="lineNum">       5</span>              : static const int figure_home[COUNTFIGURE][COUNTCOORDINATE][2] /*{x,y}*/ = {</span>
+<span id="L6"><span class="lineNum">       6</span>              :     {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},   //   -.</span>
+<span id="L7"><span class="lineNum">       7</span>              :     {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}},   // |  I</span>
+<span id="L8"><span class="lineNum">       8</span>              :     {{5, 0}, {0, 0}, {0, 1}, {1, 0}, {-1, 0}},   // .|.</span>
+<span id="L9"><span class="lineNum">       9</span>              :     {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 0}},    /// ::</span>
+<span id="L10"><span class="lineNum">      10</span>              :     {{5, 0}, {0, 0}, {-1, 0}, {-1, 1}, {1, 0}},  // .-</span>
+<span id="L11"><span class="lineNum">      11</span>              :     {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {-1, 0}},   // Z</span>
+<span id="L12"><span class="lineNum">      12</span>              :     {{5, 0}, {0, 0}, {0, 1}, {-1, 1}, {1, 0}}    //! Z</span>
+<span id="L13"><span class="lineNum">      13</span>              : };</span>
+<span id="L14"><span class="lineNum">      14</span>              : </span>
+<span id="L15"><span class="lineNum">      15</span>              : </span>
+<span id="L16"><span class="lineNum">      16</span> <span class="tlaGNC">          28 : void Figuring(int **figure, int index) {  // не изменено</span></span>
+<span id="L17"><span class="lineNum">      17</span> <span class="tlaGNC">         168 :   for (int k = 0; k &lt; COUNTCOORDINATE; k++) {</span></span>
+<span id="L18"><span class="lineNum">      18</span> <span class="tlaGNC">         140 :     figure[k][0] = figure_home[index][k][0];</span></span>
+<span id="L19"><span class="lineNum">      19</span> <span class="tlaGNC">         140 :     figure[k][1] = figure_home[index][k][1];</span></span>
+<span id="L20"><span class="lineNum">      20</span>              :   }</span>
+<span id="L21"><span class="lineNum">      21</span> <span class="tlaGNC">          28 : }</span></span>
+<span id="L22"><span class="lineNum">      22</span>              : </span>
+<span id="L23"><span class="lineNum">      23</span> <span class="tlaGNC">          42 : int Curtsy(int **field, int **figure, int i) {  // бэк спуск фигуры</span></span>
+<span id="L24"><span class="lineNum">      24</span> <span class="tlaGNC">          42 :   int clop = 0;</span></span>
+<span id="L25"><span class="lineNum">      25</span> <span class="tlaGNC">          42 :   int **temp_figure = CreateCopy();</span></span>
+<span id="L26"><span class="lineNum">      26</span> <span class="tlaGNC">          42 :   CopyFigure(temp_figure, figure);</span></span>
+<span id="L27"><span class="lineNum">      27</span> <span class="tlaGNC">          42 :   if (i &lt; 1) {</span></span>
+<span id="L28"><span class="lineNum">      28</span> <span class="tlaGNC">           1 :     clop = BAD_ARGUMENT;</span></span>
+<span id="L29"><span class="lineNum">      29</span>              :   }</span>
+<span id="L30"><span class="lineNum">      30</span> <span class="tlaGNC">          42 :   if (!CheckCollision(field, temp_figure) &amp;&amp; clop == 0) {</span></span>
+<span id="L31"><span class="lineNum">      31</span> <span class="tlaGNC">          41 :     temp_figure[0][1] += i;</span></span>
+<span id="L32"><span class="lineNum">      32</span> <span class="tlaGNC">          41 :     clop = CheckCollision(field, temp_figure);</span></span>
+<span id="L33"><span class="lineNum">      33</span> <span class="tlaGNC">          41 :     if (!clop) {</span></span>
+<span id="L34"><span class="lineNum">      34</span> <span class="tlaGNC">          39 :       CopyFigure(figure, temp_figure);</span></span>
+<span id="L35"><span class="lineNum">      35</span>              :     }</span>
+<span id="L36"><span class="lineNum">      36</span>              :   }  // else clop=BAD_ARGUMENT;</span>
+<span id="L37"><span class="lineNum">      37</span> <span class="tlaGNC">          42 :   DeleteCopy(&amp;temp_figure);</span></span>
+<span id="L38"><span class="lineNum">      38</span>              : </span>
+<span id="L39"><span class="lineNum">      39</span> <span class="tlaGNC">          42 :   return clop;</span></span>
+<span id="L40"><span class="lineNum">      40</span>              : }</span>
+<span id="L41"><span class="lineNum">      41</span>              : </span>
+<span id="L42"><span class="lineNum">      42</span>              : //&quot;обнуление&quot; поля //использовать в клине (gameover)</span>
+<span id="L43"><span class="lineNum">      43</span> <span class="tlaGNC">          10 : void ZeroingTemp(</span></span>
+<span id="L44"><span class="lineNum">      44</span>              :     int **field) {  </span>
+<span id="L45"><span class="lineNum">      45</span> <span class="tlaGNC">         210 :   for (int i = 0; i &lt; MAXROWS; i++) {</span></span>
+<span id="L46"><span class="lineNum">      46</span> <span class="tlaGNC">        2200 :     for (int j = 0; j &lt; MAXCOLS; j++) {</span></span>
+<span id="L47"><span class="lineNum">      47</span> <span class="tlaGNC">        2000 :       field[i][j] = '.';</span></span>
+<span id="L48"><span class="lineNum">      48</span>              :     }</span>
+<span id="L49"><span class="lineNum">      49</span>              :   }</span>
+<span id="L50"><span class="lineNum">      50</span> <span class="tlaGNC">          10 : }</span></span>
+<span id="L51"><span class="lineNum">      51</span>              : </span>
+<span id="L52"><span class="lineNum">      52</span>              :  // добавление фигуры на поле</span>
+<span id="L53"><span class="lineNum">      53</span> <span class="tlaGNC">          11 : int SumFigure(int **field, int **figure) {</span></span>
+<span id="L54"><span class="lineNum">      54</span> <span class="tlaGNC">          11 :   int clop = 0;</span></span>
+<span id="L55"><span class="lineNum">      55</span>              : </span>
+<span id="L56"><span class="lineNum">      56</span>              :   // Проверка на выход за границы поля или столкновение с другой фигурой</span>
+<span id="L57"><span class="lineNum">      57</span> <span class="tlaGNC">          55 :   for (int k = 4; k &gt; 0 &amp;&amp; !clop; k--) {</span></span>
+<span id="L58"><span class="lineNum">      58</span> <span class="tlaGNC">          44 :     int new_x = figure[0][0] + figure[k][0];  // Новая координата по x</span></span>
+<span id="L59"><span class="lineNum">      59</span> <span class="tlaGNC">          44 :     int new_y = figure[0][1] + figure[k][1];  // Новая координата по y</span></span>
+<span id="L60"><span class="lineNum">      60</span>              : </span>
+<span id="L61"><span class="lineNum">      61</span>              :     // Проверяем вертикальные границы (y) и горизонтальные (x)</span>
+<span id="L62"><span class="lineNum">      62</span> <span class="tlaGNC">          44 :     if (new_y &gt;= MAXROWS || new_y &lt; 0 || new_x &gt;= MAXCOLS || new_x &lt; 0) {</span></span>
+<span id="L63"><span class="lineNum">      63</span> <span class="tlaUNC">           0 :       clop = 1;  // Если фигура выходит за границы, останавливаемся</span></span>
+<span id="L64"><span class="lineNum">      64</span>              :     }</span>
+<span id="L65"><span class="lineNum">      65</span>              :     // Проверка на столкновение с уже существующими блоками на поле</span>
+<span id="L66"><span class="lineNum">      66</span> <span class="tlaGNC">          44 :     else if (field[new_y][new_x] != '.') {</span></span>
+<span id="L67"><span class="lineNum">      67</span> <span class="tlaUNC">           0 :       clop = 1;</span></span>
+<span id="L68"><span class="lineNum">      68</span>              :     }</span>
+<span id="L69"><span class="lineNum">      69</span>              :   }</span>
+<span id="L70"><span class="lineNum">      70</span>              :   // Если не было столкновений и выхода за границы, обновляем поле</span>
+<span id="L71"><span class="lineNum">      71</span> <span class="tlaGNC">          55 :   for (int k = 4; k &gt; 0 &amp;&amp; !clop; k--) {</span></span>
+<span id="L72"><span class="lineNum">      72</span> <span class="tlaGNC">          44 :     int new_x = figure[0][0] + figure[k][0];  // Новая координата по x</span></span>
+<span id="L73"><span class="lineNum">      73</span> <span class="tlaGNC">          44 :     int new_y = figure[0][1] + figure[k][1];  // Новая координата по y</span></span>
+<span id="L74"><span class="lineNum">      74</span> <span class="tlaGNC">          44 :     field[new_y][new_x] = 'I';  // Устанавливаем фигуру на поле</span></span>
+<span id="L75"><span class="lineNum">      75</span>              :   }</span>
+<span id="L76"><span class="lineNum">      76</span>              : </span>
+<span id="L77"><span class="lineNum">      77</span> <span class="tlaGNC">          11 :   return clop;  // Возвращаем флаг столкновения</span></span>
 <span id="L78"><span class="lineNum">      78</span>              : }</span>
 <span id="L79"><span class="lineNum">      79</span>              : </span>
-<span id="L80"><span class="lineNum">      80</span> <span class="tlaGNC">          12 : int stringDel(</span></span>
-<span id="L81"><span class="lineNum">      81</span>              :     int **Field) {  // удаляет заполненные строки и возвращает их количество</span>
-<span id="L82"><span class="lineNum">      82</span> <span class="tlaGNC">          12 :   int delcounter = 0;</span></span>
-<span id="L83"><span class="lineNum">      83</span> <span class="tlaGNC">         252 :   for (int i = 0; i &lt; MAXROWS; i++) {</span></span>
-<span id="L84"><span class="lineNum">      84</span> <span class="tlaGNC">         240 :     int zerstring = 1;</span></span>
-<span id="L85"><span class="lineNum">      85</span>              : </span>
-<span id="L86"><span class="lineNum">      86</span> <span class="tlaGNC">        2640 :     for (int j = 0; j &lt; MAXCOLS; j++) {</span></span>
-<span id="L87"><span class="lineNum">      87</span> <span class="tlaGNC">        2400 :       if (Field[i][j] == '.') {</span></span>
-<span id="L88"><span class="lineNum">      88</span> <span class="tlaGNC">        2250 :         zerstring = 0;</span></span>
-<span id="L89"><span class="lineNum">      89</span>              :       }</span>
-<span id="L90"><span class="lineNum">      90</span>              :     }</span>
-<span id="L91"><span class="lineNum">      91</span> <span class="tlaGNC">         240 :     if (zerstring) {</span></span>
-<span id="L92"><span class="lineNum">      92</span> <span class="tlaGNC">          31 :       for (int n = i; n &gt; 0; n--) {</span></span>
-<span id="L93"><span class="lineNum">      93</span> <span class="tlaGNC">         176 :         for (int k = 0; k &lt; MAXCOLS; k++) {</span></span>
-<span id="L94"><span class="lineNum">      94</span> <span class="tlaGNC">         160 :           Field[n][k] = Field[n - 1][k];</span></span>
-<span id="L95"><span class="lineNum">      95</span>              :         }</span>
-<span id="L96"><span class="lineNum">      96</span>              :       }</span>
-<span id="L97"><span class="lineNum">      97</span> <span class="tlaGNC">         165 :       for (int k = 0; k &lt; MAXCOLS; k++) {</span></span>
-<span id="L98"><span class="lineNum">      98</span> <span class="tlaGNC">         150 :         Field[0][k] = '.';</span></span>
-<span id="L99"><span class="lineNum">      99</span>              :       }</span>
-<span id="L100"><span class="lineNum">     100</span> <span class="tlaGNC">          15 :       delcounter++;</span></span>
-<span id="L101"><span class="lineNum">     101</span>              :     }</span>
-<span id="L102"><span class="lineNum">     102</span>              :     // printw(&quot;\n&quot;);</span>
-<span id="L103"><span class="lineNum">     103</span>              :   }</span>
-<span id="L104"><span class="lineNum">     104</span> <span class="tlaGNC">          12 :   return delcounter;</span></span>
-<span id="L105"><span class="lineNum">     105</span>              : }</span>
-<span id="L106"><span class="lineNum">     106</span>              : </span>
-<span id="L107"><span class="lineNum">     107</span>              : // возможно убрать score внутрь функции</span>
-<span id="L108"><span class="lineNum">     108</span> <span class="tlaUNC">           0 : int fileScore(</span></span>
-<span id="L109"><span class="lineNum">     109</span>              :     char *name, char *score,</span>
-<span id="L110"><span class="lineNum">     110</span>              :     GameInfo_t *info) {  // добавить сразу замену счёта в файле или игре(смотря</span>
-<span id="L111"><span class="lineNum">     111</span>              :                          // что больше) и в конце закрывать файл</span>
-<span id="L112"><span class="lineNum">     112</span>              :   FILE *fp;</span>
-<span id="L113"><span class="lineNum">     113</span> <span class="tlaUNC">           0 :   strcat(name, &quot;.txt&quot;);</span></span>
-<span id="L114"><span class="lineNum">     114</span>              : </span>
-<span id="L115"><span class="lineNum">     115</span>              :   // if ((fp = fopen(&quot;test&quot;, &quot;w&quot;))==NULL) {</span>
-<span id="L116"><span class="lineNum">     116</span>              :   // printf(&quot;Cannot open file.\n&quot;);</span>
-<span id="L117"><span class="lineNum">     117</span>              :   // }</span>
-<span id="L118"><span class="lineNum">     118</span> <span class="tlaUNC">           0 :   if ((fp = fopen(name, &quot;r+&quot;)) == NULL) {</span></span>
-<span id="L119"><span class="lineNum">     119</span> <span class="tlaUNC">           0 :     fp = fopen(name, &quot;w+&quot;);</span></span>
-<span id="L120"><span class="lineNum">     120</span>              :   }  // добавить проверок на всякое</span>
-<span id="L121"><span class="lineNum">     121</span> <span class="tlaUNC">           0 :   fgets(score, 100, fp);</span></span>
-<span id="L122"><span class="lineNum">     122</span> <span class="tlaUNC">           0 :   int fs = atoi(score);</span></span>
-<span id="L123"><span class="lineNum">     123</span> <span class="tlaUNC">           0 :   if (fs &gt;= info-&gt;high_score) {</span></span>
-<span id="L124"><span class="lineNum">     124</span> <span class="tlaUNC">           0 :     info-&gt;high_score = fs;</span></span>
-<span id="L125"><span class="lineNum">     125</span>              :   }</span>
-<span id="L126"><span class="lineNum">     126</span> <span class="tlaUNC">           0 :   get_set_info(info, PUSH);</span></span>
-<span id="L127"><span class="lineNum">     127</span> <span class="tlaUNC">           0 :   fclose(fp);</span></span>
-<span id="L128"><span class="lineNum">     128</span> <span class="tlaUNC">           0 :   return 0;</span></span>
-<span id="L129"><span class="lineNum">     129</span>              : }</span>
-<span id="L130"><span class="lineNum">     130</span>              : </span>
-<span id="L131"><span class="lineNum">     131</span> <span class="tlaGNC">           8 : int FigureDown2(int **Field, int **Figure) {</span></span>
-<span id="L132"><span class="lineNum">     132</span> <span class="tlaGNC">           8 :   int clop = 0;</span></span>
-<span id="L133"><span class="lineNum">     133</span> <span class="tlaGNC">          31 :   for (int k = 4; k &gt; 0 &amp;&amp; !clop; k--) {</span></span>
-<span id="L134"><span class="lineNum">     134</span> <span class="tlaGNC">          23 :     int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x</span></span>
-<span id="L135"><span class="lineNum">     135</span> <span class="tlaGNC">          23 :     int new_y = Figure[0][1] + Figure[k][1] + 1;  // Новая координата по y</span></span>
-<span id="L136"><span class="lineNum">     136</span> <span class="tlaGNC">          23 :     if (new_y == MAXROWS || Field[new_y][new_x] != '.') clop = 1;  //!!!!</span></span>
-<span id="L137"><span class="lineNum">     137</span>              :   }</span>
-<span id="L138"><span class="lineNum">     138</span> <span class="tlaGNC">           8 :   return clop;</span></span>
-<span id="L139"><span class="lineNum">     139</span>              : }</span>
-<span id="L140"><span class="lineNum">     140</span>              : </span>
-<span id="L141"><span class="lineNum">     141</span> <span class="tlaGNC">          91 : void copyFigure(int **dest, int **src) {</span></span>
-<span id="L142"><span class="lineNum">     142</span> <span class="tlaGNC">         546 :   for (int k = 0; k &lt; COUNTCOORDINATE; k++) {</span></span>
-<span id="L143"><span class="lineNum">     143</span> <span class="tlaGNC">         455 :     dest[k][0] = src[k][0];</span></span>
-<span id="L144"><span class="lineNum">     144</span> <span class="tlaGNC">         455 :     dest[k][1] = src[k][1];</span></span>
-<span id="L145"><span class="lineNum">     145</span>              :   }</span>
-<span id="L146"><span class="lineNum">     146</span> <span class="tlaGNC">          91 : }</span></span>
+<span id="L80"><span class="lineNum">      80</span>              :  // стирание фигуры с поля</span>
+<span id="L81"><span class="lineNum">      81</span> <span class="tlaGNC">           7 : int SubFigure(int **field,</span></span>
+<span id="L82"><span class="lineNum">      82</span>              :               int **figure) { </span>
+<span id="L83"><span class="lineNum">      83</span> <span class="tlaGNC">           7 :   int clop = 0;</span></span>
+<span id="L84"><span class="lineNum">      84</span>              :   // Если не было столкновений и выхода за границы, обновляем поле</span>
+<span id="L85"><span class="lineNum">      85</span> <span class="tlaGNC">          35 :   for (int k = 4; k &gt; 0; k--) {</span></span>
+<span id="L86"><span class="lineNum">      86</span> <span class="tlaGNC">          28 :     int new_x = figure[0][0] + figure[k][0];  // Новая координата по x</span></span>
+<span id="L87"><span class="lineNum">      87</span> <span class="tlaGNC">          28 :     int new_y = figure[0][1] + figure[k][1];</span></span>
+<span id="L88"><span class="lineNum">      88</span> <span class="tlaGNC">          28 :     if (!(new_y &gt;= MAXROWS || new_y &lt; 0 || new_x &gt;= MAXCOLS || new_x &lt; 0))</span></span>
+<span id="L89"><span class="lineNum">      89</span> <span class="tlaGNC">          28 :       field[new_y][new_x] = '.';  // возвращаем отсутствие фигуры</span></span>
+<span id="L90"><span class="lineNum">      90</span>              :   }</span>
+<span id="L91"><span class="lineNum">      91</span>              : </span>
+<span id="L92"><span class="lineNum">      92</span> <span class="tlaGNC">           7 :   return clop;  // Возвращаем флаг столкновения//откуда оно здесь?//начать</span></span>
+<span id="L93"><span class="lineNum">      93</span>              :                 // следить за клопом</span>
+<span id="L94"><span class="lineNum">      94</span>              : }</span>
+<span id="L95"><span class="lineNum">      95</span>              : </span>
+<span id="L96"><span class="lineNum">      96</span>              :  // удаляет заполненные строки и возвращает их количество</span>
+<span id="L97"><span class="lineNum">      97</span> <span class="tlaGNC">          12 : int StringDel(    int **field) { </span></span>
+<span id="L98"><span class="lineNum">      98</span> <span class="tlaGNC">          12 :   int del_counter = 0;</span></span>
+<span id="L99"><span class="lineNum">      99</span> <span class="tlaGNC">         252 :   for (int i = 0; i &lt; MAXROWS; i++) {</span></span>
+<span id="L100"><span class="lineNum">     100</span> <span class="tlaGNC">         240 :     int zer_string = 1;</span></span>
+<span id="L101"><span class="lineNum">     101</span>              : </span>
+<span id="L102"><span class="lineNum">     102</span> <span class="tlaGNC">        2640 :     for (int j = 0; j &lt; MAXCOLS; j++) {</span></span>
+<span id="L103"><span class="lineNum">     103</span> <span class="tlaGNC">        2400 :       if (field[i][j] == '.') {</span></span>
+<span id="L104"><span class="lineNum">     104</span> <span class="tlaGNC">        2250 :         zer_string = 0;</span></span>
+<span id="L105"><span class="lineNum">     105</span>              :       }</span>
+<span id="L106"><span class="lineNum">     106</span>              :     }</span>
+<span id="L107"><span class="lineNum">     107</span> <span class="tlaGNC">         240 :     if (zer_string) {</span></span>
+<span id="L108"><span class="lineNum">     108</span> <span class="tlaGNC">          31 :       for (int n = i; n &gt; 0; n--) {</span></span>
+<span id="L109"><span class="lineNum">     109</span> <span class="tlaGNC">         176 :         for (int k = 0; k &lt; MAXCOLS; k++) {</span></span>
+<span id="L110"><span class="lineNum">     110</span> <span class="tlaGNC">         160 :           field[n][k] = field[n - 1][k];</span></span>
+<span id="L111"><span class="lineNum">     111</span>              :         }</span>
+<span id="L112"><span class="lineNum">     112</span>              :       }</span>
+<span id="L113"><span class="lineNum">     113</span> <span class="tlaGNC">         165 :       for (int k = 0; k &lt; MAXCOLS; k++) {</span></span>
+<span id="L114"><span class="lineNum">     114</span> <span class="tlaGNC">         150 :         field[0][k] = '.';</span></span>
+<span id="L115"><span class="lineNum">     115</span>              :       }</span>
+<span id="L116"><span class="lineNum">     116</span> <span class="tlaGNC">          15 :       del_counter++;</span></span>
+<span id="L117"><span class="lineNum">     117</span>              :     }</span>
+<span id="L118"><span class="lineNum">     118</span>              :     // printw(&quot;\n&quot;);</span>
+<span id="L119"><span class="lineNum">     119</span>              :   }</span>
+<span id="L120"><span class="lineNum">     120</span> <span class="tlaGNC">          12 :   return del_counter;</span></span>
+<span id="L121"><span class="lineNum">     121</span>              : }</span>
+<span id="L122"><span class="lineNum">     122</span>              : </span>
+<span id="L123"><span class="lineNum">     123</span>              : // возможно убрать score внутрь функции</span>
+<span id="L124"><span class="lineNum">     124</span>              :  // добавить сразу замену счёта в файле или игре(смотря</span>
+<span id="L125"><span class="lineNum">     125</span>              :                          // что больше) и в конце закрывать файл</span>
+<span id="L126"><span class="lineNum">     126</span> <span class="tlaGNC">          13 : int FileScore(</span></span>
+<span id="L127"><span class="lineNum">     127</span>              :     char *name,</span>
+<span id="L128"><span class="lineNum">     128</span>              :     GameInfo_t *info) { </span>
+<span id="L129"><span class="lineNum">     129</span> <span class="tlaGNC">          13 :   char *score = (char *)calloc(10, sizeof(char));</span></span>
+<span id="L130"><span class="lineNum">     130</span>              :   FILE *fp;</span>
+<span id="L131"><span class="lineNum">     131</span>              :   char filename[64];</span>
+<span id="L132"><span class="lineNum">     132</span>              :   // strcat(name, &quot;.txt&quot;);</span>
+<span id="L133"><span class="lineNum">     133</span> <span class="tlaGNC">          13 :   snprintf(filename, sizeof(filename), &quot;%s.txt&quot;, name);</span></span>
+<span id="L134"><span class="lineNum">     134</span> <span class="tlaGNC">          13 :   if ((fp = fopen(filename, &quot;r+&quot;)) == NULL) {</span></span>
+<span id="L135"><span class="lineNum">     135</span> <span class="tlaUNC">           0 :     fp = fopen(filename, &quot;w+&quot;);</span></span>
+<span id="L136"><span class="lineNum">     136</span>              :   }  // добавить проверок на всякое</span>
+<span id="L137"><span class="lineNum">     137</span> <span class="tlaGNC">          13 :   fgets(score, 10, fp);</span></span>
+<span id="L138"><span class="lineNum">     138</span> <span class="tlaGNC">          13 :   int fs = atoi(score);</span></span>
+<span id="L139"><span class="lineNum">     139</span> <span class="tlaGNC">          13 :   if (fs &gt;= info-&gt;high_score) {</span></span>
+<span id="L140"><span class="lineNum">     140</span> <span class="tlaGNC">          13 :     info-&gt;high_score = fs;</span></span>
+<span id="L141"><span class="lineNum">     141</span>              :   }</span>
+<span id="L142"><span class="lineNum">     142</span> <span class="tlaGNC">          13 :   GetSetInfo(info, PUSH);</span></span>
+<span id="L143"><span class="lineNum">     143</span> <span class="tlaGNC">          13 :   free(score);</span></span>
+<span id="L144"><span class="lineNum">     144</span> <span class="tlaGNC">          13 :   fclose(fp);</span></span>
+<span id="L145"><span class="lineNum">     145</span> <span class="tlaGNC">          13 :   return 0;</span></span>
+<span id="L146"><span class="lineNum">     146</span>              : }</span>
 <span id="L147"><span class="lineNum">     147</span>              : </span>
-<span id="L148"><span class="lineNum">     148</span> <span class="tlaGNC">          89 : int checkCollision(int **Field, int **Figure) {</span></span>
-<span id="L149"><span class="lineNum">     149</span> <span class="tlaGNC">          89 :   int clop = 0;</span></span>
-<span id="L150"><span class="lineNum">     150</span> <span class="tlaGNC">         436 :   for (int k = 4; k &gt; 0 &amp;&amp; !clop; k--) {</span></span>
-<span id="L151"><span class="lineNum">     151</span> <span class="tlaGNC">         347 :     int new_x = Figure[0][0] + Figure[k][0];  // Новая координата по x</span></span>
-<span id="L152"><span class="lineNum">     152</span> <span class="tlaGNC">         347 :     int new_y = Figure[0][1] + Figure[k][1];  // Новая координата по y</span></span>
-<span id="L153"><span class="lineNum">     153</span>              : </span>
-<span id="L154"><span class="lineNum">     154</span>              :     // Проверка на выход за границы или на столкновение с другими фигурами</span>
-<span id="L155"><span class="lineNum">     155</span> <span class="tlaGNC">         347 :     if (new_y &gt;= MAXROWS || new_y &lt; 0 || new_x &gt;= MAXCOLS || new_x &lt; 0 ||</span></span>
-<span id="L156"><span class="lineNum">     156</span> <span class="tlaGNC">         345 :         Field[new_y][new_x] != '.') {</span></span>
-<span id="L157"><span class="lineNum">     157</span> <span class="tlaGNC">           3 :       clop = 1;  // Столкновение произошло</span></span>
-<span id="L158"><span class="lineNum">     158</span>              :     }</span>
-<span id="L159"><span class="lineNum">     159</span>              :   }</span>
-<span id="L160"><span class="lineNum">     160</span> <span class="tlaGNC">          89 :   return clop;</span></span>
-<span id="L161"><span class="lineNum">     161</span>              : }</span>
-<span id="L162"><span class="lineNum">     162</span>              : </span>
-<span id="L163"><span class="lineNum">     163</span> <span class="tlaGNC">          74 : int **createcopy() {</span></span>
-<span id="L164"><span class="lineNum">     164</span> <span class="tlaGNC">          74 :   int **tempFigure = malloc(COUNTCOORDINATE * sizeof(int *));</span></span>
-<span id="L165"><span class="lineNum">     165</span> <span class="tlaGNC">         444 :   for (int k = 0; k &lt; COUNTCOORDINATE; k++) {</span></span>
-<span id="L166"><span class="lineNum">     166</span> <span class="tlaGNC">         370 :     tempFigure[k] = malloc(2 * sizeof(int));</span></span>
-<span id="L167"><span class="lineNum">     167</span>              :   }</span>
-<span id="L168"><span class="lineNum">     168</span> <span class="tlaGNC">          74 :   return tempFigure;</span></span>
-<span id="L169"><span class="lineNum">     169</span>              : }</span>
-<span id="L170"><span class="lineNum">     170</span> <span class="tlaGNC">          22 : int **createpole() {  // а очищается??</span></span>
-<span id="L171"><span class="lineNum">     171</span>              :   int **tempFigure =</span>
-<span id="L172"><span class="lineNum">     172</span> <span class="tlaGNC">          22 :       (int **)malloc(MAXROWS * sizeof(int *));  // создание постоянного поля</span></span>
-<span id="L173"><span class="lineNum">     173</span> <span class="tlaGNC">         462 :   for (int i = 0; i &lt; MAXROWS; i++) {</span></span>
-<span id="L174"><span class="lineNum">     174</span> <span class="tlaGNC">         440 :     tempFigure[i] = (int *)malloc(MAXCOLS * sizeof(int));</span></span>
-<span id="L175"><span class="lineNum">     175</span> <span class="tlaGNC">        4840 :     for (int j = 0; j &lt; MAXCOLS; j++) {</span></span>
-<span id="L176"><span class="lineNum">     176</span> <span class="tlaGNC">        4400 :       tempFigure[i][j] = '.';</span></span>
-<span id="L177"><span class="lineNum">     177</span>              :     }</span>
-<span id="L178"><span class="lineNum">     178</span>              :   }  // вызывать здесь zeroing_temp</span>
-<span id="L179"><span class="lineNum">     179</span> <span class="tlaGNC">          22 :   return tempFigure;</span></span>
-<span id="L180"><span class="lineNum">     180</span>              : }</span>
-<span id="L181"><span class="lineNum">     181</span> <span class="tlaGNC">          60 : int deletecopy(int ***copy) {</span></span>
-<span id="L182"><span class="lineNum">     182</span> <span class="tlaGNC">         360 :   for (int k = 0; k &lt; COUNTCOORDINATE; k++) {</span></span>
-<span id="L183"><span class="lineNum">     183</span> <span class="tlaGNC">         300 :     free((*copy)[k]);</span></span>
-<span id="L184"><span class="lineNum">     184</span>              :   }</span>
-<span id="L185"><span class="lineNum">     185</span> <span class="tlaGNC">          60 :   free(*copy);</span></span>
-<span id="L186"><span class="lineNum">     186</span> <span class="tlaGNC">          60 :   *copy = NULL;</span></span>
-<span id="L187"><span class="lineNum">     187</span> <span class="tlaGNC">          60 :   return 0;</span></span>
-<span id="L188"><span class="lineNum">     188</span>              : }</span>
+<span id="L148"><span class="lineNum">     148</span> <span class="tlaGNC">           8 : int FigureDown(int **field, int **figure) {</span></span>
+<span id="L149"><span class="lineNum">     149</span> <span class="tlaGNC">           8 :   int clop = 0;</span></span>
+<span id="L150"><span class="lineNum">     150</span> <span class="tlaGNC">          31 :   for (int k = 4; k &gt; 0 &amp;&amp; !clop; k--) {</span></span>
+<span id="L151"><span class="lineNum">     151</span> <span class="tlaGNC">          23 :     int new_x = figure[0][0] + figure[k][0];  // Новая координата по x</span></span>
+<span id="L152"><span class="lineNum">     152</span> <span class="tlaGNC">          23 :     int new_y = figure[0][1] + figure[k][1] + 1;  // Новая координата по y</span></span>
+<span id="L153"><span class="lineNum">     153</span> <span class="tlaGNC">          23 :     if (new_y == MAXROWS || field[new_y][new_x] != '.') clop = 1;  //!!!!</span></span>
+<span id="L154"><span class="lineNum">     154</span>              :   }</span>
+<span id="L155"><span class="lineNum">     155</span> <span class="tlaGNC">           8 :   return clop;</span></span>
+<span id="L156"><span class="lineNum">     156</span>              : }</span>
+<span id="L157"><span class="lineNum">     157</span>              : </span>
+<span id="L158"><span class="lineNum">     158</span> <span class="tlaGNC">          91 : void CopyFigure(int **dest, int **src) {</span></span>
+<span id="L159"><span class="lineNum">     159</span> <span class="tlaGNC">         546 :   for (int k = 0; k &lt; COUNTCOORDINATE; k++) {</span></span>
+<span id="L160"><span class="lineNum">     160</span> <span class="tlaGNC">         455 :     dest[k][0] = src[k][0];</span></span>
+<span id="L161"><span class="lineNum">     161</span> <span class="tlaGNC">         455 :     dest[k][1] = src[k][1];</span></span>
+<span id="L162"><span class="lineNum">     162</span>              :   }</span>
+<span id="L163"><span class="lineNum">     163</span> <span class="tlaGNC">          91 : }</span></span>
+<span id="L164"><span class="lineNum">     164</span>              : </span>
+<span id="L165"><span class="lineNum">     165</span> <span class="tlaGNC">          89 : int CheckCollision(int **field, int **figure) {</span></span>
+<span id="L166"><span class="lineNum">     166</span> <span class="tlaGNC">          89 :   int clop = 0;</span></span>
+<span id="L167"><span class="lineNum">     167</span> <span class="tlaGNC">         436 :   for (int k = 4; k &gt; 0 &amp;&amp; !clop; k--) {</span></span>
+<span id="L168"><span class="lineNum">     168</span> <span class="tlaGNC">         347 :     int new_x = figure[0][0] + figure[k][0];  // Новая координата по x</span></span>
+<span id="L169"><span class="lineNum">     169</span> <span class="tlaGNC">         347 :     int new_y = figure[0][1] + figure[k][1];  // Новая координата по y</span></span>
+<span id="L170"><span class="lineNum">     170</span>              : </span>
+<span id="L171"><span class="lineNum">     171</span>              :     // Проверка на выход за границы или на столкновение с другими фигурами</span>
+<span id="L172"><span class="lineNum">     172</span> <span class="tlaGNC">         347 :     if (new_y &gt;= MAXROWS || new_y &lt; 0 || new_x &gt;= MAXCOLS || new_x &lt; 0 ||</span></span>
+<span id="L173"><span class="lineNum">     173</span> <span class="tlaGNC">         345 :         field[new_y][new_x] != '.') {</span></span>
+<span id="L174"><span class="lineNum">     174</span> <span class="tlaGNC">           3 :       clop = 1;  // Столкновение произошло</span></span>
+<span id="L175"><span class="lineNum">     175</span>              :     }</span>
+<span id="L176"><span class="lineNum">     176</span>              :   }</span>
+<span id="L177"><span class="lineNum">     177</span> <span class="tlaGNC">          89 :   return clop;</span></span>
+<span id="L178"><span class="lineNum">     178</span>              : }</span>
+<span id="L179"><span class="lineNum">     179</span>              : </span>
+<span id="L180"><span class="lineNum">     180</span>              : //добавить проверку на маллок</span>
+<span id="L181"><span class="lineNum">     181</span> <span class="tlaGNC">          75 : int **CreateCopy() {</span></span>
+<span id="L182"><span class="lineNum">     182</span> <span class="tlaGNC">          75 :   int **temp_figure = malloc(COUNTCOORDINATE * sizeof(int *));</span></span>
+<span id="L183"><span class="lineNum">     183</span> <span class="tlaGNC">         450 :   for (int k = 0; k &lt; COUNTCOORDINATE; k++) {</span></span>
+<span id="L184"><span class="lineNum">     184</span> <span class="tlaGNC">         375 :     temp_figure[k] = malloc(2 * sizeof(int));</span></span>
+<span id="L185"><span class="lineNum">     185</span>              :   }</span>
+<span id="L186"><span class="lineNum">     186</span> <span class="tlaGNC">          75 :   return temp_figure;</span></span>
+<span id="L187"><span class="lineNum">     187</span>              : }</span>
+<span id="L188"><span class="lineNum">     188</span>              : </span>
 <span id="L189"><span class="lineNum">     189</span>              : </span>
-<span id="L190"><span class="lineNum">     190</span> <span class="tlaGNC">          21 : int deletepole(int ***copy) {</span></span>
-<span id="L191"><span class="lineNum">     191</span> <span class="tlaGNC">         231 :   for (int k = 0; k &lt; MAXCOLS; k++) {</span></span>
-<span id="L192"><span class="lineNum">     192</span> <span class="tlaGNC">         210 :     free((*copy)[k]);</span></span>
-<span id="L193"><span class="lineNum">     193</span>              :   }</span>
-<span id="L194"><span class="lineNum">     194</span> <span class="tlaGNC">          21 :   free(*copy);</span></span>
-<span id="L195"><span class="lineNum">     195</span> <span class="tlaGNC">          21 :   *copy = NULL;</span></span>
-<span id="L196"><span class="lineNum">     196</span> <span class="tlaGNC">          21 :   return 0;</span></span>
-<span id="L197"><span class="lineNum">     197</span>              : }</span>
-<span id="L198"><span class="lineNum">     198</span>              : </span>
-<span id="L199"><span class="lineNum">     199</span> <span class="tlaGNC">           2 : int rotateCols2(int **Field, int **Figure) {</span></span>
-<span id="L200"><span class="lineNum">     200</span> <span class="tlaGNC">           2 :   int clop = 0;</span></span>
-<span id="L201"><span class="lineNum">     201</span> <span class="tlaGNC">           2 :   int **tempFigure = createcopy();</span></span>
-<span id="L202"><span class="lineNum">     202</span> <span class="tlaGNC">           2 :   copyFigure(tempFigure, Figure);</span></span>
-<span id="L203"><span class="lineNum">     203</span>              : </span>
-<span id="L204"><span class="lineNum">     204</span> <span class="tlaGNC">          10 :   for (int k = 1; k &lt; COUNTCOORDINATE; k++) {</span></span>
-<span id="L205"><span class="lineNum">     205</span> <span class="tlaGNC">           8 :     int tempx = tempFigure[k][0];</span></span>
-<span id="L206"><span class="lineNum">     206</span> <span class="tlaGNC">           8 :     tempFigure[k][0] = -tempFigure[k][1];</span></span>
-<span id="L207"><span class="lineNum">     207</span> <span class="tlaGNC">           8 :     tempFigure[k][1] = tempx;</span></span>
-<span id="L208"><span class="lineNum">     208</span>              :   }</span>
-<span id="L209"><span class="lineNum">     209</span>              : </span>
-<span id="L210"><span class="lineNum">     210</span> <span class="tlaGNC">           2 :   clop = checkCollision(Field, tempFigure);</span></span>
-<span id="L211"><span class="lineNum">     211</span> <span class="tlaGNC">           2 :   if (!clop) {</span></span>
-<span id="L212"><span class="lineNum">     212</span> <span class="tlaGNC">           2 :     copyFigure(Figure, tempFigure);</span></span>
-<span id="L213"><span class="lineNum">     213</span>              :   }</span>
-<span id="L214"><span class="lineNum">     214</span>              : </span>
-<span id="L215"><span class="lineNum">     215</span> <span class="tlaGNC">           2 :   deletecopy(&amp;tempFigure);</span></span>
-<span id="L216"><span class="lineNum">     216</span> <span class="tlaGNC">           2 :   return clop;</span></span>
-<span id="L217"><span class="lineNum">     217</span>              : }</span>
-<span id="L218"><span class="lineNum">     218</span>              : </span>
-<span id="L219"><span class="lineNum">     219</span> <span class="tlaGNC">           3 : int moveCols2(int **Field, int **Figure, int i) {</span></span>
-<span id="L220"><span class="lineNum">     220</span> <span class="tlaGNC">           3 :   int clop = 0;</span></span>
-<span id="L221"><span class="lineNum">     221</span> <span class="tlaGNC">           3 :   int **tempFigure = createcopy();</span></span>
-<span id="L222"><span class="lineNum">     222</span> <span class="tlaGNC">           3 :   copyFigure(tempFigure, Figure);</span></span>
-<span id="L223"><span class="lineNum">     223</span>              : </span>
-<span id="L224"><span class="lineNum">     224</span> <span class="tlaGNC">           3 :   tempFigure[0][0] += i;</span></span>
-<span id="L225"><span class="lineNum">     225</span> <span class="tlaGNC">           3 :   clop = checkCollision(Field, tempFigure);</span></span>
-<span id="L226"><span class="lineNum">     226</span> <span class="tlaGNC">           3 :   if (!clop) {</span></span>
-<span id="L227"><span class="lineNum">     227</span> <span class="tlaGNC">           3 :     copyFigure(Figure, tempFigure);</span></span>
-<span id="L228"><span class="lineNum">     228</span>              :   }</span>
-<span id="L229"><span class="lineNum">     229</span>              : </span>
-<span id="L230"><span class="lineNum">     230</span> <span class="tlaGNC">           3 :   deletecopy(&amp;tempFigure);</span></span>
-<span id="L231"><span class="lineNum">     231</span> <span class="tlaGNC">           3 :   return clop;</span></span>
-<span id="L232"><span class="lineNum">     232</span>              : }</span>
-<span id="L233"><span class="lineNum">     233</span>              : </span>
-<span id="L234"><span class="lineNum">     234</span> <span class="tlaGNC">          11 : int scoring(GameInfo_t *tetris) {</span></span>
-<span id="L235"><span class="lineNum">     235</span> <span class="tlaGNC">          11 :   int a = stringDel(tetris-&gt;field);</span></span>
-<span id="L236"><span class="lineNum">     236</span> <span class="tlaGNC">          11 :   switch (a) {</span></span>
-<span id="L237"><span class="lineNum">     237</span> <span class="tlaGNC">           1 :     case 1:</span></span>
-<span id="L238"><span class="lineNum">     238</span> <span class="tlaGNC">           1 :       tetris-&gt;score += 100;</span></span>
-<span id="L239"><span class="lineNum">     239</span> <span class="tlaGNC">           1 :       break;</span></span>
-<span id="L240"><span class="lineNum">     240</span> <span class="tlaGNC">           1 :     case 2:</span></span>
-<span id="L241"><span class="lineNum">     241</span> <span class="tlaGNC">           1 :       tetris-&gt;score += 300;</span></span>
-<span id="L242"><span class="lineNum">     242</span> <span class="tlaGNC">           1 :       break;</span></span>
-<span id="L243"><span class="lineNum">     243</span> <span class="tlaGNC">           1 :     case 3:</span></span>
-<span id="L244"><span class="lineNum">     244</span> <span class="tlaGNC">           1 :       tetris-&gt;score += 700;</span></span>
-<span id="L245"><span class="lineNum">     245</span> <span class="tlaGNC">           1 :       break;</span></span>
-<span id="L246"><span class="lineNum">     246</span> <span class="tlaGNC">           2 :     case 4:</span></span>
-<span id="L247"><span class="lineNum">     247</span> <span class="tlaGNC">           2 :       tetris-&gt;score += 1500;</span></span>
-<span id="L248"><span class="lineNum">     248</span> <span class="tlaGNC">           2 :       break;</span></span>
-<span id="L249"><span class="lineNum">     249</span> <span class="tlaGNC">           6 :     default:</span></span>
-<span id="L250"><span class="lineNum">     250</span> <span class="tlaGNC">           6 :       break;</span></span>
-<span id="L251"><span class="lineNum">     251</span>              :   }</span>
-<span id="L252"><span class="lineNum">     252</span> <span class="tlaGNC">          11 :   if (tetris-&gt;score &gt; tetris-&gt;high_score) {</span></span>
-<span id="L253"><span class="lineNum">     253</span> <span class="tlaGNC">           5 :     tetris-&gt;high_score = tetris-&gt;score;</span></span>
-<span id="L254"><span class="lineNum">     254</span>              :   }</span>
-<span id="L255"><span class="lineNum">     255</span> <span class="tlaGNC">          11 :   get_set_info(tetris, PUSH);</span></span>
-<span id="L256"><span class="lineNum">     256</span> <span class="tlaGNC">          11 :   return 0;</span></span>
-<span id="L257"><span class="lineNum">     257</span>              : }</span>
-<span id="L258"><span class="lineNum">     258</span>              : </span>
-<span id="L259"><span class="lineNum">     259</span>              : // score deletai</span>
-<span id="L260"><span class="lineNum">     260</span> <span class="tlaUNC">           0 : int fileScoreinput(</span></span>
-<span id="L261"><span class="lineNum">     261</span>              :     char *name,</span>
-<span id="L262"><span class="lineNum">     262</span>              :     GameInfo_t *info) {  // добавить сразу замену счёта в файле или игре(смотря</span>
-<span id="L263"><span class="lineNum">     263</span>              :                          // что больше) и в конце закрывать файл</span>
-<span id="L264"><span class="lineNum">     264</span>              :   FILE *fp;</span>
-<span id="L265"><span class="lineNum">     265</span>              :   // strcat(name, &quot;.txt&quot;);</span>
-<span id="L266"><span class="lineNum">     266</span>              : </span>
-<span id="L267"><span class="lineNum">     267</span> <span class="tlaUNC">           0 :   if ((fp = fopen(name, &quot;r+&quot;)) == NULL) {</span></span>
-<span id="L268"><span class="lineNum">     268</span> <span class="tlaUNC">           0 :     fp = fopen(name, &quot;w+&quot;);</span></span>
-<span id="L269"><span class="lineNum">     269</span>              :   }  // добавить проверок на всякое</span>
-<span id="L270"><span class="lineNum">     270</span>              :   // fgets(score, 100, fp);</span>
-<span id="L271"><span class="lineNum">     271</span>              :   // int fs=atoi(score);</span>
-<span id="L272"><span class="lineNum">     272</span> <span class="tlaUNC">           0 :   if (info-&gt;high_score &lt;= info-&gt;score) {</span></span>
-<span id="L273"><span class="lineNum">     273</span> <span class="tlaUNC">           0 :     fprintf(fp, &quot;%d&quot;, info-&gt;high_score);</span></span>
-<span id="L274"><span class="lineNum">     274</span>              :   }</span>
-<span id="L275"><span class="lineNum">     275</span>              :   // itoa(info-&gt;high_score, info-&gt;score,10);</span>
-<span id="L276"><span class="lineNum">     276</span>              :   // fputs(info-&gt;score, fp);</span>
-<span id="L277"><span class="lineNum">     277</span>              : </span>
-<span id="L278"><span class="lineNum">     278</span> <span class="tlaUNC">           0 :   fclose(fp);</span></span>
-<span id="L279"><span class="lineNum">     279</span> <span class="tlaUNC">           0 :   return 0;</span></span>
-<span id="L280"><span class="lineNum">     280</span>              : }</span>
-<span id="L281"><span class="lineNum">     281</span>              : </span>
-<span id="L282"><span class="lineNum">     282</span> <span class="tlaGNC">          14 : int **updatefigure() {</span></span>
-<span id="L283"><span class="lineNum">     283</span>              :   static int **figure;</span>
-<span id="L284"><span class="lineNum">     284</span>              :   static int flag = 1;</span>
-<span id="L285"><span class="lineNum">     285</span> <span class="tlaGNC">          14 :   if (flag) {</span></span>
-<span id="L286"><span class="lineNum">     286</span> <span class="tlaGNC">           6 :     figure = createcopy();</span></span>
-<span id="L287"><span class="lineNum">     287</span> <span class="tlaGNC">           6 :     flag = 0;</span></span>
-<span id="L288"><span class="lineNum">     288</span>              :   }</span>
-<span id="L289"><span class="lineNum">     289</span>              :   // figure = createcopy();</span>
-<span id="L290"><span class="lineNum">     290</span> <span class="tlaGNC">          14 :   return figure;</span></span>
-<span id="L291"><span class="lineNum">     291</span>              : }</span>
-<span id="L292"><span class="lineNum">     292</span>              : </span>
-<span id="L293"><span class="lineNum">     293</span>              : // flag==0-&gt;остаётся инфо, 1 инфо меняется</span>
-<span id="L294"><span class="lineNum">     294</span>              : //  GameInfo_t update(GameInfo_t * info, int flag){</span>
-<span id="L295"><span class="lineNum">     295</span>              : //    static GameInfo_t tetris={0};</span>
-<span id="L296"><span class="lineNum">     296</span>              : //    if (flag){</span>
-<span id="L297"><span class="lineNum">     297</span>              : //      *info=tetris;</span>
-<span id="L298"><span class="lineNum">     298</span>              : //    } else {</span>
-<span id="L299"><span class="lineNum">     299</span>              : //      tetris = *info;</span>
-<span id="L300"><span class="lineNum">     300</span>              : //    }</span>
-<span id="L301"><span class="lineNum">     301</span>              : //  }</span>
-<span id="L302"><span class="lineNum">     302</span>              : </span>
-<span id="L303"><span class="lineNum">     303</span> <span class="tlaGNC">           8 : void zeroing_all(GameInfo_t *x) {</span></span>
-<span id="L304"><span class="lineNum">     304</span> <span class="tlaGNC">           8 :   zeroing_temp(x-&gt;field);</span></span>
-<span id="L305"><span class="lineNum">     305</span> <span class="tlaGNC">           8 :   x-&gt;score = 0;</span></span>
-<span id="L306"><span class="lineNum">     306</span> <span class="tlaGNC">           8 :   x-&gt;speed = 0;</span></span>
-<span id="L307"><span class="lineNum">     307</span> <span class="tlaGNC">           8 :   x-&gt;level = 0;</span></span>
-<span id="L308"><span class="lineNum">     308</span> <span class="tlaGNC">           8 :   x-&gt;pause = 0;</span></span>
-<span id="L309"><span class="lineNum">     309</span> <span class="tlaGNC">           8 :   Figuring(x-&gt;next, rand() % COUNTFIGURE);</span></span>
-<span id="L310"><span class="lineNum">     310</span> <span class="tlaGNC">           8 :   get_set_info(x, PUSH);</span></span>
-<span id="L311"><span class="lineNum">     311</span> <span class="tlaGNC">           8 : }</span></span>
-<span id="L312"><span class="lineNum">     312</span>              : </span>
-<span id="L313"><span class="lineNum">     313</span> <span class="tlaGNC">          34 : GameInfo_t get_set_info(GameInfo_t *info, int push) {  // not included</span></span>
-<span id="L314"><span class="lineNum">     314</span>              :   static GameInfo_t game_info;</span>
-<span id="L315"><span class="lineNum">     315</span>              :   // static int** figure;</span>
-<span id="L316"><span class="lineNum">     316</span> <span class="tlaGNC">          34 :   if (push) {</span></span>
-<span id="L317"><span class="lineNum">     317</span> <span class="tlaGNC">          23 :     game_info = *info;</span></span>
-<span id="L318"><span class="lineNum">     318</span>              :   } else {</span>
-<span id="L319"><span class="lineNum">     319</span> <span class="tlaGNC">          11 :     *info = game_info;</span></span>
-<span id="L320"><span class="lineNum">     320</span>              :   }</span>
-<span id="L321"><span class="lineNum">     321</span> <span class="tlaGNC">          34 :   return game_info;</span></span>
-<span id="L322"><span class="lineNum">     322</span>              : }</span>
-<span id="L323"><span class="lineNum">     323</span>              : </span>
-<span id="L324"><span class="lineNum">     324</span> <span class="tlaGNC">          11 : int init_tetris(GameInfo_t* tetris){</span></span>
-<span id="L325"><span class="lineNum">     325</span> <span class="tlaGNC">          11 :   tetris-&gt;pause = 0;</span></span>
-<span id="L326"><span class="lineNum">     326</span> <span class="tlaGNC">          11 :   tetris-&gt;score = 0;</span></span>
-<span id="L327"><span class="lineNum">     327</span> <span class="tlaGNC">          11 :   tetris-&gt;high_score = 0;</span></span>
-<span id="L328"><span class="lineNum">     328</span> <span class="tlaGNC">          11 :   tetris-&gt;level = 0;</span></span>
-<span id="L329"><span class="lineNum">     329</span> <span class="tlaGNC">          11 :   tetris-&gt;field = createpole();</span></span>
-<span id="L330"><span class="lineNum">     330</span> <span class="tlaGNC">          11 :   tetris-&gt;next = createcopy();</span></span>
-<span id="L331"><span class="lineNum">     331</span> <span class="tlaGNC">          11 :   return 0;//поменять на возможный вывод ошибок</span></span>
-<span id="L332"><span class="lineNum">     332</span>              : }</span>
+<span id="L190"><span class="lineNum">     190</span>              : //добавить проверку на маллок</span>
+<span id="L191"><span class="lineNum">     191</span> <span class="tlaGNC">          23 : int **CreateField() {  // а очищается??</span></span>
+<span id="L192"><span class="lineNum">     192</span>              :   int **field =</span>
+<span id="L193"><span class="lineNum">     193</span> <span class="tlaGNC">          23 :       (int **)malloc(MAXROWS * sizeof(int *));  // создание постоянного поля</span></span>
+<span id="L194"><span class="lineNum">     194</span> <span class="tlaGNC">         483 :   for (int i = 0; i &lt; MAXROWS; i++) {</span></span>
+<span id="L195"><span class="lineNum">     195</span> <span class="tlaGNC">         460 :     field[i] = (int *)malloc(MAXCOLS * sizeof(int));</span></span>
+<span id="L196"><span class="lineNum">     196</span> <span class="tlaGNC">        5060 :     for (int j = 0; j &lt; MAXCOLS; j++) {</span></span>
+<span id="L197"><span class="lineNum">     197</span> <span class="tlaGNC">        4600 :       field[i][j] = '.';</span></span>
+<span id="L198"><span class="lineNum">     198</span>              :     }</span>
+<span id="L199"><span class="lineNum">     199</span>              :   } </span>
+<span id="L200"><span class="lineNum">     200</span> <span class="tlaGNC">          23 :   return field;</span></span>
+<span id="L201"><span class="lineNum">     201</span>              : }</span>
+<span id="L202"><span class="lineNum">     202</span>              : </span>
+<span id="L203"><span class="lineNum">     203</span> <span class="tlaGNC">          61 : int DeleteCopy(int ***copy) {</span></span>
+<span id="L204"><span class="lineNum">     204</span> <span class="tlaGNC">         366 :   for (int k = 0; k &lt; COUNTCOORDINATE; k++) {</span></span>
+<span id="L205"><span class="lineNum">     205</span> <span class="tlaGNC">         305 :     free((*copy)[k]);</span></span>
+<span id="L206"><span class="lineNum">     206</span>              :   }</span>
+<span id="L207"><span class="lineNum">     207</span> <span class="tlaGNC">          61 :   free(*copy);</span></span>
+<span id="L208"><span class="lineNum">     208</span> <span class="tlaGNC">          61 :   *copy = NULL;</span></span>
+<span id="L209"><span class="lineNum">     209</span> <span class="tlaGNC">          61 :   return 0;</span></span>
+<span id="L210"><span class="lineNum">     210</span>              : }</span>
+<span id="L211"><span class="lineNum">     211</span>              : </span>
+<span id="L212"><span class="lineNum">     212</span> <span class="tlaGNC">          22 : int DeleteField(int ***copy) {</span></span>
+<span id="L213"><span class="lineNum">     213</span> <span class="tlaGNC">         242 :   for (int k = 0; k &lt; MAXCOLS; k++) {</span></span>
+<span id="L214"><span class="lineNum">     214</span> <span class="tlaGNC">         220 :     free((*copy)[k]);</span></span>
+<span id="L215"><span class="lineNum">     215</span>              :   }</span>
+<span id="L216"><span class="lineNum">     216</span> <span class="tlaGNC">          22 :   free(*copy);</span></span>
+<span id="L217"><span class="lineNum">     217</span> <span class="tlaGNC">          22 :   *copy = NULL;</span></span>
+<span id="L218"><span class="lineNum">     218</span> <span class="tlaGNC">          22 :   return 0;</span></span>
+<span id="L219"><span class="lineNum">     219</span>              : }</span>
+<span id="L220"><span class="lineNum">     220</span>              : </span>
+<span id="L221"><span class="lineNum">     221</span> <span class="tlaGNC">           2 : int RotateCols(int **field, int **figure) {</span></span>
+<span id="L222"><span class="lineNum">     222</span> <span class="tlaGNC">           2 :   int clop = 0;</span></span>
+<span id="L223"><span class="lineNum">     223</span> <span class="tlaGNC">           2 :   int **temp_figure = CreateCopy();</span></span>
+<span id="L224"><span class="lineNum">     224</span> <span class="tlaGNC">           2 :   CopyFigure(temp_figure, figure);</span></span>
+<span id="L225"><span class="lineNum">     225</span>              : </span>
+<span id="L226"><span class="lineNum">     226</span> <span class="tlaGNC">          10 :   for (int k = 1; k &lt; COUNTCOORDINATE; k++) {</span></span>
+<span id="L227"><span class="lineNum">     227</span> <span class="tlaGNC">           8 :     int temp_x = temp_figure[k][0];</span></span>
+<span id="L228"><span class="lineNum">     228</span> <span class="tlaGNC">           8 :     temp_figure[k][0] = -temp_figure[k][1];</span></span>
+<span id="L229"><span class="lineNum">     229</span> <span class="tlaGNC">           8 :     temp_figure[k][1] = temp_x;</span></span>
+<span id="L230"><span class="lineNum">     230</span>              :   }</span>
+<span id="L231"><span class="lineNum">     231</span>              : </span>
+<span id="L232"><span class="lineNum">     232</span> <span class="tlaGNC">           2 :   clop = CheckCollision(field, temp_figure);</span></span>
+<span id="L233"><span class="lineNum">     233</span> <span class="tlaGNC">           2 :   if (!clop) {</span></span>
+<span id="L234"><span class="lineNum">     234</span> <span class="tlaGNC">           2 :     CopyFigure(figure, temp_figure);</span></span>
+<span id="L235"><span class="lineNum">     235</span>              :   }</span>
+<span id="L236"><span class="lineNum">     236</span>              : </span>
+<span id="L237"><span class="lineNum">     237</span> <span class="tlaGNC">           2 :   DeleteCopy(&amp;temp_figure);</span></span>
+<span id="L238"><span class="lineNum">     238</span> <span class="tlaGNC">           2 :   return clop;</span></span>
+<span id="L239"><span class="lineNum">     239</span>              : }</span>
+<span id="L240"><span class="lineNum">     240</span>              : </span>
+<span id="L241"><span class="lineNum">     241</span> <span class="tlaGNC">           3 : int MoveCols(int **field, int **figure, int i) {</span></span>
+<span id="L242"><span class="lineNum">     242</span> <span class="tlaGNC">           3 :   int clop = 0;</span></span>
+<span id="L243"><span class="lineNum">     243</span> <span class="tlaGNC">           3 :   int **temp_figure = CreateCopy();</span></span>
+<span id="L244"><span class="lineNum">     244</span> <span class="tlaGNC">           3 :   CopyFigure(temp_figure, figure);</span></span>
+<span id="L245"><span class="lineNum">     245</span>              : </span>
+<span id="L246"><span class="lineNum">     246</span> <span class="tlaGNC">           3 :   temp_figure[0][0] += i;</span></span>
+<span id="L247"><span class="lineNum">     247</span> <span class="tlaGNC">           3 :   clop = CheckCollision(field, temp_figure);</span></span>
+<span id="L248"><span class="lineNum">     248</span> <span class="tlaGNC">           3 :   if (!clop) {</span></span>
+<span id="L249"><span class="lineNum">     249</span> <span class="tlaGNC">           3 :     CopyFigure(figure, temp_figure);</span></span>
+<span id="L250"><span class="lineNum">     250</span>              :   }</span>
+<span id="L251"><span class="lineNum">     251</span>              : </span>
+<span id="L252"><span class="lineNum">     252</span> <span class="tlaGNC">           3 :   DeleteCopy(&amp;temp_figure);</span></span>
+<span id="L253"><span class="lineNum">     253</span> <span class="tlaGNC">           3 :   return clop;</span></span>
+<span id="L254"><span class="lineNum">     254</span>              : }</span>
+<span id="L255"><span class="lineNum">     255</span>              : </span>
+<span id="L256"><span class="lineNum">     256</span> <span class="tlaGNC">          11 : int Scoring(GameInfo_t *tetris) {</span></span>
+<span id="L257"><span class="lineNum">     257</span> <span class="tlaGNC">          11 :   int a = StringDel(tetris-&gt;field);</span></span>
+<span id="L258"><span class="lineNum">     258</span> <span class="tlaGNC">          11 :   switch (a) {</span></span>
+<span id="L259"><span class="lineNum">     259</span> <span class="tlaGNC">           1 :     case 1:</span></span>
+<span id="L260"><span class="lineNum">     260</span> <span class="tlaGNC">           1 :       tetris-&gt;score += 100;</span></span>
+<span id="L261"><span class="lineNum">     261</span> <span class="tlaGNC">           1 :       break;</span></span>
+<span id="L262"><span class="lineNum">     262</span> <span class="tlaGNC">           1 :     case 2:</span></span>
+<span id="L263"><span class="lineNum">     263</span> <span class="tlaGNC">           1 :       tetris-&gt;score += 300;</span></span>
+<span id="L264"><span class="lineNum">     264</span> <span class="tlaGNC">           1 :       break;</span></span>
+<span id="L265"><span class="lineNum">     265</span> <span class="tlaGNC">           1 :     case 3:</span></span>
+<span id="L266"><span class="lineNum">     266</span> <span class="tlaGNC">           1 :       tetris-&gt;score += 700;</span></span>
+<span id="L267"><span class="lineNum">     267</span> <span class="tlaGNC">           1 :       break;</span></span>
+<span id="L268"><span class="lineNum">     268</span> <span class="tlaGNC">           2 :     case 4:</span></span>
+<span id="L269"><span class="lineNum">     269</span> <span class="tlaGNC">           2 :       tetris-&gt;score += 1500;</span></span>
+<span id="L270"><span class="lineNum">     270</span> <span class="tlaGNC">           2 :       break;</span></span>
+<span id="L271"><span class="lineNum">     271</span> <span class="tlaGNC">           6 :     default:</span></span>
+<span id="L272"><span class="lineNum">     272</span> <span class="tlaGNC">           6 :       break;</span></span>
+<span id="L273"><span class="lineNum">     273</span>              :   }</span>
+<span id="L274"><span class="lineNum">     274</span> <span class="tlaGNC">          11 :   if (tetris-&gt;score &gt; tetris-&gt;high_score) {</span></span>
+<span id="L275"><span class="lineNum">     275</span> <span class="tlaGNC">           5 :     tetris-&gt;high_score = tetris-&gt;score;</span></span>
+<span id="L276"><span class="lineNum">     276</span>              :   }</span>
+<span id="L277"><span class="lineNum">     277</span> <span class="tlaGNC">          11 :   GetSetInfo(tetris, PUSH);</span></span>
+<span id="L278"><span class="lineNum">     278</span> <span class="tlaGNC">          11 :   return 0;</span></span>
+<span id="L279"><span class="lineNum">     279</span>              : }</span>
+<span id="L280"><span class="lineNum">     280</span>              : </span>
+<span id="L281"><span class="lineNum">     281</span>              : // score deletai</span>
+<span id="L282"><span class="lineNum">     282</span> <span class="tlaGNC">           1 : int FileScoreInput(</span></span>
+<span id="L283"><span class="lineNum">     283</span>              :     char *name,</span>
+<span id="L284"><span class="lineNum">     284</span>              :     GameInfo_t *info) {  </span>
+<span id="L285"><span class="lineNum">     285</span>              :   FILE *fp;</span>
+<span id="L286"><span class="lineNum">     286</span>              :   // strcat(name, &quot;.txt&quot;);</span>
+<span id="L287"><span class="lineNum">     287</span>              :   char filename[64];</span>
+<span id="L288"><span class="lineNum">     288</span> <span class="tlaGNC">           1 :   snprintf(filename, sizeof(filename), &quot;%s.txt&quot;, name);</span></span>
+<span id="L289"><span class="lineNum">     289</span> <span class="tlaGNC">           1 :   if ((fp = fopen(filename, &quot;r+&quot;)) == NULL) {</span></span>
+<span id="L290"><span class="lineNum">     290</span> <span class="tlaUNC">           0 :     fp = fopen(filename, &quot;w+&quot;);</span></span>
+<span id="L291"><span class="lineNum">     291</span>              :   }  // добавить проверок на всякое</span>
+<span id="L292"><span class="lineNum">     292</span>              :   // fgets(score, 100, fp);</span>
+<span id="L293"><span class="lineNum">     293</span>              :   // int fs=atoi(score);</span>
+<span id="L294"><span class="lineNum">     294</span> <span class="tlaGNC">           1 :   if (info-&gt;high_score &lt;= info-&gt;score) {</span></span>
+<span id="L295"><span class="lineNum">     295</span> <span class="tlaUNC">           0 :     fprintf(fp, &quot;%d&quot;, info-&gt;high_score);</span></span>
+<span id="L296"><span class="lineNum">     296</span>              :   }</span>
+<span id="L297"><span class="lineNum">     297</span>              :   // itoa(info-&gt;high_score, info-&gt;score,10);</span>
+<span id="L298"><span class="lineNum">     298</span>              :   // fputs(info-&gt;score, fp);</span>
+<span id="L299"><span class="lineNum">     299</span>              : </span>
+<span id="L300"><span class="lineNum">     300</span> <span class="tlaGNC">           1 :   fclose(fp);</span></span>
+<span id="L301"><span class="lineNum">     301</span> <span class="tlaGNC">           1 :   return 0;</span></span>
+<span id="L302"><span class="lineNum">     302</span>              : }</span>
+<span id="L303"><span class="lineNum">     303</span>              : </span>
+<span id="L304"><span class="lineNum">     304</span> <span class="tlaGNC">          14 : int **UpdateFigure() {</span></span>
+<span id="L305"><span class="lineNum">     305</span>              :   static int **figure;</span>
+<span id="L306"><span class="lineNum">     306</span>              :   static int flag = 1;</span>
+<span id="L307"><span class="lineNum">     307</span> <span class="tlaGNC">          14 :   if (flag) {</span></span>
+<span id="L308"><span class="lineNum">     308</span> <span class="tlaGNC">           6 :     figure = CreateCopy();</span></span>
+<span id="L309"><span class="lineNum">     309</span> <span class="tlaGNC">           6 :     flag = 0;</span></span>
+<span id="L310"><span class="lineNum">     310</span>              :   }</span>
+<span id="L311"><span class="lineNum">     311</span>              :   // figure = CreateCopy();</span>
+<span id="L312"><span class="lineNum">     312</span> <span class="tlaGNC">          14 :   return figure;</span></span>
+<span id="L313"><span class="lineNum">     313</span>              : }</span>
+<span id="L314"><span class="lineNum">     314</span>              : </span>
+<span id="L315"><span class="lineNum">     315</span>              : </span>
+<span id="L316"><span class="lineNum">     316</span> <span class="tlaGNC">           9 : void ZeroingAll(GameInfo_t *tetris) {</span></span>
+<span id="L317"><span class="lineNum">     317</span> <span class="tlaGNC">           9 :   ZeroingTemp(tetris-&gt;field);</span></span>
+<span id="L318"><span class="lineNum">     318</span> <span class="tlaGNC">           9 :   tetris-&gt;score = 0;</span></span>
+<span id="L319"><span class="lineNum">     319</span> <span class="tlaGNC">           9 :   tetris-&gt;speed = 0;</span></span>
+<span id="L320"><span class="lineNum">     320</span> <span class="tlaGNC">           9 :   tetris-&gt;level = 0;</span></span>
+<span id="L321"><span class="lineNum">     321</span> <span class="tlaGNC">           9 :   tetris-&gt;pause = 0;</span></span>
+<span id="L322"><span class="lineNum">     322</span> <span class="tlaGNC">           9 :   Figuring(tetris-&gt;next, rand() % COUNTFIGURE);</span></span>
+<span id="L323"><span class="lineNum">     323</span> <span class="tlaGNC">           9 :   GetSetInfo(tetris, PUSH);</span></span>
+<span id="L324"><span class="lineNum">     324</span> <span class="tlaGNC">           9 : }</span></span>
+<span id="L325"><span class="lineNum">     325</span>              : </span>
+<span id="L326"><span class="lineNum">     326</span> <span class="tlaGNC">          49 : GameInfo_t GetSetInfo(GameInfo_t *info, int push) {  // not included</span></span>
+<span id="L327"><span class="lineNum">     327</span>              :   static GameInfo_t game_info;</span>
+<span id="L328"><span class="lineNum">     328</span>              :   // static int** figure;</span>
+<span id="L329"><span class="lineNum">     329</span> <span class="tlaGNC">          49 :   if (push) {</span></span>
+<span id="L330"><span class="lineNum">     330</span> <span class="tlaGNC">          38 :     game_info = *info;</span></span>
+<span id="L331"><span class="lineNum">     331</span>              :   } else {</span>
+<span id="L332"><span class="lineNum">     332</span> <span class="tlaGNC">          11 :     *info = game_info;</span></span>
+<span id="L333"><span class="lineNum">     333</span>              :   }</span>
+<span id="L334"><span class="lineNum">     334</span> <span class="tlaGNC">          49 :   return game_info;</span></span>
+<span id="L335"><span class="lineNum">     335</span>              : }</span>
+<span id="L336"><span class="lineNum">     336</span>              : </span>
+<span id="L337"><span class="lineNum">     337</span> <span class="tlaGNC">          12 : int InitTetris(GameInfo_t* tetris){</span></span>
+<span id="L338"><span class="lineNum">     338</span> <span class="tlaGNC">          12 :   tetris-&gt;pause = 0;</span></span>
+<span id="L339"><span class="lineNum">     339</span> <span class="tlaGNC">          12 :   tetris-&gt;score = 0;</span></span>
+<span id="L340"><span class="lineNum">     340</span> <span class="tlaGNC">          12 :   tetris-&gt;high_score = 0;</span></span>
+<span id="L341"><span class="lineNum">     341</span> <span class="tlaGNC">          12 :   FileScore(&quot;user&quot;, tetris);</span></span>
+<span id="L342"><span class="lineNum">     342</span> <span class="tlaGNC">          12 :   tetris-&gt;level = 0;</span></span>
+<span id="L343"><span class="lineNum">     343</span> <span class="tlaGNC">          12 :   tetris-&gt;field = CreateField();</span></span>
+<span id="L344"><span class="lineNum">     344</span> <span class="tlaGNC">          12 :   tetris-&gt;next = CreateCopy();</span></span>
+<span id="L345"><span class="lineNum">     345</span>              :   </span>
+<span id="L346"><span class="lineNum">     346</span> <span class="tlaGNC">          12 :   return 0;//поменять на возможный вывод ошибок</span></span>
+<span id="L347"><span class="lineNum">     347</span>              : }</span>
         </pre>
               </td>
             </tr>

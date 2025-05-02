@@ -1,6 +1,8 @@
-#ifndef LIBSPEC_H
-#define LIBSPEC_H
+#ifndef LIB_SPECIFICATION_H
+#define LIB_SPECIFICATION_H
+
 #include <stdbool.h>
+
 typedef enum {
   Start,  // 0
   Pause,
@@ -13,8 +15,7 @@ typedef enum {
 } UserAction_t;
 
 typedef struct {
-  int** field;  /// поле для отрисовки
-  // int** figure;
+  int** field;     /// поле для отрисовки
   int** next;      /// следующая фигура
   int score;       /// счёт игры
   int high_score;  /// счёт из файла "ИмяИгрока" или максимальный в игре
@@ -26,4 +27,4 @@ typedef struct {
 void userInput(UserAction_t action, bool hold);
 GameInfo_t updateCurrentState();
 
-#endif
+#endif  // LIB_SPECIFICATION_H

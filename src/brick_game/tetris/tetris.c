@@ -1,7 +1,7 @@
 #include "../../inc/backend.h"
 #include "../../inc/front.h"
-void get_state(fsm_t *state, int push) {
-  static fsm_t stat = -1;
+void get_state(FSM *state, int push) {
+  static FSM stat = -1;
   if (push) {
     stat = *state;
   } else {
@@ -10,59 +10,50 @@ void get_state(fsm_t *state, int push) {
 }
 
 void userInput(UserAction_t action, bool hold) {  // not declaration
-  GameInfo_t game_info = get_set_info(&game_info, PULL);
-  fsm_t state;
-
-  // if(game_info.pause){game_info.field[19][1]='P';} else
-  // game_info.field[19][1]='D';
+  GameInfo_t game_info = GetSetInfo(&game_info, PULL);
+  FSM state=Hello;
   if (!(state == Goodbye || game_info.pause)) {
-    // game_info.field[19][9]='G';
-    state = just_state(action, &game_info, hold);
+    state = JustState(action, &game_info, hold);
   }
   if (action == Pause) {
-    // game_info.field[19][9]='T';
-    // game_info.high_score++;
     game_info.pause = !game_info.pause;
   }
   if (action == Terminate) {
     state = Goodbye;
   }
 
-  get_set_info(&game_info, PUSH);
+  GetSetInfo(&game_info, PUSH);
   get_state(&state, PUSH);
 }
 
 GameInfo_t updateCurrentState() {
   GameInfo_t info_t;
-  //  get_set_info(&info_t, PULL);
+  //  GetSetInfo(&info_t, PULL);
 
-  return get_set_info(&info_t, PULL);
+  return GetSetInfo(&info_t, PULL);
 }
 
 int main(void) {
-  WINDOW *board, *infopole;
-  drawUI(&board, &infopole);
+  WINDOW *board, *info_field;
+  Draw(&board, &info_field);
   srand(time(NULL));
-  fsm_t state = Hello;
+  
+  FSM state = Hello;
   UserAction_t signal = ERR;
 
   GameInfo_t tetris;
-  init_tetris(&tetris);
-  get_set_info(&tetris, PUSH);
-  // int ** figure = updatefigure();
-  // figure = createcopy(); // заменить
-  // функция инициализации
-
+  InitTetris(&tetris);
+  GetSetInfo(&tetris, PUSH);
   while (state != Goodbye) {
     bool hold = 0;
     signal = Uzvering(signal, &hold);
     userInput(signal, hold);
     get_state(&state, PULL);
-    // just_state(UserAction_t signal, GameInfo_t * info, bool hold );
-    gameprint(board, infopole, updateCurrentState(), "user");  // char *name
+    // JustState(UserAction_t signal, GameInfo_t * info, bool hold );
+    GamePrint(board, info_field, updateCurrentState(), "user");  // char *name
   }
 
-  fileScoreinput("user", &tetris);
+  FileScoreInput("user", &tetris);
 
   endwin();
   printf("%s %s %d\n", "user", "\n", tetris.high_score);    // убрать

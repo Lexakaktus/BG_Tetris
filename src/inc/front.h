@@ -1,10 +1,10 @@
 #ifndef FRONT_H
 #define FRONT_H
 
-// #include "backend.h" ///разобраться с этим !!!
 #include <ncurses.h>
 
-#include "libspec.h"
+#include "lib_specification.h"
+
 #define MAXROWS 20
 #define MAXCOLS 10
 #define COUNTCOORDINATE 5
@@ -12,11 +12,11 @@
 #define COUNTDIMENSION 2
 
 UserAction_t Uzvering(UserAction_t action, bool *hold);  // void userInput
-int infoprint(WINDOW *infopole, GameInfo_t tetris, char *name);
-int nfigprint(WINDOW *infopole, GameInfo_t tetris);
-int fieldprint(WINDOW *board, GameInfo_t tetris);
+int InfoPrint(WINDOW *info_window, GameInfo_t tetris, char *name);
+int NewFigurePrint(WINDOW *info_window, GameInfo_t tetris);
+int FieldPrint(WINDOW *board, GameInfo_t tetris);
+void Draw(WINDOW **board, WINDOW **info_window);
+int GamePrint(WINDOW *board, WINDOW *info_window, GameInfo_t tetris,
+              char *name);
 
-void drawUI(WINDOW **board, WINDOW **infopole);
-int gameprint(WINDOW *board, WINDOW *infopole, GameInfo_t tetris, char *name);
-
-#endif
+#endif  // FRONT_H

@@ -3,10 +3,20 @@
 #include <string.h>
 
 #include "inc/backend.h"
-#include "inc/libspec.h"
+#include "inc/lib_specification.h"
+
+static const int figure_home[COUNTFIGURE][COUNTCOORDINATE][2] /*{x,y}*/ = {
+    {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},   //   -.
+    {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}},   // |  I
+    {{5, 0}, {0, 0}, {0, 1}, {1, 0}, {-1, 0}},   // .|.
+    {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 0}},    /// ::
+    {{5, 0}, {0, 0}, {-1, 0}, {-1, 1}, {1, 0}},  // .-
+    {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {-1, 0}},   // Z
+    {{5, 0}, {0, 0}, {0, 1}, {-1, 1}, {1, 0}}    //! Z
+};
 
 START_TEST(test_Figuring) {
-  int **figure = createpole();
+  int **figure = CreateField();
   int index = 0;
 
   Figuring(figure, index);
@@ -16,9 +26,9 @@ START_TEST(test_Figuring) {
 }
 END_TEST
 
-START_TEST(test_zeroing_temp) {
-  int **field = createpole();
-  zeroing_temp(field);
+START_TEST(test_ZeroingTemp) {
+  int **field = CreateField();
+  ZeroingTemp(field);
 
   int zero_count = 0;
   for (int i = 0; i < MAXROWS; i++) {
@@ -30,334 +40,239 @@ START_TEST(test_zeroing_temp) {
   }
 
   ck_assert_int_eq(zero_count, MAXROWS * MAXCOLS);
-  deletepole(&field);
+  DeleteField(&field);
 }
 END_TEST
 
-// START_TEST(test_sumField) {
-//   int **field1 = createpole();
-//   int **field2 = createpole();
 
-//   // Заполняем field1
-//   field1[0][0] = 'X';
-
-//   sumField(field1, field2);
-
-//   ck_assert_int_eq(field1[0][0], field2[0][0]);
-
-//   deletecopy(field1);
-//   deletecopy(field2);
-// }
-// END_TEST
-
-START_TEST(test_sumFigure) {
-  int **field = createpole();
-  int **figure = createcopy();
+START_TEST(test_SumFigure) {
+  int **field = CreateField();
+  int **figure = CreateCopy();
   Figuring(figure, 1);
-
-  // Сначала проверим, что нет столкновений
-  int clop = sumFigure(field, figure);
-
-  // Поле обновляется, если нет столкновений
+  int clop = SumFigure(field, figure);
   ck_assert_int_eq(clop, 0);
 
-  deletepole(&field);
+  DeleteField(&field);
 }
 END_TEST
 
-START_TEST(test_subFigure) {
-  int **field = createpole();
-  int **figure = createcopy();
+START_TEST(test_SubFigure) {
+  int **field = CreateField();
+  int **figure = CreateCopy();
   Figuring(figure, 3);
-
-  // Сначала добавим фигуру
-  sumFigure(field, figure);
-
-  // Удалим фигуру
-  int clop = subFigure(field, figure);
-
-  // Поле должно быть очищено
+  SumFigure(field, figure);
+  int clop = SubFigure(field, figure);
   ck_assert_int_eq(field[5][0], '.');
   ck_assert_int_eq(clop, 0);
-  deletepole(&field);
+  DeleteField(&field);
 }
 END_TEST
 
 START_TEST(test_moveCols) {
-  int **field = createpole();
-  int **figure = createcopy();
+  int **field = CreateField();
+  int **figure = CreateCopy();
   Figuring(figure, 3);
-
-  // Сдвиг вправо
-  int clop = moveCols2(field, figure, 1);
-  ck_assert_int_eq(clop, 0); // Столкновений быть не должно
-
-  deletepole(&field);
+  int clop = MoveCols(field, figure, 1);
+  ck_assert_int_eq(clop, 0); 
+  DeleteField(&field);
 }
 END_TEST
 
 START_TEST(test_rotateCols) {
-  int **field = createpole();
-  int **figure = createcopy();
+  int **field = CreateField();
+  int **figure = CreateCopy();
   Figuring(figure, 3);
-
-  // Поворот фигуры
-  int clop = rotateCols2(field, figure);
-  ck_assert_int_eq(clop, 0); // Столкновений быть не должно
-
-  deletepole(&field);
+  int clop = RotateCols(field, figure);
+  ck_assert_int_eq(clop, 0);
+  DeleteField(&field);
 }
 END_TEST
 
-START_TEST(test_stringDel) {
-  int **field = createpole();
-
-  // Заполним несколько строк
+START_TEST(test_StringDel) {
+  int **field = CreateField();
   for (int i = 0; i < MAXCOLS; i++) {
     field[0][i] = 'I';
   }
-
-  int delCount = stringDel(field);
-
-  // Проверим, что одна строка была удалена
+  int delCount = StringDel(field);
   ck_assert_int_eq(delCount, 1);
 
-  deletepole(&field);
+  DeleteField(&field);
 }
 END_TEST
 
-START_TEST(test_checkCollision) {
-  int **field = createpole();
-  int **figure = createcopy();
+START_TEST(test_CheckCollision) {
+  int **field = CreateField();
+  int **figure = CreateCopy();
   Figuring(figure, 3);
-
-  // Поставим фигуру на поле
-  sumFigure(field, figure);
-
-  // Проверим столкновение
-  int clop = checkCollision(field, figure);
-
+  SumFigure(field, figure);
+  int clop = CheckCollision(field, figure);
   ck_assert_int_eq(clop, 1);
-
-  deletepole(&field);
+  DeleteField(&field);
 }
 END_TEST
 
-START_TEST(test_createcopy) {
-  int **copy = createcopy();
-
-  // Проверим, что копия была успешно создана
+START_TEST(test_CreateCopy) {
+  int **copy = CreateCopy();
   ck_assert_ptr_nonnull(copy);
-
-  // Очистим память
-  deletecopy(&copy);
+  DeleteCopy(&copy);
 }
 END_TEST
 
-START_TEST(test_deletecopy) {
-  int **copy = createcopy();
-  deletecopy(&copy);
-
-  // Проверим, что память была освобождена
+START_TEST(test_DeleteCopy) {
+  int **copy = CreateCopy();
+  DeleteCopy(&copy);
   ck_assert_ptr_null(copy);
 }
 END_TEST
 
 START_TEST(test_curtsy) {
-  int **field = createpole();
-  int **figure = createcopy();
-  // deletecopy(&copy);
+  int **field = CreateField();
+  int **figure = CreateCopy();
   Figuring(figure, 0);
-  curtsy2(field, figure, 1);
-  // Проверим, что память была освобождена
-  // ck_assert_ptr_null(copy);
+  Curtsy(field, figure, 1);
   ck_assert_int_eq(figure[0][1], 1);
-  deletecopy(&figure);
-  deletepole(&field);
+  DeleteCopy(&figure);
+  DeleteField(&field);
 }
 END_TEST
 
 START_TEST(test_curtsy_bad_arg) {
-  int **field = createpole();
-  int **figure = createcopy();
-  // deletecopy(&copy);
+  int **field = CreateField();
+  int **figure = CreateCopy();
   Figuring(figure, 0);
-  int clop = curtsy2(field, figure, 0);
-  // Проверим, что память была освобождена
-  // ck_assert_ptr_null(copy);
+  int clop = Curtsy(field, figure, 0);
   ck_assert_int_ne(clop, 0);
-  deletecopy(&figure);
-  deletepole(&field);
+  DeleteCopy(&figure);
+  DeleteField(&field);
 }
 END_TEST
 
 START_TEST(test_figure_Down2) {
-  int **field = createpole();
-  int **figure = createcopy();
-  // deletecopy(&copy);
+  int **field = CreateField();
+  int **figure = CreateCopy();
   Figuring(figure, 0);
-  curtsy2(field, figure, 17);
-  ck_assert_int_eq(FigureDown2(field, figure), 0);
-  curtsy2(field, figure, 1);
-  // Проверим, что память была освобождена
-  // ck_assert_ptr_null(copy);
-
-  ck_assert_int_ne(FigureDown2(field, figure), 0);
-  deletecopy(&figure);
-  deletepole(&field);
+  Curtsy(field, figure, 17);
+  ck_assert_int_eq(FigureDown(field, figure), 0);
+  Curtsy(field, figure, 1);
+  ck_assert_int_ne(FigureDown(field, figure), 0);
+  DeleteCopy(&figure);
+  DeleteField(&field);
 }
 END_TEST 
 
-START_TEST(test_scoring) {
-  // int **field = createpole();
-  // int **figure = createcopy();
-  // deletecopy(&copy);
+START_TEST(test_Scoring) {
   GameInfo_t  tetris;
-  init_tetris(&tetris);
-  scoring(&tetris);
-
-  // ck_assert_int_eq(FigureDown2(field, figure), 0);
-  // curtsy2(field, figure, 1);
-  // Проверим, что память была освобождена
-  // ck_assert_ptr_null(copy);
+  InitTetris(&tetris);
+  Scoring(&tetris);
   for (int i=0;i<1;i++){
     for (int j=0;j<10;j++){
       tetris.field[i][j]='I';
     }
   }
-  scoring(&tetris);
+  Scoring(&tetris);
   ck_assert_int_eq(tetris.score, 100);
-  // ck_assert_int_ne(FigureDown2(field, figure), 0);
-  // deletecopy(&figure);
-  deletepole(&(tetris.field));
+  DeleteField(&(tetris.field));
 }
 END_TEST 
 
-START_TEST(test_scoring_2) {
-  // int **field = createpole();
-  // int **figure = createcopy();
-  // deletecopy(&copy);
+START_TEST(test_Scoring_2) {
   GameInfo_t  tetris;
-  init_tetris(&tetris);
-  scoring(&tetris);
-
-  // ck_assert_int_eq(FigureDown2(field, figure), 0);
-  // curtsy2(field, figure, 1);
-  // Проверим, что память была освобождена
-  // ck_assert_ptr_null(copy);
+  InitTetris(&tetris);
+  Scoring(&tetris);
   for (int i=0;i<2;i++){
     for (int j=0;j<10;j++){
       tetris.field[i][j]='I';
     }
   }
-  scoring(&tetris);
+  Scoring(&tetris);
   ck_assert_int_eq(tetris.score, 300);
-  // ck_assert_int_ne(FigureDown2(field, figure), 0);
-  // deletecopy(&figure);
-  deletepole(&(tetris.field));
+  DeleteField(&(tetris.field));
 }
 
-START_TEST(test_scoring_3) {
-  // int **field = createpole();
-  // int **figure = createcopy();
-  // deletecopy(&copy);
+START_TEST(test_Scoring_3) {
   GameInfo_t  tetris;
-  init_tetris(&tetris);
-  scoring(&tetris);
-
-  // ck_assert_int_eq(FigureDown2(field, figure), 0);
-  // curtsy2(field, figure, 1);
-  // Проверим, что память была освобождена
-  // ck_assert_ptr_null(copy);
+  InitTetris(&tetris);
+  Scoring(&tetris);
   for (int i=0;i<3;i++){
     for (int j=0;j<10;j++){
       tetris.field[i][j]='I';
     }
   }
-  scoring(&tetris);
+  Scoring(&tetris);
   ck_assert_int_eq(tetris.score, 700);
-  // ck_assert_int_ne(FigureDown2(field, figure), 0);
-  // deletecopy(&figure);
-  deletepole(&(tetris.field));
+  DeleteField(&(tetris.field));
 }
 
-START_TEST(test_scoring_4) {
+START_TEST(test_Scoring_4) {
   GameInfo_t  tetris;
-  init_tetris(&tetris);
-  scoring(&tetris);
+  InitTetris(&tetris);
+  Scoring(&tetris);
   for (int i=0;i<4;i++){
     for (int j=0;j<10;j++){
       tetris.field[i][j]='I';
     }
   }
-  scoring(&tetris);
+  Scoring(&tetris);
   ck_assert_int_eq(tetris.score, 1500);
-  // ck_assert_int_ne(FigureDown2(field, figure), 0);
-  deletecopy(&(tetris.next));
-  deletepole(&(tetris.field));
+  DeleteCopy(&(tetris.next));
+  DeleteField(&(tetris.field));
 }
 
-START_TEST(test_zeroing_all) {
+START_TEST(test_ZeroingAll) {
   GameInfo_t  tetris;
-  init_tetris(&tetris);
+  InitTetris(&tetris);
   for (int i=0;i<4;i++){
     for (int j=0;j<10;j++){
       tetris.field[i][j]='I';
     }
   }
-  scoring(&tetris);
+  Scoring(&tetris);
   ck_assert_int_eq(tetris.score, 1500);
-  zeroing_all(&tetris);
+  ZeroingAll(&tetris);
   ck_assert_int_eq(tetris.score, 0);
-  // ck_assert_int_ne(FigureDown2(field, figure), 0);
-  deletecopy(&(tetris.next));
-  deletepole(&(tetris.field));
+  DeleteCopy(&(tetris.next));
+  DeleteField(&(tetris.field));
 }
 
-START_TEST(test_Hellostate) {
+START_TEST(test_HelloState) {
   GameInfo_t  tetris;
-  init_tetris(&tetris);
-  // for (int i=0;i<4;i++){
-  //   for (int j=0;j<10;j++){
-  //     tetris.field[i][j]='I';
-  //   }
-  // }
-  int **figure = updatefigure();
+  InitTetris(&tetris);
+  int **figure = UpdateFigure();
   Figuring(figure, 0);
-  // fsm_t 
-  fsm_t state =Hello;
-  Hellostate(Start, & state);
+  // FSM 
+  FSM state =Hello;
+  HelloState(Start, & state);
   ck_assert_int_eq(state, Hello);
-  Hellostate(Terminate, & state);
-  ck_assert_int_eq(state, Gameover);
-  Hellostate(Action, & state);
+  HelloState(Terminate, & state);
+  ck_assert_int_eq(state, GameOver);
+  HelloState(Action, & state);
   ck_assert_int_eq(state, Spawn);
-  zeroing_all(&tetris);
+  ZeroingAll(&tetris);
   ck_assert_int_eq(tetris.score, 0);
-  // ck_assert_int_ne(FigureDown2(field, figure), 0);
-  deletecopy(&(tetris.next));
-  deletepole(&(tetris.field));
+  // ck_assert_int_ne(FigureDown(field, figure), 0);
+  DeleteCopy(&(tetris.next));
+  DeleteField(&(tetris.field));
 }
 
-START_TEST(test_Spawnstate) {
+START_TEST(test_SpawnState) {
   GameInfo_t  tetris;
-  init_tetris(&tetris);
+  InitTetris(&tetris);
 
-  int **figure = updatefigure();
+  int **figure = UpdateFigure();
   Figuring(figure, 0);
-  // fsm_t 
-  fsm_t state =Hello;
-  Spawnstate(&tetris, & state);
+  // FSM 
+  FSM state =Hello;
+  SpawnState(&tetris, & state);
   ck_assert_int_eq(state, Moving);
-  // Spawnstate(Terminate, & state);
-  // ck_assert_int_eq(state, Gameover);
-  // Spawnstate(Action, & state);
+  // SpawnState(Terminate, & state);
+  // ck_assert_int_eq(state, GameOver);
+  // SpawnState(Action, & state);
   // ck_assert_int_eq(state, Spawn);
-  zeroing_all(&tetris);
+  ZeroingAll(&tetris);
   ck_assert_int_eq(tetris.score, 0);
-  // ck_assert_int_ne(FigureDown2(field, figure), 0);
-  deletecopy(&(tetris.next));
-  deletepole(&(tetris.field));
+  // ck_assert_int_ne(FigureDown(field, figure), 0);
+  DeleteCopy(&(tetris.next));
+  DeleteField(&(tetris.field));
 }
 
 
@@ -366,114 +281,108 @@ START_TEST(test_Spawnstate) {
 
 
 
-START_TEST(test_Movingstate) {
+START_TEST(test_MovingState) {
   GameInfo_t  tetris;
-  init_tetris(&tetris);
-  get_set_info(&tetris, PUSH);
-  int **figure = updatefigure();
+  InitTetris(&tetris);
+  GetSetInfo(&tetris, PUSH);
+  int **figure = UpdateFigure();
   Figuring(figure, 0);
-  fsm_t state =Hello;
-  Movingstate(&tetris, & state, Left);
+  FSM state =Hello;
+  MovingState(&tetris, & state, Left);
   ck_assert_int_eq(tetris.field[0][3], 'I');
-  Movingstate(&tetris, & state, Right);
+  MovingState(&tetris, & state, Right);
   ck_assert_int_eq(tetris.field[0][3], '.');
     // sleep(7);
   for (volatile long i = 0; i < 100000000; ++i);
-  Movingstate(&tetris, & state, Start);
+  MovingState(&tetris, & state, Start);
   ck_assert_int_eq(tetris.field[1][4], 'I');
-  Movingstate(&tetris, & state, Action);
-  Movingstate(&tetris, & state, Down);
+  MovingState(&tetris, & state, Action);
+  MovingState(&tetris, & state, Down);
   ck_assert_int_eq(state, Attaching);
   ck_assert_int_eq(tetris.field[19][4], 'I');
-  zeroing_all(&tetris);
+  ZeroingAll(&tetris);
   ck_assert_int_eq(tetris.score, 0);
-  deletecopy(&(tetris.next));
-  deletepole(&(tetris.field));
+  DeleteCopy(&(tetris.next));
+  DeleteField(&(tetris.field));
 }
 
 
 
-START_TEST(test_Attachingstate) {
+START_TEST(test_AttachingState) {
   GameInfo_t  tetris;
-  init_tetris(&tetris);
-  int **figure = updatefigure();
+  InitTetris(&tetris);
+  int **figure = UpdateFigure();
   Figuring(figure, 0);
-  // fsm_t 
-  fsm_t state =Hello;
-  Attachingstate(&tetris, & state);
+  // FSM 
+  FSM state =Hello;
+  AttachingState(&tetris, & state);
   ck_assert_int_eq(state, Spawn);
   tetris.level=11; ///потом подумать над адекватностью
-  Attachingstate(&tetris, & state);
+  AttachingState(&tetris, & state);
   ck_assert_int_eq(tetris.level, 10);
   tetris.field[0][5] = 'I';
-  Attachingstate(&tetris, & state);
-  ck_assert_int_eq(state, Gameover);
-  zeroing_all(&tetris);
+  AttachingState(&tetris, & state);
+  ck_assert_int_eq(state, GameOver);
+  ZeroingAll(&tetris);
   ck_assert_int_eq(tetris.score, 0);
-  deletecopy(&(tetris.next));
-  deletepole(&(tetris.field));
+  DeleteCopy(&(tetris.next));
+  DeleteField(&(tetris.field));
 }
 
-START_TEST(test_just_state) {
+START_TEST(test_JustState) {
   GameInfo_t  tetris;
-  init_tetris(&tetris);
-  get_set_info(&tetris, PUSH);
-  int **figure = updatefigure();
+  InitTetris(&tetris);
+  GetSetInfo(&tetris, PUSH);
+  int **figure = UpdateFigure();
   Figuring(figure, 0);
-  // fsm_t state =Hello;
-  // for (int i = 0; i <= 10000; i++)
-  // {
-    fsm_t state =just_state( Action,&tetris,0);
-  // }
+  FSM state =JustState( Action,&tetris,0);
   ck_assert_int_eq(state, Spawn);
-  state =just_state( Action,&tetris,0);
+  state =JustState( Action,&tetris,0);
   ck_assert_int_eq(state, Moving);
-  state =just_state( Down,&tetris,0);
+  state =JustState( Down,&tetris,0);
   ck_assert_int_eq(state, Attaching);
   tetris.field[0][5]='I';
-  state =just_state( Down,&tetris,0);
-  ck_assert_int_eq(state, Gameover);
-  state =just_state( Down,&tetris,0);
-// for (volatile long i = 0; i < 100000000; ++i);
-  // just_state(&tetris, &state, Left);
-  // ck_assert_int_eq(tetris.field[0][3], 'I');
-  // Movingstate(&tetris, & state, Right);
-  // ck_assert_int_eq(tetris.field[0][3], '.');
-    // sleep(7);
-  // for (volatile long i = 0; i < 100000000; ++i);
-  // Movingstate(&tetris, & state, Start);
-  // ck_assert_int_eq(tetris.field[1][4], 'I');
-  // Movingstate(&tetris, & state, Action);
-  // Movingstate(&tetris, & state, Down);
-  // ck_assert_int_eq(state, Attaching);
-  // ck_assert_int_eq(tetris.field[19][4], 'I');
-  zeroing_all(&tetris);
+  state =JustState( Down,&tetris,0);
+  ck_assert_int_eq(state, GameOver);
+  state =JustState( Down,&tetris,0);
+  ZeroingAll(&tetris);
   ck_assert_int_eq(tetris.score, 0);
-  deletecopy(&(tetris.next));
-  deletepole(&(tetris.field));
+  DeleteCopy(&(tetris.next));
+  DeleteField(&(tetris.field));
 }
 
-START_TEST(test_Gameoverstate) {
+START_TEST(test_GameOverState) {
   GameInfo_t  tetris;
-  init_tetris(&tetris);
-  int **figure = updatefigure();
+  InitTetris(&tetris);
+  int **figure = UpdateFigure();
   Figuring(figure, 0);
-  // fsm_t 
-  fsm_t state =Hello;
-  Gameoverstate(&tetris, & state, Terminate);
+  // FSM 
+  FSM state =Hello;
+  GameOverState(&tetris, & state, Terminate);
   ck_assert_int_eq(state,Goodbye);
-  Gameoverstate(&tetris, & state, Start);
+  GameOverState(&tetris, & state, Start);
   ck_assert_int_eq(state, Hello);
-  // Gameoverstate(&tetris, & state, Action);
-  // ck_assert_int_eq(state, Spawn);
-  zeroing_all(&tetris);
+  ZeroingAll(&tetris);
   ck_assert_int_eq(tetris.score, 0);
-  // ck_assert_int_ne(FigureDown2(field, figure), 0);
-  deletecopy(&(tetris.next));
-  deletepole(&(tetris.field));
+  DeleteCopy(&(tetris.next));
+  DeleteField(&(tetris.field));
 }
 
-
+START_TEST(test_FileScores) {
+  GameInfo_t tetris;
+  InitTetris(&tetris);
+  GetSetInfo(&tetris, PUSH);
+  tetris.high_score=3000;
+  FileScoreInput("test", &tetris);
+  tetris.high_score=0;
+  ck_assert_int_eq(tetris.high_score, 0);
+  FileScore("test",&tetris);
+  ck_assert_int_eq(tetris.high_score, 3000);
+  ZeroingAll(&tetris);
+  ck_assert_int_eq(tetris.score, 0);
+  DeleteCopy(&(tetris.next));
+  DeleteField(&(tetris.field));
+}
 
 
 
@@ -487,34 +396,32 @@ Suite *mozg_suite(void) {
   tcase_set_timeout(core, 20);
 
   tcase_add_test(core, test_Figuring);
-  tcase_add_test(core, test_zeroing_temp);
-  // tcase_add_test(core, test_sumField);
-  tcase_add_test(core, test_sumFigure);
-  tcase_add_test(core, test_subFigure);
+  tcase_add_test(core, test_ZeroingTemp);
+  tcase_add_test(core, test_SumFigure);
+  tcase_add_test(core, test_SubFigure);
   tcase_add_test(core, test_moveCols);
   tcase_add_test(core, test_rotateCols);
-  tcase_add_test(core, test_stringDel);
-  tcase_add_test(core, test_checkCollision);
-  tcase_add_test(core, test_createcopy);
-  tcase_add_test(core, test_deletecopy);
+  tcase_add_test(core, test_StringDel);
+  tcase_add_test(core, test_CheckCollision);
+  tcase_add_test(core, test_CreateCopy);
+  tcase_add_test(core, test_DeleteCopy);
 
   tcase_add_test(core, test_curtsy);
   tcase_add_test(core, test_curtsy_bad_arg);
   tcase_add_test(core, test_figure_Down2);
-  tcase_add_test(core, test_scoring);
-  tcase_add_test(core, test_scoring_2);
-  tcase_add_test(core, test_scoring_3);
-  tcase_add_test(core, test_scoring_4);
-  tcase_add_test(core, test_zeroing_all);
-  tcase_add_test(core, test_Hellostate);
-  tcase_add_test(core, test_Spawnstate);
-  tcase_add_test(core, test_Movingstate);
+  tcase_add_test(core, test_Scoring);
+  tcase_add_test(core, test_Scoring_2);
+  tcase_add_test(core, test_Scoring_3);
+  tcase_add_test(core, test_Scoring_4);
+  tcase_add_test(core, test_ZeroingAll);
+  tcase_add_test(core, test_HelloState);
+  tcase_add_test(core, test_SpawnState);
+  tcase_add_test(core, test_MovingState);
 
-  tcase_add_test(core, test_Attachingstate);
-  tcase_add_test(core, test_Gameoverstate);
-  tcase_add_test(core, test_just_state);
-  // tcase_add_test(core, test_curtsy_bad_arg);
-  // tcase_add_test(core, test_curtsy_bad_arg);
+  tcase_add_test(core, test_AttachingState);
+  tcase_add_test(core, test_GameOverState);
+  tcase_add_test(core, test_JustState);
+  tcase_add_test(core, test_FileScores);
 
   suite_add_tcase(suite, core);
 

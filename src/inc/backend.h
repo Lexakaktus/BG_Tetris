@@ -8,29 +8,19 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "libspec.h"
+#include "lib_specification.h"
 
 #define MAXROWS 20
 #define MAXCOLS 10
 #define COUNTCOORDINATE 5
 #define COUNTFIGURE 7
 #define COUNTDIMENSION 2
-#define FALL_DELAY 50000  // 0,5 sec?
+#define FALL_DELAY 50000  // 0,5 sec
 #define QUIT_DELAY 6000000 * 10
 #define PULL 0
 #define PUSH 1
 #define COLLIDE 1
-#define BAD_ARGUMENT 2
-
-static const int figure_home[COUNTFIGURE][COUNTCOORDINATE][2] /*{x,y}*/ = {
-    {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},   //   -.
-    {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}},   // |  I
-    {{5, 0}, {0, 0}, {0, 1}, {1, 0}, {-1, 0}},   // .|.
-    {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 0}},    /// ::
-    {{5, 0}, {0, 0}, {-1, 0}, {-1, 1}, {1, 0}},  // .-
-    {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {-1, 0}},   // Z
-    {{5, 0}, {0, 0}, {0, 1}, {-1, 1}, {1, 0}}    //! Z
-};
+#define BAD_ARGUMENT 2  //
 
 typedef enum {
   Hello,  // 0
@@ -38,53 +28,45 @@ typedef enum {
   Moving,
   Attaching,
   //   Paus,
-  Gameover,
+  GameOver,
   Goodbye  // временно
-} fsm_t;
+} FSM;
 
-void sumField(
-    int** Field,
-    int** FieldTwo);  // прибавление поля с приклеившимися фигурами ///
-/// к полю для отрисовки использовать перед sumfigure!!!
-
-int sumFigure(int** Field,
-              int** figure);  // прибавление фигуры к полю перед отрисовкой
-int subFigure(int** Field, int** Figure);  // вычитание фигуры из поля обратноd
-int curtsy(int** Figure, int i);  // понижение фигуры
-void zeroing_temp(
-    int** Field);  // обнуление поля для отрисовки(да и другого при желании)
-void Figuring(
-    int** figure,
-    int index);  // заполнение следующей и текущей фигур изначальными //
+// прибавление фигуры к полю перед отрисовкой
+int SumFigure(int** field, int** figure);
+// вычитание фигуры из поля обратноd
+int SubFigure(int** field, int** figure);
+// обнуление поля для отрисовки(да и другого при желании)
+void ZeroingTemp(int** field);
+// заполнение следующей и текущей фигур изначальными //
 // координатами (позже усложнить до одной из 7ми фигур)
+void Figuring(int** figure, int index);
 
-int stringDel(int** Field);
-int fileScore(char* name, char* score, GameInfo_t* info);
-// int FigureDown(int** Field, int** Figure);
+int StringDel(int** field);
+int FileScore(char* name, GameInfo_t* info);
+int FigureDown(int** field, int** figure);
 
-int FigureDown2(int** Field, int** Figure);
+int CheckCollision(int** field, int** figure);
+void CopyFigure(int** dest, int** src);
+int** CreateCopy();
+int DeleteCopy(int*** copy);  // where deletefield?
+int DeleteField(int*** copy);
+int Curtsy(int** field, int** figure, int i);
+int RotateCols(int** field, int** figure);
+int MoveCols(int** field, int** figure, int i);
+int Scoring(GameInfo_t* tetris);
+int FileScoreInput(char* name, GameInfo_t* info);
+int** CreateField();
 
-int checkCollision(int** Field, int** Figure);
-void copyFigure(int** dest, int** src);
-int** createcopy();
-int deletecopy(int*** copy);  // where deleteField?
-int deletepole(int*** copy);
-int curtsy2(int** Field, int** Figure, int i);
-int rotateCols2(int** Field, int** Figure);
-int moveCols2(int** Field, int** Figure, int i);
-int scoring(GameInfo_t* tetris);
-int fileScoreinput(char* name, GameInfo_t* info);
-int** createpole();
+void HelloState(UserAction_t signal, FSM* state);
+void SpawnState(GameInfo_t* info, FSM* state);
+void MovingState(GameInfo_t* info, FSM* state, UserAction_t signal);
+void AttachingState(GameInfo_t* info, FSM* state);
+void GameOverState(GameInfo_t* info, FSM* state, UserAction_t signal);
+FSM JustState(UserAction_t signal, GameInfo_t* info, bool hold);
 
-void Hellostate(UserAction_t signal, fsm_t* state);
-void Spawnstate(GameInfo_t* info, fsm_t* state);
-void Movingstate(GameInfo_t* info, fsm_t* state, UserAction_t signal);
-void Attachingstate(GameInfo_t* info, fsm_t* state);
-void Gameoverstate(GameInfo_t* info, fsm_t* state, UserAction_t signal);
-fsm_t just_state(UserAction_t signal, GameInfo_t* info, bool hold);
-
-int** updatefigure();
-void zeroing_all(GameInfo_t* x);
-GameInfo_t get_set_info(GameInfo_t* info, int push);
-int init_tetris(GameInfo_t* tetris);
-#endif
+int** UpdateFigure();
+void ZeroingAll(GameInfo_t* tetris);
+GameInfo_t GetSetInfo(GameInfo_t* info, int push);
+int InitTetris(GameInfo_t* tetris);
+#endif  // BACKEND_H
