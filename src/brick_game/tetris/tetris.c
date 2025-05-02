@@ -86,8 +86,5 @@ int main(void) {
   FileScoreInput("user", &tetris);
 
   endwin();
-  printf("%s %s %d\n", "user", "\n", tetris.high_score);    // убрать
-  printf("%s %d", "you lose\nyour score: ", tetris.score);  // убрать
-
   return 0;
 }
