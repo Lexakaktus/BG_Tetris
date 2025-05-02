@@ -19,6 +19,8 @@ START_TEST(test_Figuring) {
 
   ck_assert_int_eq(figure[0][0], figure_home[index][0][0]);
   ck_assert_int_eq(figure[0][1], figure_home[index][0][1]);
+  // DeleteCopy(&figure);
+  DeleteField(&figure);
 }
 END_TEST
 
@@ -46,7 +48,7 @@ START_TEST(test_SumFigure) {
   Figuring(figure, 1);
   int clop = SumFigure(field, figure);
   ck_assert_int_eq(clop, 0);
-
+  DeleteCopy(&figure);
   DeleteField(&field);
 }
 END_TEST
@@ -60,6 +62,7 @@ START_TEST(test_SubFigure) {
   ck_assert_int_eq(field[5][0], '.');
   ck_assert_int_eq(clop, 0);
   DeleteField(&field);
+  DeleteCopy(&figure);
 }
 END_TEST
 
@@ -70,6 +73,7 @@ START_TEST(test_moveCols) {
   int clop = MoveCols(field, figure, 1);
   ck_assert_int_eq(clop, 0);
   DeleteField(&field);
+  DeleteCopy(&figure);
 }
 END_TEST
 
@@ -80,6 +84,7 @@ START_TEST(test_rotateCols) {
   int clop = RotateCols(field, figure);
   ck_assert_int_eq(clop, 0);
   DeleteField(&field);
+  DeleteCopy(&figure);
 }
 END_TEST
 
@@ -103,12 +108,13 @@ START_TEST(test_CheckCollision) {
   int clop = CheckCollision(field, figure);
   ck_assert_int_eq(clop, 1);
   DeleteField(&field);
+  DeleteCopy(&figure);
 }
 END_TEST
 
 START_TEST(test_CreateCopy) {
   int **copy = CreateCopy();
-  ck_assert_ptr_nonnull(copy);
+  ck_assert_ptr_ne(copy, NULL);
   DeleteCopy(&copy);
 }
 END_TEST
@@ -116,7 +122,7 @@ END_TEST
 START_TEST(test_DeleteCopy) {
   int **copy = CreateCopy();
   DeleteCopy(&copy);
-  ck_assert_ptr_null(copy);
+  ck_assert_ptr_eq(copy, NULL);
 }
 END_TEST
 
@@ -183,6 +189,7 @@ START_TEST(test_Scoring_2) {
   ck_assert_int_eq(tetris.score, 300);
   DeleteField(&(tetris.field));
 }
+END_TEST
 
 START_TEST(test_Scoring_3) {
   GameInfo_t tetris;
@@ -197,6 +204,7 @@ START_TEST(test_Scoring_3) {
   ck_assert_int_eq(tetris.score, 700);
   DeleteField(&(tetris.field));
 }
+END_TEST
 
 START_TEST(test_Scoring_4) {
   GameInfo_t tetris;
@@ -212,6 +220,7 @@ START_TEST(test_Scoring_4) {
   DeleteCopy(&(tetris.next));
   DeleteField(&(tetris.field));
 }
+END_TEST
 
 START_TEST(test_ZeroingAll) {
   GameInfo_t tetris;
@@ -228,6 +237,7 @@ START_TEST(test_ZeroingAll) {
   DeleteCopy(&(tetris.next));
   DeleteField(&(tetris.field));
 }
+END_TEST
 
 START_TEST(test_HelloState) {
   GameInfo_t tetris;
@@ -247,6 +257,7 @@ START_TEST(test_HelloState) {
   DeleteCopy(&(tetris.next));
   DeleteField(&(tetris.field));
 }
+END_TEST
 
 START_TEST(test_SpawnState) {
   GameInfo_t tetris;
@@ -268,6 +279,7 @@ START_TEST(test_SpawnState) {
   DeleteCopy(&(tetris.next));
   DeleteField(&(tetris.field));
 }
+END_TEST
 
 START_TEST(test_MovingState) {
   GameInfo_t tetris;
@@ -294,6 +306,7 @@ START_TEST(test_MovingState) {
   DeleteCopy(&(tetris.next));
   DeleteField(&(tetris.field));
 }
+END_TEST
 
 START_TEST(test_AttachingState) {
   GameInfo_t tetris;
@@ -315,6 +328,7 @@ START_TEST(test_AttachingState) {
   DeleteCopy(&(tetris.next));
   DeleteField(&(tetris.field));
 }
+END_TEST
 
 START_TEST(test_JustState) {
   GameInfo_t tetris;
@@ -334,9 +348,11 @@ START_TEST(test_JustState) {
   state = JustState(Down, &tetris, 0);
   ZeroingAll(&tetris);
   ck_assert_int_eq(tetris.score, 0);
+    DeleteCopy(&(figure));
   DeleteCopy(&(tetris.next));
   DeleteField(&(tetris.field));
 }
+END_TEST
 
 START_TEST(test_GameOverState) {
   GameInfo_t tetris;
@@ -354,6 +370,7 @@ START_TEST(test_GameOverState) {
   DeleteCopy(&(tetris.next));
   DeleteField(&(tetris.field));
 }
+END_TEST
 
 START_TEST(test_FileScores) {
   GameInfo_t tetris;
@@ -371,6 +388,7 @@ START_TEST(test_FileScores) {
   DeleteCopy(&(tetris.next));
   DeleteField(&(tetris.field));
 }
+END_TEST
 
 Suite *mozg_suite(void) {
   Suite *suite = suite_create("Mozg");

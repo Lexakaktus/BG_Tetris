@@ -66,4 +66,8 @@ style:
 	clang-format --style=Google -i */*.c  */*.h
 
 clean:
-	rm -rf report *.gc* *.o *.info *.a  test test.dSYM tests/*.o build
+	rm -rf report *.gc* *.o *.info *.a  test test.dSYM tests/*.o build test_v
+valgrind:
+	$(CC) -g --coverage $(SRC) ./tests/temp_tests.c -o test_v $(det_OS) 
+	./test_v
+	valgrind --leak-check=full --show-leak-kinds=all  --track-origins=yes ./test_v

@@ -302,7 +302,7 @@ int DeleteCopy(int ***copy) {
  * @return 0 при успешном освобождении.
  */
 int DeleteField(int ***copy) {
-  for (int k = 0; k < MAXCOLS; k++) {
+  for (int k = 0; k < MAXROWS; k++) {
     free((*copy)[k]);
   }
   free(*copy);
@@ -447,7 +447,7 @@ void ZeroingAll(GameInfo_t *tetris) {
  * @return Копия текущего состояния.
  */
 GameInfo_t GetSetInfo(GameInfo_t *info, int push) {  // not included
-  static GameInfo_t game_info;
+  static GameInfo_t game_info={0};
   // static int** figure;
   if (push) {
     game_info = *info;
