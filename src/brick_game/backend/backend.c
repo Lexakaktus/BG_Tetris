@@ -1,7 +1,6 @@
 #include "../../inc/backend.h"
 
-
-//mayby rename figurehome https://google.github.io/styleguide/cppguide.html#Constant_Names
+/** @brief Массив с координатами всех возможных фигур тетриса. */
 static const int figure_home[COUNTFIGURE][COUNTCOORDINATE][2] /*{x,y}*/ = {
     {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},   //   -.
     {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}},   // |  I
@@ -13,6 +12,12 @@ static const int figure_home[COUNTFIGURE][COUNTCOORDINATE][2] /*{x,y}*/ = {
 };
 
 
+/**
+ * @brief Заполняет массив координатами фигуры по индексу.
+ * @param figure Указатель на массив координат фигуры.
+ * @param index Индекс фигуры из списка figure_home.
+ */
+
 void Figuring(int **figure, int index) {  // не изменено
   for (int k = 0; k < COUNTCOORDINATE; k++) {
     figure[k][0] = figure_home[index][k][0];
@@ -20,6 +25,15 @@ void Figuring(int **figure, int index) {  // не изменено
   }
 }
 
+
+
+/**
+ * @brief Пытается опустить фигуру вниз.
+ * @param field Игровое поле.
+ * @param figure Фигура для перемещения.
+ * @param i Количество строк для смещения (обычно 1).
+ * @return 1 если столкновение или выход за границы, иначе 0.
+ */
 int Curtsy(int **field, int **figure, int i) {  // бэк спуск фигуры
   int clop = 0;
   int **temp_figure = CreateCopy();
@@ -39,68 +53,83 @@ int Curtsy(int **field, int **figure, int i) {  // бэк спуск фигур�
   return clop;
 }
 
-//"обнуление" поля //использовать в клине (gameover)
+
+
+
+/**
+ * @brief Очищает поле, заполняя его точками.
+ * @param field Указатель на игровое поле.
+ */
 void ZeroingTemp(
     int **field) {  
   for (int i = 0; i < MAXROWS; i++) {
     for (int j = 0; j < MAXCOLS; j++) {
-      field[i][j] = '.';
+      field[i][j] = CELL_EMPTY;
     }
   }
 }
 
- // добавление фигуры на поле
+/**
+ * @brief Размещает фигуру на поле, если возможно.
+ * @param field Игровое поле.
+ * @param figure Фигура.
+ * @return 1 при столкновении или выходе за границы, иначе 0.
+ */
 int SumFigure(int **field, int **figure) {
   int clop = 0;
-
-  // Проверка на выход за границы поля или столкновение с другой фигурой
   for (int k = 4; k > 0 && !clop; k--) {
-    int new_x = figure[0][0] + figure[k][0];  // Новая координата по x
-    int new_y = figure[0][1] + figure[k][1];  // Новая координата по y
+    int new_x = figure[0][0] + figure[k][0];
+    int new_y = figure[0][1] + figure[k][1];
 
-    // Проверяем вертикальные границы (y) и горизонтальные (x)
     if (new_y >= MAXROWS || new_y < 0 || new_x >= MAXCOLS || new_x < 0) {
-      clop = 1;  // Если фигура выходит за границы, останавливаемся
+      clop = 1;
     }
-    // Проверка на столкновение с уже существующими блоками на поле
-    else if (field[new_y][new_x] != '.') {
+    else if (field[new_y][new_x] != CELL_EMPTY) {
       clop = 1;
     }
   }
-  // Если не было столкновений и выхода за границы, обновляем поле
   for (int k = 4; k > 0 && !clop; k--) {
-    int new_x = figure[0][0] + figure[k][0];  // Новая координата по x
-    int new_y = figure[0][1] + figure[k][1];  // Новая координата по y
-    field[new_y][new_x] = 'I';  // Устанавливаем фигуру на поле
+    int new_x = figure[0][0] + figure[k][0];
+    int new_y = figure[0][1] + figure[k][1];
+    field[new_y][new_x] = CELL_FILLED; 
   }
 
-  return clop;  // Возвращаем флаг столкновения
+  return clop;  
 }
 
- // стирание фигуры с поля
+
+/**
+ * @brief Удаляет фигуру с поля.
+ * @param field Игровое поле.
+ * @param figure Фигура.
+ * @return 0.
+ */
 int SubFigure(int **field,
               int **figure) { 
-  int clop = 0;
-  // Если не было столкновений и выхода за границы, обновляем поле
+
   for (int k = 4; k > 0; k--) {
     int new_x = figure[0][0] + figure[k][0];  // Новая координата по x
     int new_y = figure[0][1] + figure[k][1];
     if (!(new_y >= MAXROWS || new_y < 0 || new_x >= MAXCOLS || new_x < 0))
-      field[new_y][new_x] = '.';  // возвращаем отсутствие фигуры
+      field[new_y][new_x] = CELL_EMPTY;  // возвращаем отсутствие фигуры
   }
 
-  return clop;  // Возвращаем флаг столкновения//откуда оно здесь?//начать
-                // следить за клопом
+  return 0;
 }
 
- // удаляет заполненные строки и возвращает их количество
+
+/**
+ * @brief Удаляет заполненные строки и сдвигает остальные вниз.
+ * @param field Игровое поле.
+ * @return Количество удалённых строк.
+ */
 int StringDel(    int **field) { 
   int del_counter = 0;
   for (int i = 0; i < MAXROWS; i++) {
     int zer_string = 1;
 
     for (int j = 0; j < MAXCOLS; j++) {
-      if (field[i][j] == '.') {
+      if (field[i][j] == CELL_EMPTY) {
         zer_string = 0;
       }
     }
@@ -111,7 +140,7 @@ int StringDel(    int **field) {
         }
       }
       for (int k = 0; k < MAXCOLS; k++) {
-        field[0][k] = '.';
+        field[0][k] = CELL_EMPTY;
       }
       del_counter++;
     }
@@ -120,9 +149,12 @@ int StringDel(    int **field) {
   return del_counter;
 }
 
-// возможно убрать score внутрь функции
- // добавить сразу замену счёта в файле или игре(смотря
-                         // что больше) и в конце закрывать файл
+/**
+ * @brief Загружает рекорд игрока из файла и обновляет high_score.
+ * @param name Имя пользователя.
+ * @param info Указатель на структуру игры.
+ * @return 0 при успешной загрузке.
+ */
 int FileScore(
     char *name,
     GameInfo_t *info) { 
@@ -145,16 +177,28 @@ int FileScore(
   return 0;
 }
 
+/**
+ * @brief Проверяет, достигла ли фигура низа или столкновения.
+ * @param field Игровое поле.
+ * @param figure Фигура.
+ * @return 1 если падение должно прекратиться, иначе 0.
+ */
 int FigureDown(int **field, int **figure) {
   int clop = 0;
   for (int k = 4; k > 0 && !clop; k--) {
     int new_x = figure[0][0] + figure[k][0];  // Новая координата по x
     int new_y = figure[0][1] + figure[k][1] + 1;  // Новая координата по y
-    if (new_y == MAXROWS || field[new_y][new_x] != '.') clop = 1;  //!!!!
+    if (new_y == MAXROWS || field[new_y][new_x] != CELL_EMPTY) clop = 1;  //!!!!
   }
   return clop;
 }
 
+
+/**
+ * @brief Копирует координаты одной фигуры в другую.
+ * @param dest Массив-приёмник.
+ * @param src Массив-источник.
+ */
 void CopyFigure(int **dest, int **src) {
   for (int k = 0; k < COUNTCOORDINATE; k++) {
     dest[k][0] = src[k][0];
@@ -162,6 +206,12 @@ void CopyFigure(int **dest, int **src) {
   }
 }
 
+/**
+ * @brief Проверяет возможные столкновения фигуры с полем.
+ * @param field Игровое поле.
+ * @param figure Проверяемая фигура.
+ * @return 1 при столкновении, иначе 0.
+ */
 int CheckCollision(int **field, int **figure) {
   int clop = 0;
   for (int k = 4; k > 0 && !clop; k--) {
@@ -177,29 +227,62 @@ int CheckCollision(int **field, int **figure) {
   return clop;
 }
 
-//добавить проверку на маллок
+
+/**
+ * @brief Выделяет память под координаты фигуры.
+ * @return Указатель на двумерный массив координат, или NULL при ошибке выделения.
+ */
 int **CreateCopy() {
+  int clop=1;
   int **temp_figure = malloc(COUNTCOORDINATE * sizeof(int *));
-  for (int k = 0; k < COUNTCOORDINATE; k++) {
-    temp_figure[k] = malloc(2 * sizeof(int));
+  if (temp_figure ==NULL){
+    clop=0;
   }
-  return temp_figure;
-}
-
-
-//добавить проверку на маллок
-int **CreateField() {  // а очищается??
-  int **field =
-      (int **)malloc(MAXROWS * sizeof(int *));  // создание постоянного поля
-  for (int i = 0; i < MAXROWS; i++) {
-    field[i] = (int *)malloc(MAXCOLS * sizeof(int));
-    for (int j = 0; j < MAXCOLS; j++) {
-      field[i][j] = '.';
+  for (int k = 0; k < COUNTCOORDINATE&&clop; k++) {
+    temp_figure[k] = malloc(2 * sizeof(int));
+    if (temp_figure[k]==NULL){
+      for (int j = 0; j < k; j++) {
+                free(temp_figure[j]);
+            }
+            free(temp_figure);
+      clop=0;
     }
-  } 
-  return field;
+  }
+  return clop?temp_figure:NULL;
 }
 
+/**
+ * @brief Создаёт и инициализирует игровое поле.
+ * @return Указатель на поле, или NULL при ошибке выделения.
+ */
+int **CreateField() { 
+  int clop=1;  
+  int **field =
+      (int **)malloc(MAXROWS * sizeof(int *));
+  if (field ==NULL){
+    clop=0;
+  }
+  for (int i = 0; i < MAXROWS&&clop; i++) {
+    field[i] = (int *)malloc(MAXCOLS * sizeof(int));
+    if (field[i]==NULL){
+      for (int j = 0; j < i; j++) {
+                free(field[j]);
+            }
+            free(field);
+      clop=0;
+    } else {
+    for (int j = 0; j < MAXCOLS; j++) {
+      field[i][j] = CELL_EMPTY;
+    }}
+  } 
+  return clop?field: NULL;
+}
+
+/**
+ * @brief Освобождает память, выделенную под фигуру.
+ * @param copy Адрес указателя на фигуру.
+ * @return 0 при успешном освобождении.
+ */
 int DeleteCopy(int ***copy) {
   for (int k = 0; k < COUNTCOORDINATE; k++) {
     free((*copy)[k]);
@@ -209,6 +292,11 @@ int DeleteCopy(int ***copy) {
   return 0;
 }
 
+/**
+ * @brief Освобождает память, выделенную под поле.
+ * @param copy Адрес указателя на поле.
+ * @return 0 при успешном освобождении.
+ */
 int DeleteField(int ***copy) {
   for (int k = 0; k < MAXCOLS; k++) {
     free((*copy)[k]);
@@ -218,6 +306,13 @@ int DeleteField(int ***copy) {
   return 0;
 }
 
+
+/**
+ * @brief Поворачивает фигуру по часовой стрелке.
+ * @param field Игровое поле.
+ * @param figure Фигура.
+ * @return 1 при невозможности поворота, иначе 0.
+ */
 int RotateCols(int **field, int **figure) {
   int clop = 0;
   int **temp_figure = CreateCopy();
@@ -238,6 +333,12 @@ int RotateCols(int **field, int **figure) {
   return clop;
 }
 
+/**
+ * @brief Поворачивает фигуру по часовой стрелке.
+ * @param field Игровое поле.
+ * @param figure Фигура.
+ * @return 1 при невозможности поворота, иначе 0.
+ */
 int MoveCols(int **field, int **figure, int i) {
   int clop = 0;
   int **temp_figure = CreateCopy();
@@ -253,6 +354,12 @@ int MoveCols(int **field, int **figure, int i) {
   return clop;
 }
 
+
+/**
+ * @brief Обновляет счёт и уровень игрока в зависимости от удалённых строк.
+ * @param tetris Указатель на игровое состояние.
+ * @return 0 при успешном обновлении.
+ */
 int Scoring(GameInfo_t *tetris) {
   int a = StringDel(tetris->field);
   switch (a) {
@@ -278,29 +385,32 @@ int Scoring(GameInfo_t *tetris) {
   return 0;
 }
 
-// score deletai
+/**
+ * @brief Сохраняет рекорд в файл, если он был побит.
+ * @param name Имя пользователя.
+ * @param info Структура с результатом.
+ * @return 0 при успешной записи.
+ */
 int FileScoreInput(
     char *name,
     GameInfo_t *info) {  
   FILE *fp;
-  // strcat(name, ".txt");
   char filename[64];
   snprintf(filename, sizeof(filename), "%s.txt", name);
   if ((fp = fopen(filename, "r+")) == NULL) {
     fp = fopen(filename, "w+");
-  }  // добавить проверок на всякое
-  // fgets(score, 100, fp);
-  // int fs=atoi(score);
+  } 
   if (info->high_score <= info->score) {
     fprintf(fp, "%d", info->high_score);
   }
-  // itoa(info->high_score, info->score,10);
-  // fputs(info->score, fp);
-
   fclose(fp);
   return 0;
 }
 
+/**
+ * @brief Возвращает статическую фигуру (можно использовать как singleton).
+ * @return Указатель на фигуру.
+ */
 int **UpdateFigure() {
   static int **figure;
   static int flag = 1;
@@ -313,6 +423,10 @@ int **UpdateFigure() {
 }
 
 
+/**
+ * @brief Обнуляет данные игры и поле.
+ * @param tetris Структура игры.
+ */
 void ZeroingAll(GameInfo_t *tetris) {
   ZeroingTemp(tetris->field);
   tetris->score = 0;
@@ -323,6 +437,13 @@ void ZeroingAll(GameInfo_t *tetris) {
   GetSetInfo(tetris, PUSH);
 }
 
+
+/**
+ * @brief Позволяет получить или задать текущее состояние игры.
+ * @param info Структура с текущим состоянием (по значению или по указателю).
+ * @param push 1 — сохранить состояние, 0 — получить.
+ * @return Копия текущего состояния.
+ */
 GameInfo_t GetSetInfo(GameInfo_t *info, int push) {  // not included
   static GameInfo_t game_info;
   // static int** figure;
@@ -334,14 +455,27 @@ GameInfo_t GetSetInfo(GameInfo_t *info, int push) {  // not included
   return game_info;
 }
 
+/**
+ * @brief Инициализация структуры GameInfo_t.
+ * @param tetris Указатель на структуру для инициализации.
+ * @return 0 при успехе, 1 при ошибке выделения памяти.
+ */
 int InitTetris(GameInfo_t* tetris){
+  int clop=0;
   tetris->pause = 0;
   tetris->score = 0;
   tetris->high_score = 0;
   FileScore("user", tetris);
   tetris->level = 0;
   tetris->field = CreateField();
-  tetris->next = CreateCopy();
-  
-  return 0;//поменять на возможный вывод ошибок
+  if (tetris->field==NULL){
+    clop =1;
+  } else {
+    tetris->next = CreateCopy();
+  }
+  if (tetris->next==NULL&&!clop){
+    clop =1;
+    DeleteField(&(tetris->field));
+  }
+  return clop;
 }

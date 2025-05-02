@@ -15,6 +15,8 @@
 #define COUNTCOORDINATE 5
 #define COUNTFIGURE 7
 #define COUNTDIMENSION 2
+#define CELL_EMPTY '.'
+#define CELL_FILLED 'I'
 #define FALL_DELAY 50000 // 0,5 sec
 #define QUIT_DELAY 6000000 * 10
 #define PULL 0
