@@ -6,31 +6,36 @@ FRONT= gui/cli/*.c  brick_game/tetris/*.c
 OS = $(shell uname)
 DIST_DIR = dist_Tetris
 ifeq ($(OS), Darwin)
-	det_OS = -lcheck
+det_OS = -lcheck
 else
-	det_OS = -lcheck -lsubunit -lpthread -lrt -lgcov -lm
+det_OS = -lcheck -lsubunit -lpthread -lrt -lgcov -lm
+endif
+ifeq ($(OS), Darwin)
+OPEN_CMD = open 
+else
+OPEN_CMD = xdg-open 
 endif
 
 all: clean install play
  
 install: clean 
-	 mkdir build
+	 mkdir -p build
 	 $(CC) $(SRC)$(FRONT) -o build/game -lncurses
 
 uninstall:
 	rm -r build
-play:
+play: install
 	./build/game
 gcov_report:
 	rm -rf test-temp_tests*.gc* 
 	lcov -t "result" -o res.info -c -d . --rc branch_coverage=0
 	genhtml -o report res.info --rc branch_coverage=0
-	open report/index.html
+	# open report/index.html
+	$(OPEN_CMD) report/index.html
 
 
 test: clean
 	$(CC)  --coverage $(SRC) ./tests/temp_tests.c -o test $(det_OS) 
-#tests/*.c
 	./test
 
 commit:
@@ -38,7 +43,9 @@ commit:
 	git commit -m '$(K)'    
 	git push origin develop
 
-
+dvi:
+	doxygen Doxyfile
+	$(OPEN_CMD) dvi/html/index.html
 dist:
 	mkdir -p $(DIST_DIR)
 	cp -a brick_game $(DIST_DIR)
