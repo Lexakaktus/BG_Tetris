@@ -31,7 +31,7 @@
 /// @brief Символ занятой ячейки.
 #define CELL_FILLED 'I'
 /// @brief Задержка между падениями (в миллисекундах).
-#define FALL_DELAY 50000 // 0,5 sec
+#define FALL_DELAY 50000  // 0,5 sec
 /// @brief Задержка перед выходом из игры после поражения.
 #define QUIT_DELAY 6000000 * 10
 /// @brief Флаг для получения информации.
@@ -49,13 +49,13 @@
  * @brief Состояния конечного автомата игры.
  */
 typedef enum {
-  Hello,     // 0 ///< Приветственный экран.
-  Spawn,     ///< Спавн новой фигуры.
-  Moving,    ///< Движение текущей фигуры.
-  Attaching, ///< Прикрепление фигуры к полю.
+  Hello,      // 0 ///< Приветственный экран.
+  Spawn,      ///< Спавн новой фигуры.
+  Moving,     ///< Движение текущей фигуры.
+  Attaching,  ///< Прикрепление фигуры к полю.
   //   Paus,
-  GameOver, ///< Состояние конца игры.
-  Goodbye   ///< Финальное завершение игры.
+  GameOver,  ///< Состояние конца игры.
+  Goodbye    ///< Финальное завершение игры.
 } FSM;
 
 // === Основная логика поля и фигур ===
@@ -77,7 +77,7 @@ int FigureDown(int **field, int **figure);
 int CheckCollision(int **field, int **figure);
 void CopyFigure(int **dest, int **src);
 int **CreateCopy();
-int DeleteCopy(int ***copy); // where deletefield?
+int DeleteCopy(int ***copy);  // where deletefield?
 int DeleteField(int ***copy);
 int Curtsy(int **field, int **figure, int i);
 int RotateCols(int **field, int **figure);
@@ -101,4 +101,4 @@ int **UpdateFigure();
 void ZeroingAll(GameInfo_t *tetris);
 GameInfo_t GetSetInfo(GameInfo_t *info, int push);
 int InitTetris(GameInfo_t *tetris);
-#endif // BACKEND_H
+#endif  // BACKEND_H

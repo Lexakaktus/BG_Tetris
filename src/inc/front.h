@@ -7,8 +7,9 @@
  * использованием ncurses.
  */
 
-#include "lib_specification.h"
 #include <ncurses.h>
+
+#include "lib_specification.h"
 
 /// @brief Количество строк игрового поля.
 #define MAXROWS 20
@@ -30,7 +31,7 @@
  * @param hold Указатель на флаг "зажатия" клавиши.
  * @return Новое действие пользователя.
  */
-UserAction_t Uzvering(UserAction_t action, bool *hold); // void userInput
+UserAction_t Uzvering(UserAction_t action, bool *hold);  // void userInput
 
 /**
  * @brief Отображает дополнительную информацию об игре.
@@ -80,4 +81,4 @@ void Draw(WINDOW **board, WINDOW **info_window);
 int GamePrint(WINDOW *board, WINDOW *info_window, GameInfo_t tetris,
               char *name);
 
-#endif // FRONT_H
+#endif  // FRONT_H

@@ -2,13 +2,13 @@
 #include "test.h"
 
 static const int figure_home[COUNTFIGURE][COUNTCOORDINATE][2] /*{x,y}*/ = {
-    {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},  //   -.
-    {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}},  // |  I
-    {{5, 0}, {0, 0}, {0, 1}, {1, 0}, {-1, 0}},  // .|.
-    {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 0}},   /// ::
-    {{5, 0}, {0, 0}, {-1, 0}, {-1, 1}, {1, 0}}, // .-
-    {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {-1, 0}},  // Z
-    {{5, 0}, {0, 0}, {0, 1}, {-1, 1}, {1, 0}}   //! Z
+    {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},   //   -.
+    {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}},   // |  I
+    {{5, 0}, {0, 0}, {0, 1}, {1, 0}, {-1, 0}},   // .|.
+    {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 0}},    /// ::
+    {{5, 0}, {0, 0}, {-1, 0}, {-1, 1}, {1, 0}},  // .-
+    {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {-1, 0}},   // Z
+    {{5, 0}, {0, 0}, {0, 1}, {-1, 1}, {1, 0}}    //! Z
 };
 
 START_TEST(test_Figuring) {
@@ -293,8 +293,7 @@ START_TEST(test_MovingState) {
   MovingState(&tetris, &state, Right);
   ck_assert_int_eq(tetris.field[0][3], '.');
   // sleep(7);
-  for (volatile long i = 0; i < 100000000; ++i)
-    ;
+  for (volatile long i = 0; i < 100000000; ++i);
   MovingState(&tetris, &state, Start);
   ck_assert_int_eq(tetris.field[1][4], 'I');
   MovingState(&tetris, &state, Action);
@@ -317,7 +316,7 @@ START_TEST(test_AttachingState) {
   FSM state = Hello;
   AttachingState(&tetris, &state);
   ck_assert_int_eq(state, Spawn);
-  tetris.level = 11; /// потом подумать над адекватностью
+  tetris.level = 11;  /// потом подумать над адекватностью
   AttachingState(&tetris, &state);
   ck_assert_int_eq(tetris.level, 10);
   tetris.field[0][5] = 'I';
@@ -348,7 +347,7 @@ START_TEST(test_JustState) {
   state = JustState(Down, &tetris, 0);
   ZeroingAll(&tetris);
   ck_assert_int_eq(tetris.score, 0);
-    DeleteCopy(&(figure));
+  DeleteCopy(&(figure));
   DeleteCopy(&(tetris.next));
   DeleteField(&(tetris.field));
 }
