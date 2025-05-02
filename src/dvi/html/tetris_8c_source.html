@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>BrickGame Тетрис: Исходный файл brick_game/tetris/tetris.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">BrickGame Тетрис
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Поиск" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('tetris_8c_source.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">tetris.c</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;<a class="code" href="backend_8h.html">../../inc/backend.h</a>&quot;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="front_8h.html">../../inc/front.h</a>&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keywordtype">void</span> get_state(<a class="code hl_enumeration" href="backend_8h.html#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a> *state, <span class="keywordtype">int</span> push) {</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>  <span class="keyword">static</span> <a class="code hl_enumeration" href="backend_8h.html#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a> stat = -1;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>  <span class="keywordflow">if</span> (push) {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    stat = *state;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    *state = stat;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>  }</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>}</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span></div>
+<div class="foldopen" id="foldopen00028" data-start="{" data-end="}">
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="lib__specification_8h.html#ab961f91e569a34b6984536633126257a">   28</a></span><span class="keywordtype">void</span> userInput(<a class="code hl_enumeration" href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9">UserAction_t</a> action, <span class="keywordtype">bool</span> hold) {  <span class="comment">// not declaration</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  <a class="code hl_struct" href="struct_game_info__t.html">GameInfo_t</a> game_info = GetSetInfo(&amp;game_info, <a class="code hl_define" href="backend_8h.html#a96818d1211164e5497a6b5505564a591">PULL</a>);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  <a class="code hl_enumeration" href="backend_8h.html#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a> state=Hello;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  <span class="keywordflow">if</span> (!(state == <a class="code hl_enumvalue" href="backend_8h.html#a2aab568cd1f02e7cd9fd6c7f87e361d1a13b9787b5b0fa1ed149bbe28b122207e">Goodbye</a> || game_info.<a class="code hl_variable" href="struct_game_info__t.html#ae4acd421e39427d7922856b5f43ba1bd">pause</a>)) {</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    state = JustState(action, &amp;game_info, hold);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  }</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  <span class="keywordflow">if</span> (action == <a class="code hl_enumvalue" href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9adaba8aa0fcd8a87c25fec7d916c789e7">Pause</a>) {</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    game_info.<a class="code hl_variable" href="struct_game_info__t.html#ae4acd421e39427d7922856b5f43ba1bd">pause</a> = !game_info.<a class="code hl_variable" href="struct_game_info__t.html#ae4acd421e39427d7922856b5f43ba1bd">pause</a>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  }</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  <span class="keywordflow">if</span> (action == <a class="code hl_enumvalue" href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9aaf166713f3d14b30bee8f0ad5a09c4cb">Terminate</a>) {</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    state = <a class="code hl_enumvalue" href="backend_8h.html#a2aab568cd1f02e7cd9fd6c7f87e361d1a13b9787b5b0fa1ed149bbe28b122207e">Goodbye</a>;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  }</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  GetSetInfo(&amp;game_info, <a class="code hl_define" href="backend_8h.html#a431b92b32ec924789b2be268651a3fdd">PUSH</a>);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  get_state(&amp;state, <a class="code hl_define" href="backend_8h.html#a431b92b32ec924789b2be268651a3fdd">PUSH</a>);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>}</div>
+</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span></div>
+<div class="foldopen" id="foldopen00052" data-start="{" data-end="}">
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="lib__specification_8h.html#afd5762991a9248a0b4192983fd786a8f">   52</a></span><a class="code hl_struct" href="struct_game_info__t.html">GameInfo_t</a> updateCurrentState() {</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  <a class="code hl_struct" href="struct_game_info__t.html">GameInfo_t</a> info_t;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  <span class="comment">//  GetSetInfo(&amp;info_t, PULL);</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  <span class="keywordflow">return</span> GetSetInfo(&amp;info_t, <a class="code hl_define" href="backend_8h.html#a96818d1211164e5497a6b5505564a591">PULL</a>);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>}</div>
+</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  WINDOW *board, *info_field;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  Draw(&amp;board, &amp;info_field);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  srand(time(NULL));</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  <a class="code hl_enumeration" href="backend_8h.html#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a> state = Hello;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  <a class="code hl_enumeration" href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9">UserAction_t</a> signal = ERR;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  <a class="code hl_struct" href="struct_game_info__t.html">GameInfo_t</a> tetris;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  InitTetris(&amp;tetris);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  GetSetInfo(&amp;tetris, <a class="code hl_define" href="backend_8h.html#a431b92b32ec924789b2be268651a3fdd">PUSH</a>);</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  <span class="keywordflow">while</span> (state != <a class="code hl_enumvalue" href="backend_8h.html#a2aab568cd1f02e7cd9fd6c7f87e361d1a13b9787b5b0fa1ed149bbe28b122207e">Goodbye</a>) {</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keywordtype">bool</span> hold = 0;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    signal = Uzvering(signal, &amp;hold);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    userInput(signal, hold);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    get_state(&amp;state, <a class="code hl_define" href="backend_8h.html#a96818d1211164e5497a6b5505564a591">PULL</a>);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    GamePrint(board, info_field, updateCurrentState(), <span class="stringliteral">&quot;user&quot;</span>);  <span class="comment">// char *name</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  }</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  FileScoreInput(<span class="stringliteral">&quot;user&quot;</span>, &amp;tetris);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  endwin();</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  printf(<span class="stringliteral">&quot;%s %s %d\n&quot;</span>, <span class="stringliteral">&quot;user&quot;</span>, <span class="stringliteral">&quot;\n&quot;</span>, tetris.<a class="code hl_variable" href="struct_game_info__t.html#ac93cabe631d5d173fa35714719336c4f">high_score</a>);    <span class="comment">// убрать</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  printf(<span class="stringliteral">&quot;%s %d&quot;</span>, <span class="stringliteral">&quot;you lose\nyour score: &quot;</span>, tetris.<a class="code hl_variable" href="struct_game_info__t.html#a4a6b1b290cd3e129bf78992964cf4136">score</a>);  <span class="comment">// убрать</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>}</div>
+<div class="ttc" id="abackend_8h_html"><div class="ttname"><a href="backend_8h.html">backend.h</a></div><div class="ttdoc">Заголовочный файл с бэкенд-логикой тетриса: обработка игрового поля, фигур и состояний.</div></div>
+<div class="ttc" id="abackend_8h_html_a2aab568cd1f02e7cd9fd6c7f87e361d1"><div class="ttname"><a href="backend_8h.html#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a></div><div class="ttdeci">FSM</div><div class="ttdoc">Состояния конечного автомата игры.</div><div class="ttdef"><b>Определения</b> <a href="backend_8h_source.html#l00049">backend.h:49</a></div></div>
+<div class="ttc" id="abackend_8h_html_a2aab568cd1f02e7cd9fd6c7f87e361d1a13b9787b5b0fa1ed149bbe28b122207e"><div class="ttname"><a href="backend_8h.html#a2aab568cd1f02e7cd9fd6c7f87e361d1a13b9787b5b0fa1ed149bbe28b122207e">Goodbye</a></div><div class="ttdeci">@ Goodbye</div><div class="ttdoc">Финальное завершение игры.</div><div class="ttdef"><b>Определения</b> <a href="backend_8h_source.html#l00056">backend.h:56</a></div></div>
+<div class="ttc" id="abackend_8h_html_a431b92b32ec924789b2be268651a3fdd"><div class="ttname"><a href="backend_8h.html#a431b92b32ec924789b2be268651a3fdd">PUSH</a></div><div class="ttdeci">#define PUSH</div><div class="ttdoc">Флаг для записи информации.</div><div class="ttdef"><b>Определения</b> <a href="backend_8h_source.html#l00040">backend.h:40</a></div></div>
+<div class="ttc" id="abackend_8h_html_a96818d1211164e5497a6b5505564a591"><div class="ttname"><a href="backend_8h.html#a96818d1211164e5497a6b5505564a591">PULL</a></div><div class="ttdeci">#define PULL</div><div class="ttdoc">Флаг для получения информации.</div><div class="ttdef"><b>Определения</b> <a href="backend_8h_source.html#l00038">backend.h:38</a></div></div>
+<div class="ttc" id="afront_8h_html"><div class="ttname"><a href="front_8h.html">front.h</a></div><div class="ttdoc">Заголовочный файл с функциями интерфейса для отображения Tetris с использованием ncurses.</div></div>
+<div class="ttc" id="alib__specification_8h_html_a7ba289d7b97db30e0b7041ca2cef75a9"><div class="ttname"><a href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9">UserAction_t</a></div><div class="ttdeci">UserAction_t</div><div class="ttdoc">Перечисление возможных действий пользователя.</div><div class="ttdef"><b>Определения</b> <a href="lib__specification_8h_source.html#l00015">lib_specification.h:15</a></div></div>
+<div class="ttc" id="alib__specification_8h_html_a7ba289d7b97db30e0b7041ca2cef75a9aaf166713f3d14b30bee8f0ad5a09c4cb"><div class="ttname"><a href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9aaf166713f3d14b30bee8f0ad5a09c4cb">Terminate</a></div><div class="ttdeci">@ Terminate</div><div class="ttdoc">Завершение игры.</div><div class="ttdef"><b>Определения</b> <a href="lib__specification_8h_source.html#l00018">lib_specification.h:18</a></div></div>
+<div class="ttc" id="alib__specification_8h_html_a7ba289d7b97db30e0b7041ca2cef75a9adaba8aa0fcd8a87c25fec7d916c789e7"><div class="ttname"><a href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9adaba8aa0fcd8a87c25fec7d916c789e7">Pause</a></div><div class="ttdeci">@ Pause</div><div class="ttdoc">Пауза.</div><div class="ttdef"><b>Определения</b> <a href="lib__specification_8h_source.html#l00017">lib_specification.h:17</a></div></div>
+<div class="ttc" id="astruct_game_info__t_html"><div class="ttname"><a href="struct_game_info__t.html">GameInfo_t</a></div><div class="ttdoc">Структура, содержащая текущее состояние игры.</div><div class="ttdef"><b>Определения</b> <a href="lib__specification_8h_source.html#l00031">lib_specification.h:31</a></div></div>
+<div class="ttc" id="astruct_game_info__t_html_a4a6b1b290cd3e129bf78992964cf4136"><div class="ttname"><a href="struct_game_info__t.html#a4a6b1b290cd3e129bf78992964cf4136">GameInfo_t::score</a></div><div class="ttdeci">int score</div><div class="ttdoc">Текущий счёт игрока.</div><div class="ttdef"><b>Определения</b> <a href="lib__specification_8h_source.html#l00034">lib_specification.h:34</a></div></div>
+<div class="ttc" id="astruct_game_info__t_html_ac93cabe631d5d173fa35714719336c4f"><div class="ttname"><a href="struct_game_info__t.html#ac93cabe631d5d173fa35714719336c4f">GameInfo_t::high_score</a></div><div class="ttdeci">int high_score</div><div class="ttdoc">Рекорд (высший счёт).</div><div class="ttdef"><b>Определения</b> <a href="lib__specification_8h_source.html#l00035">lib_specification.h:35</a></div></div>
+<div class="ttc" id="astruct_game_info__t_html_ae4acd421e39427d7922856b5f43ba1bd"><div class="ttname"><a href="struct_game_info__t.html#ae4acd421e39427d7922856b5f43ba1bd">GameInfo_t::pause</a></div><div class="ttdeci">int pause</div><div class="ttdoc">Флаг паузы (1 — игра на паузе, 0 — активна).</div><div class="ttdef"><b>Определения</b> <a href="lib__specification_8h_source.html#l00038">lib_specification.h:38</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_2ee2de302366a9522113dfc9d3962873.html">brick_game</a></li><li class="navelem"><a class="el" href="dir_a27466d1e2cff2d3a32cbaf29900b661.html">tetris</a></li><li class="navelem"><b>tetris.c</b></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

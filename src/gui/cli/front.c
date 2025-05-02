@@ -1,5 +1,13 @@
 #include "../../inc/front.h"
 
+
+/**
+ * @brief Обрабатывает ввод пользователя с клавиатуры.
+ * 
+ * @param action Предыдущее действие пользователя.
+ * @param hold Указатель на флаг зажатия клавиши.
+ * @return Новое действие пользователя.
+ */
 UserAction_t Uzvering(
     UserAction_t action,
     bool *hold) { 
@@ -47,25 +55,37 @@ UserAction_t Uzvering(
   return action;
 }
 
-
+/**
+ * @brief Отрисовывает следующую фигуру в окне информации.
+ * 
+ * @param info_window Окно ncurses для вывода.
+ * @param tetris Текущая информация об игре.
+ * @return int 0 при успешной отрисовке.
+ */
 int NewFigurePrint(WINDOW *info_window, GameInfo_t tetris) {  // фронт
   int x = tetris.next[0][0] - 3;
   int y = tetris.next[0][1] + 1;
 
   for (int i = 1; i < COUNTCOORDINATE; i++) {
-    //  wclrtoeol(info_window);
     mvwprintw(info_window, i, 1, "%c   ", ' ');
   }
   mvwprintw(info_window, y, x, "%c", '*');
   for (int i = 2; i < COUNTCOORDINATE; i++) {
-    //  wclrtoeol(info_window);
-    // mvwprintw(info_window, y+tetris.next[i][1], 1, "%c   ", ' ');
     mvwprintw(info_window, y + tetris.next[i][1], x + tetris.next[i][0], "%c",
               '*');
   }
   return 0;
 }
 
+
+/**
+ * @brief Отрисовывает информационную панель с данными игры.
+ * 
+ * @param info_window Окно ncurses для вывода.
+ * @param tetris Текущая информация об игре.
+ * @param name Имя игрока.
+ * @return int 0 при успешной отрисовке.
+ */
 int InfoPrint(WINDOW *info_window, GameInfo_t tetris, char *name) {
   // wclear(info_window);
   box(info_window, 0, 0);
@@ -86,25 +106,31 @@ int InfoPrint(WINDOW *info_window, GameInfo_t tetris, char *name) {
   return 0;
 }
 
-// енто чисто отрисовка
+
+/**
+ * @brief Отрисовывает игровое поле.
+ * 
+ * @param board Окно ncurses, в котором отрисовывается поле.
+ * @param tetris Структура с текущим состоянием поля.
+ * @return int 0 при успешной отрисовке.
+ */
 int FieldPrint(WINDOW *board, GameInfo_t tetris) {
   wmove(board, 0, 0);
   for (int i = 0; i < MAXROWS;
-       i++) {  // первая печать  поля //gjlhfpevtdftncz x,y
+       i++) {
     for (int j = 0; j < MAXCOLS; j++) {
-      // printw("%c%c", temp_field[i][j], temp_field[i][j]);
       switch (tetris.field[i][j]) {
-        case '.':  // Пример: символ 'X' печатается красным
+        case '.': 
           wattron(board, COLOR_PAIR(1));
-          wprintw(board, "%c%c", tetris.field[i][j], tetris.field[i][j]);
+          wprintw(board, "%s", "..");
           wattroff(board, COLOR_PAIR(1));
           break;
-        case 'I':  // Пример: символ 'O' печатается зеленым
+        case 'I':  
           wattron(board, COLOR_PAIR(2));
-          wprintw(board, "%c%c", tetris.field[i][j], tetris.field[i][j]);
+          wprintw(board, "%s", "II");
           wattroff(board, COLOR_PAIR(2));
           break;
-        default:  // Другие символы печатаются желтым
+        default:  
           wattron(board, COLOR_PAIR(3));
           wprintw(board, "%c%c", tetris.field[i][j], tetris.field[i][j]);
           wattroff(board, COLOR_PAIR(3));
@@ -116,6 +142,13 @@ int FieldPrint(WINDOW *board, GameInfo_t tetris) {
   return 0;
 }
 
+
+/**
+ * @brief Инициализирует ncurses, создаёт окна и задаёт цвета.
+ * 
+ * @param board Указатель на указатель окна с игровым полем.
+ * @param info_window Указатель на указатель окна с информацией.
+ */
 void Draw(WINDOW **board, WINDOW **info_window) {
   initscr();
   timeout(1);
@@ -144,6 +177,16 @@ void Draw(WINDOW **board, WINDOW **info_window) {
   init_pair(3, COLOR_YELLOW, COLOR_BLACK);
 }
 
+
+/**
+ * @brief Основная отрисовка интерфейса игры (поле + инфо).
+ * 
+ * @param board Окно игрового поля.
+ * @param info_window Окно информационной панели.
+ * @param tetris Структура с состоянием игры.
+ * @param name Имя пользователя.
+ * @return int 0 при успешной отрисовке.
+ */
 int GamePrint(WINDOW *board, WINDOW *info_window, GameInfo_t tetris, char *name) {
   FieldPrint(board, tetris);
   InfoPrint(info_window, tetris, name);

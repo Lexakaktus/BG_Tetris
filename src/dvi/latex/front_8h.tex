@@ -1,0 +1,285 @@
+\doxysection{Файл inc/front.h}
+\hypertarget{front_8h}{}\label{front_8h}\index{inc/front.h@{inc/front.h}}
+
+
+Заголовочный файл с функциями интерфейса для отображения Tetris с использованием ncurses.  
+
+
+{\ttfamily \#include $<$ncurses.\+h$>$}\newline
+{\ttfamily \#include "{}lib\+\_\+specification.\+h"{}}\newline
+\doxysubsubsection*{Макросы}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{front_8h_a5defaa6a67c0db00483fb376caf78bd0}{MAXROWS}}~20
+\begin{DoxyCompactList}\small\item\em Количество строк игрового поля. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{front_8h_a5defaa6a67c0db00483fb376caf78bd0}{MAXROWS}}~20
+\begin{DoxyCompactList}\small\item\em Количество строк игрового поля. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{front_8h_a6a83dc415ae5e205183f0488b46228c4}{MAXCOLS}}~10
+\begin{DoxyCompactList}\small\item\em Количество столбцов игрового поля. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{front_8h_a0e21c77a1d541961ebf6501ec58be3dc}{COUNTCOORDINATE}}~5
+\begin{DoxyCompactList}\small\item\em Количество координат в фигуре. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{front_8h_a75c281462c172ae33073839cd6870c41}{COUNTFIGURE}}~7
+\begin{DoxyCompactList}\small\item\em Количество различных фигур. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{front_8h_a120e89fb2a09b7f5294e94a0f292d740}{COUNTDIMENSION}}~2
+\begin{DoxyCompactList}\small\item\em Количество измерений (x, y) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Функции}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}} \mbox{\hyperlink{front_8h_ad57b9077691d084d675893056f57abe8}{Uzvering}} (\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}} action, bool \texorpdfstring{$\ast$}{*}hold)
+\begin{DoxyCompactList}\small\item\em Обрабатывает ввод пользователя с клавиатуры. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{front_8h_a19f2d330911a36d0ce3985e6f4193a3f}{Info\+Print}} (WINDOW \texorpdfstring{$\ast$}{*}info\+\_\+window, \mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} tetris, char \texorpdfstring{$\ast$}{*}name)
+\begin{DoxyCompactList}\small\item\em Отображает дополнительную информацию об игре. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{front_8h_a0961309c4bbae77cec58e1d2c627afec}{New\+Figure\+Print}} (WINDOW \texorpdfstring{$\ast$}{*}info\+\_\+window, \mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} tetris)
+\begin{DoxyCompactList}\small\item\em Отображает следующую фигуру. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{front_8h_aa8fd3cf9181aa8ce99a9be0a59678473}{Field\+Print}} (WINDOW \texorpdfstring{$\ast$}{*}board, \mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} tetris)
+\begin{DoxyCompactList}\small\item\em Отображает основное поле игры. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{front_8h_aa23e28ca412ceeed8a60499496e56b6e}{Draw}} (WINDOW \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}board, WINDOW \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}info\+\_\+window)
+\begin{DoxyCompactList}\small\item\em Инициализирует и рисует интерфейс\+: поле и информационную панель. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{front_8h_a63c1f7a6ca12ad1a16062196f1c0d416}{Game\+Print}} (WINDOW \texorpdfstring{$\ast$}{*}board, WINDOW \texorpdfstring{$\ast$}{*}info\+\_\+window, \mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} tetris, char \texorpdfstring{$\ast$}{*}name)
+\begin{DoxyCompactList}\small\item\em Отрисовывает всю игровую информацию. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Заголовочный файл с функциями интерфейса для отображения Tetris с использованием ncurses. 
+
+
+
+См. определение в файле \mbox{\hyperlink{front_8h_source}{front.\+h}}
+
+
+
+\doxysubsection{Макросы}
+\Hypertarget{front_8h_a0e21c77a1d541961ebf6501ec58be3dc}\index{front.h@{front.h}!COUNTCOORDINATE@{COUNTCOORDINATE}}
+\index{COUNTCOORDINATE@{COUNTCOORDINATE}!front.h@{front.h}}
+\doxysubsubsection{\texorpdfstring{COUNTCOORDINATE}{COUNTCOORDINATE}}
+{\footnotesize\ttfamily \label{front_8h_a0e21c77a1d541961ebf6501ec58be3dc} 
+\#define COUNTCOORDINATE~5}
+
+
+
+Количество координат в фигуре. 
+
+
+
+См. определение в файле \mbox{\hyperlink{front_8h_source}{front.\+h}} строка \mbox{\hyperlink{front_8h_source_l00019}{19}}
+
+\Hypertarget{front_8h_a120e89fb2a09b7f5294e94a0f292d740}\index{front.h@{front.h}!COUNTDIMENSION@{COUNTDIMENSION}}
+\index{COUNTDIMENSION@{COUNTDIMENSION}!front.h@{front.h}}
+\doxysubsubsection{\texorpdfstring{COUNTDIMENSION}{COUNTDIMENSION}}
+{\footnotesize\ttfamily \label{front_8h_a120e89fb2a09b7f5294e94a0f292d740} 
+\#define COUNTDIMENSION~2}
+
+
+
+Количество измерений (x, y) 
+
+
+
+См. определение в файле \mbox{\hyperlink{front_8h_source}{front.\+h}} строка \mbox{\hyperlink{front_8h_source_l00023}{23}}
+
+\Hypertarget{front_8h_a75c281462c172ae33073839cd6870c41}\index{front.h@{front.h}!COUNTFIGURE@{COUNTFIGURE}}
+\index{COUNTFIGURE@{COUNTFIGURE}!front.h@{front.h}}
+\doxysubsubsection{\texorpdfstring{COUNTFIGURE}{COUNTFIGURE}}
+{\footnotesize\ttfamily \label{front_8h_a75c281462c172ae33073839cd6870c41} 
+\#define COUNTFIGURE~7}
+
+
+
+Количество различных фигур. 
+
+
+
+См. определение в файле \mbox{\hyperlink{front_8h_source}{front.\+h}} строка \mbox{\hyperlink{front_8h_source_l00021}{21}}
+
+\Hypertarget{front_8h_a6a83dc415ae5e205183f0488b46228c4}\index{front.h@{front.h}!MAXCOLS@{MAXCOLS}}
+\index{MAXCOLS@{MAXCOLS}!front.h@{front.h}}
+\doxysubsubsection{\texorpdfstring{MAXCOLS}{MAXCOLS}}
+{\footnotesize\ttfamily \label{front_8h_a6a83dc415ae5e205183f0488b46228c4} 
+\#define MAXCOLS~10}
+
+
+
+Количество столбцов игрового поля. 
+
+
+
+См. определение в файле \mbox{\hyperlink{front_8h_source}{front.\+h}} строка \mbox{\hyperlink{front_8h_source_l00017}{17}}
+
+\Hypertarget{front_8h_a5defaa6a67c0db00483fb376caf78bd0}\index{front.h@{front.h}!MAXROWS@{MAXROWS}}
+\index{MAXROWS@{MAXROWS}!front.h@{front.h}}
+\doxysubsubsection{\texorpdfstring{MAXROWS}{MAXROWS}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{front_8h_a5defaa6a67c0db00483fb376caf78bd0} 
+\#define MAXROWS~20}
+
+
+
+Количество строк игрового поля. 
+
+Количество столбцов игрового поля. 
+
+См. определение в файле \mbox{\hyperlink{front_8h_source}{front.\+h}} строка \mbox{\hyperlink{front_8h_source_l00013}{13}}
+
+\Hypertarget{front_8h_a5defaa6a67c0db00483fb376caf78bd0}\index{front.h@{front.h}!MAXROWS@{MAXROWS}}
+\index{MAXROWS@{MAXROWS}!front.h@{front.h}}
+\doxysubsubsection{\texorpdfstring{MAXROWS}{MAXROWS}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{front_8h_a5defaa6a67c0db00483fb376caf78bd0} 
+\#define MAXROWS~20}
+
+
+
+Количество строк игрового поля. 
+
+Количество столбцов игрового поля. 
+
+См. определение в файле \mbox{\hyperlink{front_8h_source}{front.\+h}} строка \mbox{\hyperlink{front_8h_source_l00013}{13}}
+
+
+
+\doxysubsection{Функции}
+\Hypertarget{front_8h_aa23e28ca412ceeed8a60499496e56b6e}\index{front.h@{front.h}!Draw@{Draw}}
+\index{Draw@{Draw}!front.h@{front.h}}
+\doxysubsubsection{\texorpdfstring{Draw()}{Draw()}}
+{\footnotesize\ttfamily \label{front_8h_aa23e28ca412ceeed8a60499496e56b6e} 
+void Draw (\begin{DoxyParamCaption}\item[{WINDOW \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{board}{, }\item[{WINDOW \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{info\+\_\+window}{}\end{DoxyParamCaption})}
+
+
+
+Инициализирует и рисует интерфейс\+: поле и информационную панель. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em board} & Указатель на окно поля. \\
+\hline
+{\em info\+\_\+window} & Указатель на окно информации. \\
+\hline
+\end{DoxyParams}
+
+
+См. определение в файле \mbox{\hyperlink{front_8c_source}{front.\+c}} строка \mbox{\hyperlink{front_8c_source_l00119}{119}}
+
+\Hypertarget{front_8h_aa8fd3cf9181aa8ce99a9be0a59678473}\index{front.h@{front.h}!FieldPrint@{FieldPrint}}
+\index{FieldPrint@{FieldPrint}!front.h@{front.h}}
+\doxysubsubsection{\texorpdfstring{FieldPrint()}{FieldPrint()}}
+{\footnotesize\ttfamily \label{front_8h_aa8fd3cf9181aa8ce99a9be0a59678473} 
+int Field\+Print (\begin{DoxyParamCaption}\item[{WINDOW \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}}}]{tetris}{}\end{DoxyParamCaption})}
+
+
+
+Отображает основное поле игры. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em board} & Окно ncurses с полем. \\
+\hline
+{\em tetris} & Текущее состояние игры. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+0 при успехе. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{front_8c_source}{front.\+c}} строка \mbox{\hyperlink{front_8c_source_l00090}{90}}
+
+\Hypertarget{front_8h_a63c1f7a6ca12ad1a16062196f1c0d416}\index{front.h@{front.h}!GamePrint@{GamePrint}}
+\index{GamePrint@{GamePrint}!front.h@{front.h}}
+\doxysubsubsection{\texorpdfstring{GamePrint()}{GamePrint()}}
+{\footnotesize\ttfamily \label{front_8h_a63c1f7a6ca12ad1a16062196f1c0d416} 
+int Game\+Print (\begin{DoxyParamCaption}\item[{WINDOW \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{WINDOW \texorpdfstring{$\ast$}{*}}]{info\+\_\+window}{, }\item[{\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}}}]{tetris}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{name}{}\end{DoxyParamCaption})}
+
+
+
+Отрисовывает всю игровую информацию. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em board} & Окно поля. \\
+\hline
+{\em info\+\_\+window} & Окно информации. \\
+\hline
+{\em tetris} & Структура с состоянием игры. \\
+\hline
+{\em name} & Имя игрока. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+0 при успехе. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{front_8c_source}{front.\+c}} строка \mbox{\hyperlink{front_8c_source_l00147}{147}}
+
+\Hypertarget{front_8h_a19f2d330911a36d0ce3985e6f4193a3f}\index{front.h@{front.h}!InfoPrint@{InfoPrint}}
+\index{InfoPrint@{InfoPrint}!front.h@{front.h}}
+\doxysubsubsection{\texorpdfstring{InfoPrint()}{InfoPrint()}}
+{\footnotesize\ttfamily \label{front_8h_a19f2d330911a36d0ce3985e6f4193a3f} 
+int Info\+Print (\begin{DoxyParamCaption}\item[{WINDOW \texorpdfstring{$\ast$}{*}}]{info\+\_\+window}{, }\item[{\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}}}]{tetris}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{name}{}\end{DoxyParamCaption})}
+
+
+
+Отображает дополнительную информацию об игре. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em info\+\_\+window} & Окно ncurses для информации. \\
+\hline
+{\em tetris} & Текущее состояние игры. \\
+\hline
+{\em name} & Имя игрока. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+0 при успехе. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{front_8c_source}{front.\+c}} строка \mbox{\hyperlink{front_8c_source_l00069}{69}}
+
+\Hypertarget{front_8h_a0961309c4bbae77cec58e1d2c627afec}\index{front.h@{front.h}!NewFigurePrint@{NewFigurePrint}}
+\index{NewFigurePrint@{NewFigurePrint}!front.h@{front.h}}
+\doxysubsubsection{\texorpdfstring{NewFigurePrint()}{NewFigurePrint()}}
+{\footnotesize\ttfamily \label{front_8h_a0961309c4bbae77cec58e1d2c627afec} 
+int New\+Figure\+Print (\begin{DoxyParamCaption}\item[{WINDOW \texorpdfstring{$\ast$}{*}}]{info\+\_\+window}{, }\item[{\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}}}]{tetris}{}\end{DoxyParamCaption})}
+
+
+
+Отображает следующую фигуру. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em info\+\_\+window} & Окно ncurses для информации. \\
+\hline
+{\em tetris} & Текущее состояние игры. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+0 при успехе. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{front_8c_source}{front.\+c}} строка \mbox{\hyperlink{front_8c_source_l00051}{51}}
+
+\Hypertarget{front_8h_ad57b9077691d084d675893056f57abe8}\index{front.h@{front.h}!Uzvering@{Uzvering}}
+\index{Uzvering@{Uzvering}!front.h@{front.h}}
+\doxysubsubsection{\texorpdfstring{Uzvering()}{Uzvering()}}
+{\footnotesize\ttfamily \label{front_8h_ad57b9077691d084d675893056f57abe8} 
+\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}} Uzvering (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}}}]{action}{, }\item[{bool \texorpdfstring{$\ast$}{*}}]{hold}{}\end{DoxyParamCaption})}
+
+
+
+Обрабатывает ввод пользователя с клавиатуры. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em action} & Предыдущее действие пользователя. \\
+\hline
+{\em hold} & Указатель на флаг "{}зажатия"{} клавиши. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+Новое действие пользователя. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{front_8c_source}{front.\+c}} строка \mbox{\hyperlink{front_8c_source_l00003}{3}}
+

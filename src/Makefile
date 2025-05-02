@@ -20,16 +20,16 @@ install: clean
 uninstall:
 	rm -r build
 play:
-	./tetris
+	./build/game
 gcov_report:
-	rm -rf test-test_*.gc* test-s21_tests.gc*
+	rm -rf test-temp_tests*.gc* 
 	lcov -t "result" -o res.info -c -d . --rc branch_coverage=0
 	genhtml -o report res.info --rc branch_coverage=0
 	open report/index.html
 
 
 test: clean
-	$(CC)   --coverage $(SRC) temp_tests.c -o test $(det_OS) 
+	$(CC)  --coverage $(SRC) ./tests/temp_tests.c -o test $(det_OS) 
 #tests/*.c
 	./test
 
@@ -59,4 +59,4 @@ style:
 	clang-format --style=Google -i */*.c  */*.h
 
 clean:
-	rm -rf report *.gc* *.o *.info *.a  test test.dSYM tests/*.o
+	rm -rf report *.gc* *.o *.info *.a  test test.dSYM tests/*.o build

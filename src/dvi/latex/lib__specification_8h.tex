@@ -1,0 +1,152 @@
+\doxysection{Файл inc/lib\+\_\+specification.h}
+\hypertarget{lib__specification_8h}{}\label{lib__specification_8h}\index{inc/lib\_specification.h@{inc/lib\_specification.h}}
+
+
+Определяет структуру данных \doxylink{struct_game_info__t}{Game\+Info\+\_\+t} и перечисление \doxylink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}, используемые в игре Tetris.  
+
+
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+\doxysubsubsection*{Классы}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Структура, содержащая текущее состояние игры. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Перечисления}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}} \{ \newline
+\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9abd5f9c956752ce4dc707b4624b3a36f7}{Start}}
+, \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9adaba8aa0fcd8a87c25fec7d916c789e7}{Pause}}
+, \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9aaf166713f3d14b30bee8f0ad5a09c4cb}{Terminate}}
+, \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9a9d4d8b0b72fc2659da772d761a3c5ecb}{Left}}
+, \newline
+\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9ad48f7af8c070184f3774c8e85854eb66}{Right}}
+, \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9a57a7edcbc04d6175683383cad5c3e0a2}{Up}}
+, \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9abcf8c79e9a5f5f9d606fb35645a0fb27}{Down}}
+, \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9a3887649be5130f60dd3e7a6eb8e9f142}{Action}}
+ \}
+\begin{DoxyCompactList}\small\item\em Перечисление возможных действий пользователя. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Функции}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{lib__specification_8h_ab961f91e569a34b6984536633126257a}{user\+Input}} (\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}} action, bool hold)
+\begin{DoxyCompactList}\small\item\em Обрабатывает пользовательский ввод. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \mbox{\hyperlink{lib__specification_8h_afd5762991a9248a0b4192983fd786a8f}{update\+Current\+State}} ()
+\begin{DoxyCompactList}\small\item\em Обновляет и возвращает текущее состояние игры. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Определяет структуру данных \doxylink{struct_game_info__t}{Game\+Info\+\_\+t} и перечисление \doxylink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}, используемые в игре Tetris. 
+
+
+
+См. определение в файле \mbox{\hyperlink{lib__specification_8h_source}{lib\+\_\+specification.\+h}}
+
+
+
+\doxysubsection{Перечисления}
+\Hypertarget{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}\index{lib\_specification.h@{lib\_specification.h}!UserAction\_t@{UserAction\_t}}
+\index{UserAction\_t@{UserAction\_t}!lib\_specification.h@{lib\_specification.h}}
+\doxysubsubsection{\texorpdfstring{UserAction\_t}{UserAction\_t}}
+{\footnotesize\ttfamily \label{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9} 
+enum \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}}}
+
+
+
+Перечисление возможных действий пользователя. 
+
+\begin{DoxyEnumFields}[2]{Элементы перечислений}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Start@{Start}!lib\_specification.h@{lib\_specification.h}}\index{lib\_specification.h@{lib\_specification.h}!Start@{Start}}}\Hypertarget{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9abd5f9c956752ce4dc707b4624b3a36f7}\label{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9abd5f9c956752ce4dc707b4624b3a36f7} 
+Start&Начало игры или продолжение. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Pause@{Pause}!lib\_specification.h@{lib\_specification.h}}\index{lib\_specification.h@{lib\_specification.h}!Pause@{Pause}}}\Hypertarget{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9adaba8aa0fcd8a87c25fec7d916c789e7}\label{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9adaba8aa0fcd8a87c25fec7d916c789e7} 
+Pause&Пауза. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Terminate@{Terminate}!lib\_specification.h@{lib\_specification.h}}\index{lib\_specification.h@{lib\_specification.h}!Terminate@{Terminate}}}\Hypertarget{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9aaf166713f3d14b30bee8f0ad5a09c4cb}\label{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9aaf166713f3d14b30bee8f0ad5a09c4cb} 
+Terminate&Завершение игры. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Left@{Left}!lib\_specification.h@{lib\_specification.h}}\index{lib\_specification.h@{lib\_specification.h}!Left@{Left}}}\Hypertarget{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9a9d4d8b0b72fc2659da772d761a3c5ecb}\label{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9a9d4d8b0b72fc2659da772d761a3c5ecb} 
+Left&Движение фигуры влево. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Right@{Right}!lib\_specification.h@{lib\_specification.h}}\index{lib\_specification.h@{lib\_specification.h}!Right@{Right}}}\Hypertarget{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9ad48f7af8c070184f3774c8e85854eb66}\label{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9ad48f7af8c070184f3774c8e85854eb66} 
+Right&Движение фигуры вправо. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Up@{Up}!lib\_specification.h@{lib\_specification.h}}\index{lib\_specification.h@{lib\_specification.h}!Up@{Up}}}\Hypertarget{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9a57a7edcbc04d6175683383cad5c3e0a2}\label{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9a57a7edcbc04d6175683383cad5c3e0a2} 
+Up&Действие "{}вверх"{} (зарезервировано или для поворота). \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Down@{Down}!lib\_specification.h@{lib\_specification.h}}\index{lib\_specification.h@{lib\_specification.h}!Down@{Down}}}\Hypertarget{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9abcf8c79e9a5f5f9d606fb35645a0fb27}\label{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9abcf8c79e9a5f5f9d606fb35645a0fb27} 
+Down&Движение фигуры вниз. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Action@{Action}!lib\_specification.h@{lib\_specification.h}}\index{lib\_specification.h@{lib\_specification.h}!Action@{Action}}}\Hypertarget{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9a3887649be5130f60dd3e7a6eb8e9f142}\label{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9a3887649be5130f60dd3e7a6eb8e9f142} 
+Action&Основное действие (например, поворот фигуры). \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+См. определение в файле \mbox{\hyperlink{lib__specification_8h_source}{lib\+\_\+specification.\+h}} строка \mbox{\hyperlink{lib__specification_8h_source_l00015}{15}}
+
+
+
+\doxysubsection{Функции}
+\Hypertarget{lib__specification_8h_afd5762991a9248a0b4192983fd786a8f}\index{lib\_specification.h@{lib\_specification.h}!updateCurrentState@{updateCurrentState}}
+\index{updateCurrentState@{updateCurrentState}!lib\_specification.h@{lib\_specification.h}}
+\doxysubsubsection{\texorpdfstring{updateCurrentState()}{updateCurrentState()}}
+{\footnotesize\ttfamily \label{lib__specification_8h_afd5762991a9248a0b4192983fd786a8f} 
+\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} update\+Current\+State (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Обновляет и возвращает текущее состояние игры. 
+
+\begin{DoxyReturn}{Возвращает}
+Актуальное состояние игры.
+\end{DoxyReturn}
+Обновляет и возвращает текущее состояние игры.
+
+Используется для фронтенда\+: обновляет отображение игры.
+
+\begin{DoxyReturn}{Возвращает}
+Текущий {\ttfamily \doxylink{struct_game_info__t}{Game\+Info\+\_\+t}}. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{tetris_8c_source}{tetris.\+c}} строка \mbox{\hyperlink{tetris_8c_source_l00052}{52}}
+
+\Hypertarget{lib__specification_8h_ab961f91e569a34b6984536633126257a}\index{lib\_specification.h@{lib\_specification.h}!userInput@{userInput}}
+\index{userInput@{userInput}!lib\_specification.h@{lib\_specification.h}}
+\doxysubsubsection{\texorpdfstring{userInput()}{userInput()}}
+{\footnotesize\ttfamily \label{lib__specification_8h_ab961f91e569a34b6984536633126257a} 
+void user\+Input (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}}}]{action}{, }\item[{bool}]{hold}{}\end{DoxyParamCaption})}
+
+
+
+Обрабатывает пользовательский ввод. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em action} & Действие пользователя. \\
+\hline
+{\em hold} & Флаг, указывающий, удерживается ли клавиша.\\
+\hline
+\end{DoxyParams}
+Управляет состоянием игры\+: пауза, завершение, передаёт действие в автомата состояний.
+
+
+\begin{DoxyParams}{Аргументы}
+{\em action} & Событие, вызванное нажатием клавиши пользователем. \\
+\hline
+{\em hold} & Было ли удержание клавиши (не используется пока). \\
+\hline
+\end{DoxyParams}
+
+
+См. определение в файле \mbox{\hyperlink{tetris_8c_source}{tetris.\+c}} строка \mbox{\hyperlink{tetris_8c_source_l00028}{28}}
+

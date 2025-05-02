@@ -1,0 +1,370 @@
+\doxysection{backend.\+c}
+\hypertarget{backend_8c_source}{}\label{backend_8c_source}\index{brick\_game/backend/backend.c@{brick\_game/backend/backend.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{backend_8h}{../../inc/backend.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00004}00004\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ figure\_home[\mbox{\hyperlink{backend_8h_a75c281462c172ae33073839cd6870c41}{COUNTFIGURE}}][\mbox{\hyperlink{backend_8h_a0e21c77a1d541961ebf6501ec58be3dc}{COUNTCOORDINATE}}][2]\ \textcolor{comment}{/*\{x,y\}*/}\ =\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00005}00005\ \ \ \ \ \{\{5,\ 0\},\ \{0,\ 0\},\ \{1,\ 0\},\ \{-\/1,\ 0\},\ \{1,\ 1\}\},\ \ \ \textcolor{comment}{//\ \ \ -\/.}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00006}00006\ \ \ \ \ \{\{5,\ 1\},\ \{0,\ 0\},\ \{0,\ 1\},\ \{0,\ 2\},\ \{0,\ -\/1\}\},\ \ \ \textcolor{comment}{//\ |\ \ I}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00007}00007\ \ \ \ \ \{\{5,\ 0\},\ \{0,\ 0\},\ \{0,\ 1\},\ \{1,\ 0\},\ \{-\/1,\ 0\}\},\ \ \ \textcolor{comment}{//\ .|.}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00008}00008\ \ \ \ \ \{\{5,\ 0\},\ \{0,\ 0\},\ \{0,\ 1\},\ \{1,\ 1\},\ \{1,\ 0\}\},\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00009}00009\ \ \ \ \ \{\{5,\ 0\},\ \{0,\ 0\},\ \{-\/1,\ 0\},\ \{-\/1,\ 1\},\ \{1,\ 0\}\},\ \ \textcolor{comment}{//\ .-\/}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00010}00010\ \ \ \ \ \{\{5,\ 0\},\ \{0,\ 0\},\ \{0,\ 1\},\ \{1,\ 1\},\ \{-\/1,\ 0\}\},\ \ \ \textcolor{comment}{//\ Z}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00011}00011\ \ \ \ \ \{\{5,\ 0\},\ \{0,\ 0\},\ \{0,\ 1\},\ \{-\/1,\ 1\},\ \{1,\ 0\}\}\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00012}00012\ \};}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00021}\mbox{\hyperlink{backend_8h_a0e5027dbabb199f7ab535a5cc0f8e812}{00021}}\ \textcolor{keywordtype}{void}\ Figuring(\textcolor{keywordtype}{int}\ **figure,\ \textcolor{keywordtype}{int}\ index)\ \{\ \ \textcolor{comment}{//\ не\ изменено}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00022}00022\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ \mbox{\hyperlink{backend_8h_a0e21c77a1d541961ebf6501ec58be3dc}{COUNTCOORDINATE}};\ k++)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00023}00023\ \ \ \ \ figure[k][0]\ =\ figure\_home[index][k][0];}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00024}00024\ \ \ \ \ figure[k][1]\ =\ figure\_home[index][k][1];}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00025}00025\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00026}00026\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00037}\mbox{\hyperlink{backend_8h_a7d44e2f23a94929f77bd22190ba5a0cf}{00037}}\ \textcolor{keywordtype}{int}\ Curtsy(\textcolor{keywordtype}{int}\ **field,\ \textcolor{keywordtype}{int}\ **figure,\ \textcolor{keywordtype}{int}\ i)\ \{\ \ \textcolor{comment}{//\ бэк\ спуск\ фигуры}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00038}00038\ \ \ \textcolor{keywordtype}{int}\ clop\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00039}00039\ \ \ \textcolor{keywordtype}{int}\ **temp\_figure\ =\ CreateCopy();}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00040}00040\ \ \ CopyFigure(temp\_figure,\ figure);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00041}00041\ \ \ \textcolor{keywordflow}{if}\ (i\ <\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00042}00042\ \ \ \ \ clop\ =\ \mbox{\hyperlink{backend_8h_ae0e3badb51583d9218fe56b5f51c1ecc}{BAD\_ARGUMENT}};}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00043}00043\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00044}00044\ \ \ \textcolor{keywordflow}{if}\ (!CheckCollision(field,\ temp\_figure)\ \&\&\ clop\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00045}00045\ \ \ \ \ temp\_figure[0][1]\ +=\ i;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00046}00046\ \ \ \ \ clop\ =\ CheckCollision(field,\ temp\_figure);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00047}00047\ \ \ \ \ \textcolor{keywordflow}{if}\ (!clop)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00048}00048\ \ \ \ \ \ \ CopyFigure(figure,\ temp\_figure);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00049}00049\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00050}00050\ \ \ \}\ \ \textcolor{comment}{//\ else\ clop=BAD\_ARGUMENT;}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00051}00051\ \ \ DeleteCopy(\&temp\_figure);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00053}00053\ \ \ \textcolor{keywordflow}{return}\ clop;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00054}00054\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00063}\mbox{\hyperlink{backend_8h_ae4095c00014129a0eaa65435910b38ba}{00063}}\ \textcolor{keywordtype}{void}\ ZeroingTemp(}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00064}00064\ \ \ \ \ \textcolor{keywordtype}{int}\ **field)\ \{\ \ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00065}00065\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{backend_8h_a5defaa6a67c0db00483fb376caf78bd0}{MAXROWS}};\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00066}00066\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ \mbox{\hyperlink{backend_8h_a6a83dc415ae5e205183f0488b46228c4}{MAXCOLS}};\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00067}00067\ \ \ \ \ \ \ field[i][j]\ =\ \mbox{\hyperlink{backend_8h_ab95aa986509de505fb54b0d2c2b5a019}{CELL\_EMPTY}};}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00068}00068\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00069}00069\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00070}00070\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00078}\mbox{\hyperlink{backend_8h_a5752919a95d754c38df9f87ca5c62e05}{00078}}\ \textcolor{keywordtype}{int}\ SumFigure(\textcolor{keywordtype}{int}\ **field,\ \textcolor{keywordtype}{int}\ **figure)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00079}00079\ \ \ \textcolor{keywordtype}{int}\ clop\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00080}00080\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 4;\ k\ >\ 0\ \&\&\ !clop;\ k-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00081}00081\ \ \ \ \ \textcolor{keywordtype}{int}\ new\_x\ =\ figure[0][0]\ +\ figure[k][0];}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00082}00082\ \ \ \ \ \textcolor{keywordtype}{int}\ new\_y\ =\ figure[0][1]\ +\ figure[k][1];}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00084}00084\ \ \ \ \ \textcolor{keywordflow}{if}\ (new\_y\ >=\ \mbox{\hyperlink{backend_8h_a5defaa6a67c0db00483fb376caf78bd0}{MAXROWS}}\ ||\ new\_y\ <\ 0\ ||\ new\_x\ >=\ \mbox{\hyperlink{backend_8h_a6a83dc415ae5e205183f0488b46228c4}{MAXCOLS}}\ ||\ new\_x\ <\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00085}00085\ \ \ \ \ \ \ clop\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00086}00086\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00087}00087\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (field[new\_y][new\_x]\ !=\ \mbox{\hyperlink{backend_8h_ab95aa986509de505fb54b0d2c2b5a019}{CELL\_EMPTY}})\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00088}00088\ \ \ \ \ \ \ clop\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00089}00089\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00090}00090\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00091}00091\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 4;\ k\ >\ 0\ \&\&\ !clop;\ k-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00092}00092\ \ \ \ \ \textcolor{keywordtype}{int}\ new\_x\ =\ figure[0][0]\ +\ figure[k][0];}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00093}00093\ \ \ \ \ \textcolor{keywordtype}{int}\ new\_y\ =\ figure[0][1]\ +\ figure[k][1];}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00094}00094\ \ \ \ \ field[new\_y][new\_x]\ =\ \mbox{\hyperlink{backend_8h_a958788fcb5525a553495debc0042ef20}{CELL\_FILLED}};\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00095}00095\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00097}00097\ \ \ \textcolor{keywordflow}{return}\ clop;\ \ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00098}00098\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00107}\mbox{\hyperlink{backend_8h_a9ff972b8421849428383479d7ab42d2b}{00107}}\ \textcolor{keywordtype}{int}\ SubFigure(\textcolor{keywordtype}{int}\ **field,}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ **figure)\ \{\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00110}00110\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 4;\ k\ >\ 0;\ k-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00111}00111\ \ \ \ \ \textcolor{keywordtype}{int}\ new\_x\ =\ figure[0][0]\ +\ figure[k][0];\ \ \textcolor{comment}{//\ Новая\ координата\ по\ x}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00112}00112\ \ \ \ \ \textcolor{keywordtype}{int}\ new\_y\ =\ figure[0][1]\ +\ figure[k][1];}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00113}00113\ \ \ \ \ \textcolor{keywordflow}{if}\ (!(new\_y\ >=\ \mbox{\hyperlink{backend_8h_a5defaa6a67c0db00483fb376caf78bd0}{MAXROWS}}\ ||\ new\_y\ <\ 0\ ||\ new\_x\ >=\ \mbox{\hyperlink{backend_8h_a6a83dc415ae5e205183f0488b46228c4}{MAXCOLS}}\ ||\ new\_x\ <\ 0))}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00114}00114\ \ \ \ \ \ \ field[new\_y][new\_x]\ =\ \mbox{\hyperlink{backend_8h_ab95aa986509de505fb54b0d2c2b5a019}{CELL\_EMPTY}};\ \ \textcolor{comment}{//\ возвращаем\ отсутствие\ фигуры}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00115}00115\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00117}00117\ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00118}00118\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00126}\mbox{\hyperlink{backend_8h_a61609035d90a44818709130551770a1f}{00126}}\ \textcolor{keywordtype}{int}\ StringDel(\ \ \ \ \textcolor{keywordtype}{int}\ **field)\ \{\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00127}00127\ \ \ \textcolor{keywordtype}{int}\ del\_counter\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00128}00128\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{backend_8h_a5defaa6a67c0db00483fb376caf78bd0}{MAXROWS}};\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00129}00129\ \ \ \ \ \textcolor{keywordtype}{int}\ zer\_string\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00131}00131\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ \mbox{\hyperlink{backend_8h_a6a83dc415ae5e205183f0488b46228c4}{MAXCOLS}};\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00132}00132\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (field[i][j]\ ==\ \mbox{\hyperlink{backend_8h_ab95aa986509de505fb54b0d2c2b5a019}{CELL\_EMPTY}})\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00133}00133\ \ \ \ \ \ \ \ \ zer\_string\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00134}00134\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00135}00135\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00136}00136\ \ \ \ \ \textcolor{keywordflow}{if}\ (zer\_string)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00137}00137\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ n\ =\ i;\ n\ >\ 0;\ n-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00138}00138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ \mbox{\hyperlink{backend_8h_a6a83dc415ae5e205183f0488b46228c4}{MAXCOLS}};\ k++)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ field[n][k]\ =\ field[n\ -\/\ 1][k];}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00140}00140\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00141}00141\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00142}00142\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ \mbox{\hyperlink{backend_8h_a6a83dc415ae5e205183f0488b46228c4}{MAXCOLS}};\ k++)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00143}00143\ \ \ \ \ \ \ \ \ field[0][k]\ =\ \mbox{\hyperlink{backend_8h_ab95aa986509de505fb54b0d2c2b5a019}{CELL\_EMPTY}};}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00144}00144\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00145}00145\ \ \ \ \ \ \ del\_counter++;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00146}00146\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00147}00147\ \ \ \ \ \textcolor{comment}{//\ printw("{}\(\backslash\)n"{});}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00148}00148\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00149}00149\ \ \ \textcolor{keywordflow}{return}\ del\_counter;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00150}00150\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00158}\mbox{\hyperlink{backend_8h_ab8548d955d54fa4895fefa5c6d1897bc}{00158}}\ \textcolor{keywordtype}{int}\ FileScore(}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00159}00159\ \ \ \ \ \textcolor{keywordtype}{char}\ *name,}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00160}00160\ \ \ \ \ \mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *info)\ \{\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00161}00161\ \ \ \textcolor{keywordtype}{char}\ *score\ =\ (\textcolor{keywordtype}{char}\ *)calloc(10,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}));}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00162}00162\ \ \ FILE\ *fp;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00163}00163\ \ \ \textcolor{keywordtype}{char}\ filename[64];}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00164}00164\ \ \ \textcolor{comment}{//\ strcat(name,\ "{}.txt"{});}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00165}00165\ \ \ snprintf(filename,\ \textcolor{keyword}{sizeof}(filename),\ \textcolor{stringliteral}{"{}\%s.txt"{}},\ name);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00166}00166\ \ \ \textcolor{keywordflow}{if}\ ((fp\ =\ fopen(filename,\ \textcolor{stringliteral}{"{}r+"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00167}00167\ \ \ \ \ fp\ =\ fopen(filename,\ \textcolor{stringliteral}{"{}w+"{}});}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00168}00168\ \ \ \}\ \ \textcolor{comment}{//\ добавить\ проверок\ на\ всякое}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00169}00169\ \ \ fgets(score,\ 10,\ fp);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00170}00170\ \ \ \textcolor{keywordtype}{int}\ fs\ =\ atoi(score);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00171}00171\ \ \ \textcolor{keywordflow}{if}\ (fs\ >=\ info-\/>\mbox{\hyperlink{struct_game_info__t_ac93cabe631d5d173fa35714719336c4f}{high\_score}})\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00172}00172\ \ \ \ \ info-\/>\mbox{\hyperlink{struct_game_info__t_ac93cabe631d5d173fa35714719336c4f}{high\_score}}\ =\ fs;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00173}00173\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00174}00174\ \ \ GetSetInfo(info,\ \mbox{\hyperlink{backend_8h_a431b92b32ec924789b2be268651a3fdd}{PUSH}});}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00175}00175\ \ \ free(score);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00176}00176\ \ \ fclose(fp);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00177}00177\ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00178}00178\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00186}\mbox{\hyperlink{backend_8h_a098cf9d4ae3131615866cd8cf6698153}{00186}}\ \textcolor{keywordtype}{int}\ FigureDown(\textcolor{keywordtype}{int}\ **field,\ \textcolor{keywordtype}{int}\ **figure)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00187}00187\ \ \ \textcolor{keywordtype}{int}\ clop\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00188}00188\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 4;\ k\ >\ 0\ \&\&\ !clop;\ k-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00189}00189\ \ \ \ \ \textcolor{keywordtype}{int}\ new\_x\ =\ figure[0][0]\ +\ figure[k][0];\ \ \textcolor{comment}{//\ Новая\ координата\ по\ x}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00190}00190\ \ \ \ \ \textcolor{keywordtype}{int}\ new\_y\ =\ figure[0][1]\ +\ figure[k][1]\ +\ 1;\ \ \textcolor{comment}{//\ Новая\ координата\ по\ y}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00191}00191\ \ \ \ \ \textcolor{keywordflow}{if}\ (new\_y\ ==\ \mbox{\hyperlink{backend_8h_a5defaa6a67c0db00483fb376caf78bd0}{MAXROWS}}\ ||\ field[new\_y][new\_x]\ !=\ \mbox{\hyperlink{backend_8h_ab95aa986509de505fb54b0d2c2b5a019}{CELL\_EMPTY}})\ clop\ =\ 1;\ \ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00192}00192\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00193}00193\ \ \ \textcolor{keywordflow}{return}\ clop;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00194}00194\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00195}00195\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00202}\mbox{\hyperlink{backend_8h_ab297eed34f2fbded5b3122e30e5b6ba5}{00202}}\ \textcolor{keywordtype}{void}\ CopyFigure(\textcolor{keywordtype}{int}\ **dest,\ \textcolor{keywordtype}{int}\ **src)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00203}00203\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ \mbox{\hyperlink{backend_8h_a0e21c77a1d541961ebf6501ec58be3dc}{COUNTCOORDINATE}};\ k++)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00204}00204\ \ \ \ \ dest[k][0]\ =\ src[k][0];}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00205}00205\ \ \ \ \ dest[k][1]\ =\ src[k][1];}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00206}00206\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00207}00207\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00215}\mbox{\hyperlink{backend_8h_a9ed581f5dfd685f6fbefadaece946bc7}{00215}}\ \textcolor{keywordtype}{int}\ CheckCollision(\textcolor{keywordtype}{int}\ **field,\ \textcolor{keywordtype}{int}\ **figure)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00216}00216\ \ \ \textcolor{keywordtype}{int}\ clop\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00217}00217\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 4;\ k\ >\ 0\ \&\&\ !clop;\ k-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00218}00218\ \ \ \ \ \textcolor{keywordtype}{int}\ new\_x\ =\ figure[0][0]\ +\ figure[k][0];\ \ \textcolor{comment}{//\ Новая\ координата\ по\ x}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00219}00219\ \ \ \ \ \textcolor{keywordtype}{int}\ new\_y\ =\ figure[0][1]\ +\ figure[k][1];\ \ \textcolor{comment}{//\ Новая\ координата\ по\ y}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00220}00220\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00221}00221\ \ \ \ \ \textcolor{comment}{//\ Проверка\ на\ выход\ за\ границы\ или\ на\ столкновение\ с\ другими\ фигурами}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00222}00222\ \ \ \ \ \textcolor{keywordflow}{if}\ (new\_y\ >=\ \mbox{\hyperlink{backend_8h_a5defaa6a67c0db00483fb376caf78bd0}{MAXROWS}}\ ||\ new\_y\ <\ 0\ ||\ new\_x\ >=\ \mbox{\hyperlink{backend_8h_a6a83dc415ae5e205183f0488b46228c4}{MAXCOLS}}\ ||\ new\_x\ <\ 0\ ||}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00223}00223\ \ \ \ \ \ \ \ \ field[new\_y][new\_x]\ !=\ \textcolor{charliteral}{'.'})\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00224}00224\ \ \ \ \ \ \ clop\ =\ 1;\ \ \textcolor{comment}{//\ Столкновение\ произошло}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00225}00225\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00226}00226\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00227}00227\ \ \ \textcolor{keywordflow}{return}\ clop;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00228}00228\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00229}00229\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00230}00230\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00235}\mbox{\hyperlink{backend_8h_af9b49936ae5777dad07ba76554091543}{00235}}\ \textcolor{keywordtype}{int}\ **CreateCopy()\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00236}00236\ \ \ \textcolor{keywordtype}{int}\ clop=1;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00237}00237\ \ \ \textcolor{keywordtype}{int}\ **temp\_figure\ =\ malloc(\mbox{\hyperlink{backend_8h_a0e21c77a1d541961ebf6501ec58be3dc}{COUNTCOORDINATE}}\ *\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}\ *));}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00238}00238\ \ \ \textcolor{keywordflow}{if}\ (temp\_figure\ ==NULL)\{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00239}00239\ \ \ \ \ clop=0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00240}00240\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00241}00241\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ \mbox{\hyperlink{backend_8h_a0e21c77a1d541961ebf6501ec58be3dc}{COUNTCOORDINATE}}\&\&clop;\ k++)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00242}00242\ \ \ \ \ temp\_figure[k]\ =\ malloc(2\ *\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00243}00243\ \ \ \ \ \textcolor{keywordflow}{if}\ (temp\_figure[k]==NULL)\{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00244}00244\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ k;\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(temp\_figure[j]);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ free(temp\_figure);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00248}00248\ \ \ \ \ \ \ clop=0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00249}00249\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00250}00250\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00251}00251\ \ \ \textcolor{keywordflow}{return}\ clop?temp\_figure:NULL;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00252}00252\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00253}00253\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00258}\mbox{\hyperlink{backend_8h_a540d773842db1391445c4dddee2f8191}{00258}}\ \textcolor{keywordtype}{int}\ **CreateField()\ \{\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00259}00259\ \ \ \textcolor{keywordtype}{int}\ clop=1;\ \ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00260}00260\ \ \ \textcolor{keywordtype}{int}\ **field\ =}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00261}00261\ \ \ \ \ \ \ (\textcolor{keywordtype}{int}\ **)malloc(\mbox{\hyperlink{backend_8h_a5defaa6a67c0db00483fb376caf78bd0}{MAXROWS}}\ *\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}\ *));}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00262}00262\ \ \ \textcolor{keywordflow}{if}\ (field\ ==NULL)\{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00263}00263\ \ \ \ \ clop=0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00264}00264\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00265}00265\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{backend_8h_a5defaa6a67c0db00483fb376caf78bd0}{MAXROWS}}\&\&clop;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00266}00266\ \ \ \ \ field[i]\ =\ (\textcolor{keywordtype}{int}\ *)malloc(\mbox{\hyperlink{backend_8h_a6a83dc415ae5e205183f0488b46228c4}{MAXCOLS}}\ *\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00267}00267\ \ \ \ \ \textcolor{keywordflow}{if}\ (field[i]==NULL)\{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00268}00268\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ i;\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(field[j]);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ free(field);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00272}00272\ \ \ \ \ \ \ clop=0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00273}00273\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00274}00274\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ \mbox{\hyperlink{backend_8h_a6a83dc415ae5e205183f0488b46228c4}{MAXCOLS}};\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00275}00275\ \ \ \ \ \ \ field[i][j]\ =\ \mbox{\hyperlink{backend_8h_ab95aa986509de505fb54b0d2c2b5a019}{CELL\_EMPTY}};}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00276}00276\ \ \ \ \ \}\}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00277}00277\ \ \ \}\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00278}00278\ \ \ \textcolor{keywordflow}{return}\ clop?field:\ NULL;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00279}00279\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00280}00280\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00286}\mbox{\hyperlink{backend_8h_a88ba5e3b1a4e9d79737d8ae53fafd927}{00286}}\ \textcolor{keywordtype}{int}\ DeleteCopy(\textcolor{keywordtype}{int}\ ***copy)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00287}00287\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ \mbox{\hyperlink{backend_8h_a0e21c77a1d541961ebf6501ec58be3dc}{COUNTCOORDINATE}};\ k++)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00288}00288\ \ \ \ \ free((*copy)[k]);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00289}00289\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00290}00290\ \ \ free(*copy);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00291}00291\ \ \ *copy\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00292}00292\ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00293}00293\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00294}00294\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00300}\mbox{\hyperlink{backend_8h_a02b31eee0979e10be35da90f8a115a72}{00300}}\ \textcolor{keywordtype}{int}\ DeleteField(\textcolor{keywordtype}{int}\ ***copy)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00301}00301\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ \mbox{\hyperlink{backend_8h_a6a83dc415ae5e205183f0488b46228c4}{MAXCOLS}};\ k++)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00302}00302\ \ \ \ \ free((*copy)[k]);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00303}00303\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00304}00304\ \ \ free(*copy);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00305}00305\ \ \ *copy\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00306}00306\ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00307}00307\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00308}00308\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00309}00309\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00316}\mbox{\hyperlink{backend_8h_ab159a32d41414c368abe0b54fc0089af}{00316}}\ \textcolor{keywordtype}{int}\ RotateCols(\textcolor{keywordtype}{int}\ **field,\ \textcolor{keywordtype}{int}\ **figure)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00317}00317\ \ \ \textcolor{keywordtype}{int}\ clop\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00318}00318\ \ \ \textcolor{keywordtype}{int}\ **temp\_figure\ =\ CreateCopy();}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00319}00319\ \ \ CopyFigure(temp\_figure,\ figure);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00320}00320\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00321}00321\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 1;\ k\ <\ \mbox{\hyperlink{backend_8h_a0e21c77a1d541961ebf6501ec58be3dc}{COUNTCOORDINATE}};\ k++)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00322}00322\ \ \ \ \ \textcolor{keywordtype}{int}\ temp\_x\ =\ temp\_figure[k][0];}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00323}00323\ \ \ \ \ temp\_figure[k][0]\ =\ -\/temp\_figure[k][1];}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00324}00324\ \ \ \ \ temp\_figure[k][1]\ =\ temp\_x;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00325}00325\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00326}00326\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00327}00327\ \ \ clop\ =\ CheckCollision(field,\ temp\_figure);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00328}00328\ \ \ \textcolor{keywordflow}{if}\ (!clop)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00329}00329\ \ \ \ \ CopyFigure(figure,\ temp\_figure);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00330}00330\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00331}00331\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00332}00332\ \ \ DeleteCopy(\&temp\_figure);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00333}00333\ \ \ \textcolor{keywordflow}{return}\ clop;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00334}00334\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00335}00335\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00342}\mbox{\hyperlink{backend_8h_a3b0698435caa0a3a5465a0c7c178d421}{00342}}\ \textcolor{keywordtype}{int}\ MoveCols(\textcolor{keywordtype}{int}\ **field,\ \textcolor{keywordtype}{int}\ **figure,\ \textcolor{keywordtype}{int}\ i)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00343}00343\ \ \ \textcolor{keywordtype}{int}\ clop\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00344}00344\ \ \ \textcolor{keywordtype}{int}\ **temp\_figure\ =\ CreateCopy();}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00345}00345\ \ \ CopyFigure(temp\_figure,\ figure);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00346}00346\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00347}00347\ \ \ temp\_figure[0][0]\ +=\ i;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00348}00348\ \ \ clop\ =\ CheckCollision(field,\ temp\_figure);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00349}00349\ \ \ \textcolor{keywordflow}{if}\ (!clop)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00350}00350\ \ \ \ \ CopyFigure(figure,\ temp\_figure);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00351}00351\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00352}00352\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00353}00353\ \ \ DeleteCopy(\&temp\_figure);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00354}00354\ \ \ \textcolor{keywordflow}{return}\ clop;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00355}00355\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00356}00356\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00357}00357\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00363}\mbox{\hyperlink{backend_8h_a1b780a1bf0bc32d6b9674f7316914874}{00363}}\ \textcolor{keywordtype}{int}\ Scoring(\mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *tetris)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00364}00364\ \ \ \textcolor{keywordtype}{int}\ a\ =\ StringDel(tetris-\/>\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}});}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00365}00365\ \ \ \textcolor{keywordflow}{switch}\ (a)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00366}00366\ \ \ \ \ \textcolor{keywordflow}{case}\ 1:}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00367}00367\ \ \ \ \ \ \ tetris-\/>\mbox{\hyperlink{struct_game_info__t_a4a6b1b290cd3e129bf78992964cf4136}{score}}\ +=\ 100;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00368}00368\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00369}00369\ \ \ \ \ \textcolor{keywordflow}{case}\ 2:}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00370}00370\ \ \ \ \ \ \ tetris-\/>\mbox{\hyperlink{struct_game_info__t_a4a6b1b290cd3e129bf78992964cf4136}{score}}\ +=\ 300;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00371}00371\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00372}00372\ \ \ \ \ \textcolor{keywordflow}{case}\ 3:}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00373}00373\ \ \ \ \ \ \ tetris-\/>\mbox{\hyperlink{struct_game_info__t_a4a6b1b290cd3e129bf78992964cf4136}{score}}\ +=\ 700;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00374}00374\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00375}00375\ \ \ \ \ \textcolor{keywordflow}{case}\ 4:}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00376}00376\ \ \ \ \ \ \ tetris-\/>\mbox{\hyperlink{struct_game_info__t_a4a6b1b290cd3e129bf78992964cf4136}{score}}\ +=\ 1500;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00377}00377\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00378}00378\ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00379}00379\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00380}00380\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00381}00381\ \ \ \textcolor{keywordflow}{if}\ (tetris-\/>\mbox{\hyperlink{struct_game_info__t_a4a6b1b290cd3e129bf78992964cf4136}{score}}\ >\ tetris-\/>\mbox{\hyperlink{struct_game_info__t_ac93cabe631d5d173fa35714719336c4f}{high\_score}})\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00382}00382\ \ \ \ \ tetris-\/>\mbox{\hyperlink{struct_game_info__t_ac93cabe631d5d173fa35714719336c4f}{high\_score}}\ =\ tetris-\/>\mbox{\hyperlink{struct_game_info__t_a4a6b1b290cd3e129bf78992964cf4136}{score}};}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00383}00383\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00384}00384\ \ \ GetSetInfo(tetris,\ \mbox{\hyperlink{backend_8h_a431b92b32ec924789b2be268651a3fdd}{PUSH}});}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00385}00385\ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00386}00386\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00387}00387\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00394}\mbox{\hyperlink{backend_8h_a565f18bd6a9738161da477a72537949a}{00394}}\ \textcolor{keywordtype}{int}\ FileScoreInput(}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00395}00395\ \ \ \ \ \textcolor{keywordtype}{char}\ *name,}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00396}00396\ \ \ \ \ \mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *info)\ \{\ \ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00397}00397\ \ \ FILE\ *fp;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00398}00398\ \ \ \textcolor{keywordtype}{char}\ filename[64];}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00399}00399\ \ \ snprintf(filename,\ \textcolor{keyword}{sizeof}(filename),\ \textcolor{stringliteral}{"{}\%s.txt"{}},\ name);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00400}00400\ \ \ \textcolor{keywordflow}{if}\ ((fp\ =\ fopen(filename,\ \textcolor{stringliteral}{"{}r+"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00401}00401\ \ \ \ \ fp\ =\ fopen(filename,\ \textcolor{stringliteral}{"{}w+"{}});}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00402}00402\ \ \ \}\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00403}00403\ \ \ \textcolor{keywordflow}{if}\ (info-\/>\mbox{\hyperlink{struct_game_info__t_ac93cabe631d5d173fa35714719336c4f}{high\_score}}\ <=\ info-\/>\mbox{\hyperlink{struct_game_info__t_a4a6b1b290cd3e129bf78992964cf4136}{score}})\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00404}00404\ \ \ \ \ fprintf(fp,\ \textcolor{stringliteral}{"{}\%d"{}},\ info-\/>\mbox{\hyperlink{struct_game_info__t_ac93cabe631d5d173fa35714719336c4f}{high\_score}});}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00405}00405\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00406}00406\ \ \ fclose(fp);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00407}00407\ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00408}00408\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00409}00409\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00414}\mbox{\hyperlink{backend_8h_a61dd9c744f782f4a3967c59a3c0e07d2}{00414}}\ \textcolor{keywordtype}{int}\ **UpdateFigure()\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00415}00415\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ **figure;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00416}00416\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ flag\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00417}00417\ \ \ \textcolor{keywordflow}{if}\ (flag)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00418}00418\ \ \ \ \ figure\ =\ CreateCopy();}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00419}00419\ \ \ \ \ flag\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00420}00420\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00421}00421\ \ \ \textcolor{comment}{//\ figure\ =\ CreateCopy();}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00422}00422\ \ \ \textcolor{keywordflow}{return}\ figure;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00423}00423\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00424}00424\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00425}00425\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00430}\mbox{\hyperlink{backend_8h_a7a6e5c8bd8080ec12a102e527569ad58}{00430}}\ \textcolor{keywordtype}{void}\ ZeroingAll(\mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *tetris)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00431}00431\ \ \ ZeroingTemp(tetris-\/>\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}});}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00432}00432\ \ \ tetris-\/>\mbox{\hyperlink{struct_game_info__t_a4a6b1b290cd3e129bf78992964cf4136}{score}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00433}00433\ \ \ tetris-\/>\mbox{\hyperlink{struct_game_info__t_a9cc403ee7fbba455d3ef0de350cf2b0c}{speed}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00434}00434\ \ \ tetris-\/>\mbox{\hyperlink{struct_game_info__t_a2ab1763e0a25ced7b4e086e987396444}{level}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00435}00435\ \ \ tetris-\/>\mbox{\hyperlink{struct_game_info__t_ae4acd421e39427d7922856b5f43ba1bd}{pause}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00436}00436\ \ \ Figuring(tetris-\/>\mbox{\hyperlink{struct_game_info__t_ab897112aa413eac6657970ef2a873026}{next}},\ rand()\ \%\ \mbox{\hyperlink{backend_8h_a75c281462c172ae33073839cd6870c41}{COUNTFIGURE}});}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00437}00437\ \ \ GetSetInfo(tetris,\ \mbox{\hyperlink{backend_8h_a431b92b32ec924789b2be268651a3fdd}{PUSH}});}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00438}00438\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00439}00439\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00440}00440\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00447}\mbox{\hyperlink{backend_8h_a645c26bde04373c6026f1532f7863f9d}{00447}}\ \mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ GetSetInfo(\mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *info,\ \textcolor{keywordtype}{int}\ push)\ \{\ \ \textcolor{comment}{//\ not\ included}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00448}00448\ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ game\_info;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00449}00449\ \ \ \textcolor{comment}{//\ static\ int**\ figure;}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00450}00450\ \ \ \textcolor{keywordflow}{if}\ (push)\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00451}00451\ \ \ \ \ game\_info\ =\ *info;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00452}00452\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00453}00453\ \ \ \ \ *info\ =\ game\_info;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00454}00454\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00455}00455\ \ \ \textcolor{keywordflow}{return}\ game\_info;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00456}00456\ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00457}00457\ }
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00463}\mbox{\hyperlink{backend_8h_aef3504a6b3b632fc1bccc6faac99abfc}{00463}}\ \textcolor{keywordtype}{int}\ InitTetris(\mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}*\ tetris)\{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00464}00464\ \ \ \textcolor{keywordtype}{int}\ clop=0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00465}00465\ \ \ tetris-\/>\mbox{\hyperlink{struct_game_info__t_ae4acd421e39427d7922856b5f43ba1bd}{pause}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00466}00466\ \ \ tetris-\/>\mbox{\hyperlink{struct_game_info__t_a4a6b1b290cd3e129bf78992964cf4136}{score}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00467}00467\ \ \ tetris-\/>\mbox{\hyperlink{struct_game_info__t_ac93cabe631d5d173fa35714719336c4f}{high\_score}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00468}00468\ \ \ FileScore(\textcolor{stringliteral}{"{}user"{}},\ tetris);}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00469}00469\ \ \ tetris-\/>\mbox{\hyperlink{struct_game_info__t_a2ab1763e0a25ced7b4e086e987396444}{level}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00470}00470\ \ \ tetris-\/>\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}}\ =\ CreateField();}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00471}00471\ \ \ \textcolor{keywordflow}{if}\ (tetris-\/>\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}}==NULL)\{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00472}00472\ \ \ \ \ clop\ =1;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00473}00473\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00474}00474\ \ \ \ \ tetris-\/>\mbox{\hyperlink{struct_game_info__t_ab897112aa413eac6657970ef2a873026}{next}}\ =\ CreateCopy();}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00475}00475\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00476}00476\ \ \ \textcolor{keywordflow}{if}\ (tetris-\/>\mbox{\hyperlink{struct_game_info__t_ab897112aa413eac6657970ef2a873026}{next}}==NULL\&\&!clop)\{}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00477}00477\ \ \ \ \ clop\ =1;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00478}00478\ \ \ \ \ DeleteField(\&(tetris-\/>\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}}));}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00479}00479\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00480}00480\ \ \ \textcolor{keywordflow}{return}\ clop;}
+\DoxyCodeLine{\Hypertarget{backend_8c_source_l00481}00481\ \}}
+
+\end{DoxyCode}

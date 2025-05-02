@@ -1,0 +1,1433 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>BrickGame Тетрис: Файл inc/backend.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">BrickGame Тетрис
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Поиск" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('backend_8h.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Макросы</a> &#124;
+<a href="#enum-members">Перечисления</a> &#124;
+<a href="#func-members">Функции</a>  </div>
+  <div class="headertitle"><div class="title">Файл backend.h</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Заголовочный файл с бэкенд-логикой тетриса: обработка игрового поля, фигур и состояний.  
+<a href="#details">Подробнее...</a></p>
+<div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;time.h&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="lib__specification_8h_source.html">lib_specification.h</a>&quot;</code><br />
+</div>
+<p><a href="backend_8h_source.html">См. исходные тексты.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Макросы</h2></td></tr>
+<tr class="memitem:a5defaa6a67c0db00483fb376caf78bd0" id="r_a5defaa6a67c0db00483fb376caf78bd0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5defaa6a67c0db00483fb376caf78bd0">MAXROWS</a>&#160;&#160;&#160;20</td></tr>
+<tr class="memdesc:a5defaa6a67c0db00483fb376caf78bd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Количество строк игрового поля.  <br /></td></tr>
+<tr class="separator:a5defaa6a67c0db00483fb376caf78bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a83dc415ae5e205183f0488b46228c4" id="r_a6a83dc415ae5e205183f0488b46228c4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6a83dc415ae5e205183f0488b46228c4">MAXCOLS</a>&#160;&#160;&#160;10</td></tr>
+<tr class="memdesc:a6a83dc415ae5e205183f0488b46228c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Количество столбцов игрового поля.  <br /></td></tr>
+<tr class="separator:a6a83dc415ae5e205183f0488b46228c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e21c77a1d541961ebf6501ec58be3dc" id="r_a0e21c77a1d541961ebf6501ec58be3dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0e21c77a1d541961ebf6501ec58be3dc">COUNTCOORDINATE</a>&#160;&#160;&#160;5</td></tr>
+<tr class="memdesc:a0e21c77a1d541961ebf6501ec58be3dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Количество координат в фигуре (центральная + 4 блока).  <br /></td></tr>
+<tr class="separator:a0e21c77a1d541961ebf6501ec58be3dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75c281462c172ae33073839cd6870c41" id="r_a75c281462c172ae33073839cd6870c41"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a75c281462c172ae33073839cd6870c41">COUNTFIGURE</a>&#160;&#160;&#160;7</td></tr>
+<tr class="memdesc:a75c281462c172ae33073839cd6870c41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Количество разных фигур  <br /></td></tr>
+<tr class="separator:a75c281462c172ae33073839cd6870c41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a120e89fb2a09b7f5294e94a0f292d740" id="r_a120e89fb2a09b7f5294e94a0f292d740"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a120e89fb2a09b7f5294e94a0f292d740">COUNTDIMENSION</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:a120e89fb2a09b7f5294e94a0f292d740"><td class="mdescLeft">&#160;</td><td class="mdescRight">Размерность координат (x, y).  <br /></td></tr>
+<tr class="separator:a120e89fb2a09b7f5294e94a0f292d740"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab95aa986509de505fb54b0d2c2b5a019" id="r_ab95aa986509de505fb54b0d2c2b5a019"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab95aa986509de505fb54b0d2c2b5a019">CELL_EMPTY</a>&#160;&#160;&#160;'.'</td></tr>
+<tr class="memdesc:ab95aa986509de505fb54b0d2c2b5a019"><td class="mdescLeft">&#160;</td><td class="mdescRight">Символ пустой ячейки.  <br /></td></tr>
+<tr class="separator:ab95aa986509de505fb54b0d2c2b5a019"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a958788fcb5525a553495debc0042ef20" id="r_a958788fcb5525a553495debc0042ef20"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a958788fcb5525a553495debc0042ef20">CELL_FILLED</a>&#160;&#160;&#160;'I'</td></tr>
+<tr class="memdesc:a958788fcb5525a553495debc0042ef20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Символ занятой ячейки.  <br /></td></tr>
+<tr class="separator:a958788fcb5525a553495debc0042ef20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b02d1d55a784582a45aa3d28df2b2aa" id="r_a2b02d1d55a784582a45aa3d28df2b2aa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2b02d1d55a784582a45aa3d28df2b2aa">FALL_DELAY</a>&#160;&#160;&#160;50000</td></tr>
+<tr class="memdesc:a2b02d1d55a784582a45aa3d28df2b2aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Задержка между падениями (в миллисекундах).  <br /></td></tr>
+<tr class="separator:a2b02d1d55a784582a45aa3d28df2b2aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95e1b11928cfc24a5ccd0346db14ac6b" id="r_a95e1b11928cfc24a5ccd0346db14ac6b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a95e1b11928cfc24a5ccd0346db14ac6b">QUIT_DELAY</a>&#160;&#160;&#160;6000000 * 10</td></tr>
+<tr class="memdesc:a95e1b11928cfc24a5ccd0346db14ac6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Задержка перед выходом из игры после поражения.  <br /></td></tr>
+<tr class="separator:a95e1b11928cfc24a5ccd0346db14ac6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96818d1211164e5497a6b5505564a591" id="r_a96818d1211164e5497a6b5505564a591"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a96818d1211164e5497a6b5505564a591">PULL</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:a96818d1211164e5497a6b5505564a591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Флаг для получения информации.  <br /></td></tr>
+<tr class="separator:a96818d1211164e5497a6b5505564a591"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a431b92b32ec924789b2be268651a3fdd" id="r_a431b92b32ec924789b2be268651a3fdd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a431b92b32ec924789b2be268651a3fdd">PUSH</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:a431b92b32ec924789b2be268651a3fdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Флаг для записи информации.  <br /></td></tr>
+<tr class="separator:a431b92b32ec924789b2be268651a3fdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21d4c366220cb9ec2b450fcc1bb1a1b5" id="r_a21d4c366220cb9ec2b450fcc1bb1a1b5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a21d4c366220cb9ec2b450fcc1bb1a1b5">COLLIDE</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:a21d4c366220cb9ec2b450fcc1bb1a1b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Флаг столкновения.  <br /></td></tr>
+<tr class="separator:a21d4c366220cb9ec2b450fcc1bb1a1b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0e3badb51583d9218fe56b5f51c1ecc" id="r_ae0e3badb51583d9218fe56b5f51c1ecc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae0e3badb51583d9218fe56b5f51c1ecc">BAD_ARGUMENT</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:ae0e3badb51583d9218fe56b5f51c1ecc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Код ошибки аргумента  <br /></td></tr>
+<tr class="separator:ae0e3badb51583d9218fe56b5f51c1ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Перечисления</h2></td></tr>
+<tr class="memitem:a2aab568cd1f02e7cd9fd6c7f87e361d1" id="r_a2aab568cd1f02e7cd9fd6c7f87e361d1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a> { <br />
+&#160;&#160;<b>Hello</b>
+, <a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1aaa91a7c5a479ef5add68c761703fbaee">Spawn</a>
+, <a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1ace38a563425aa1722759240461351f90">Moving</a>
+, <a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1a5a7ee45908134ef42da0d15d31e092b7">Attaching</a>
+, <br />
+&#160;&#160;<a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1ae2724ba71a1a0daaa937dd3ac38e53e4">GameOver</a>
+, <a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1a13b9787b5b0fa1ed149bbe28b122207e">Goodbye</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:a2aab568cd1f02e7cd9fd6c7f87e361d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Состояния конечного автомата игры.  <a href="#a2aab568cd1f02e7cd9fd6c7f87e361d1">Подробнее...</a><br /></td></tr>
+<tr class="separator:a2aab568cd1f02e7cd9fd6c7f87e361d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Функции</h2></td></tr>
+<tr class="memitem:a5752919a95d754c38df9f87ca5c62e05" id="r_a5752919a95d754c38df9f87ca5c62e05"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5752919a95d754c38df9f87ca5c62e05">SumFigure</a> (int **field, int **figure)</td></tr>
+<tr class="memdesc:a5752919a95d754c38df9f87ca5c62e05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Размещает фигуру на поле, если возможно.  <br /></td></tr>
+<tr class="separator:a5752919a95d754c38df9f87ca5c62e05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ff972b8421849428383479d7ab42d2b" id="r_a9ff972b8421849428383479d7ab42d2b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ff972b8421849428383479d7ab42d2b">SubFigure</a> (int **field, int **figure)</td></tr>
+<tr class="memdesc:a9ff972b8421849428383479d7ab42d2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаляет фигуру с поля.  <br /></td></tr>
+<tr class="separator:a9ff972b8421849428383479d7ab42d2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4095c00014129a0eaa65435910b38ba" id="r_ae4095c00014129a0eaa65435910b38ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae4095c00014129a0eaa65435910b38ba">ZeroingTemp</a> (int **field)</td></tr>
+<tr class="memdesc:ae4095c00014129a0eaa65435910b38ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Очищает поле, заполняя его точками.  <br /></td></tr>
+<tr class="separator:ae4095c00014129a0eaa65435910b38ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e5027dbabb199f7ab535a5cc0f8e812" id="r_a0e5027dbabb199f7ab535a5cc0f8e812"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0e5027dbabb199f7ab535a5cc0f8e812">Figuring</a> (int **figure, int index)</td></tr>
+<tr class="memdesc:a0e5027dbabb199f7ab535a5cc0f8e812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Заполняет массив координатами фигуры по индексу.  <br /></td></tr>
+<tr class="separator:a0e5027dbabb199f7ab535a5cc0f8e812"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61609035d90a44818709130551770a1f" id="r_a61609035d90a44818709130551770a1f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61609035d90a44818709130551770a1f">StringDel</a> (int **field)</td></tr>
+<tr class="memdesc:a61609035d90a44818709130551770a1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаляет заполненные строки и сдвигает остальные вниз.  <br /></td></tr>
+<tr class="separator:a61609035d90a44818709130551770a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8548d955d54fa4895fefa5c6d1897bc" id="r_ab8548d955d54fa4895fefa5c6d1897bc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab8548d955d54fa4895fefa5c6d1897bc">FileScore</a> (char *name, <a class="el" href="struct_game_info__t.html">GameInfo_t</a> *info)</td></tr>
+<tr class="memdesc:ab8548d955d54fa4895fefa5c6d1897bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Загружает рекорд игрока из файла и обновляет high_score.  <br /></td></tr>
+<tr class="separator:ab8548d955d54fa4895fefa5c6d1897bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a098cf9d4ae3131615866cd8cf6698153" id="r_a098cf9d4ae3131615866cd8cf6698153"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a098cf9d4ae3131615866cd8cf6698153">FigureDown</a> (int **field, int **figure)</td></tr>
+<tr class="memdesc:a098cf9d4ae3131615866cd8cf6698153"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет, достигла ли фигура низа или столкновения.  <br /></td></tr>
+<tr class="separator:a098cf9d4ae3131615866cd8cf6698153"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ed581f5dfd685f6fbefadaece946bc7" id="r_a9ed581f5dfd685f6fbefadaece946bc7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ed581f5dfd685f6fbefadaece946bc7">CheckCollision</a> (int **field, int **figure)</td></tr>
+<tr class="memdesc:a9ed581f5dfd685f6fbefadaece946bc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет возможные столкновения фигуры с полем.  <br /></td></tr>
+<tr class="separator:a9ed581f5dfd685f6fbefadaece946bc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab297eed34f2fbded5b3122e30e5b6ba5" id="r_ab297eed34f2fbded5b3122e30e5b6ba5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab297eed34f2fbded5b3122e30e5b6ba5">CopyFigure</a> (int **dest, int **src)</td></tr>
+<tr class="memdesc:ab297eed34f2fbded5b3122e30e5b6ba5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Копирует координаты одной фигуры в другую.  <br /></td></tr>
+<tr class="separator:ab297eed34f2fbded5b3122e30e5b6ba5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9b49936ae5777dad07ba76554091543" id="r_af9b49936ae5777dad07ba76554091543"><td class="memItemLeft" align="right" valign="top">int **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9b49936ae5777dad07ba76554091543">CreateCopy</a> ()</td></tr>
+<tr class="memdesc:af9b49936ae5777dad07ba76554091543"><td class="mdescLeft">&#160;</td><td class="mdescRight">Выделяет память под координаты фигуры.  <br /></td></tr>
+<tr class="separator:af9b49936ae5777dad07ba76554091543"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88ba5e3b1a4e9d79737d8ae53fafd927" id="r_a88ba5e3b1a4e9d79737d8ae53fafd927"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a88ba5e3b1a4e9d79737d8ae53fafd927">DeleteCopy</a> (int ***copy)</td></tr>
+<tr class="memdesc:a88ba5e3b1a4e9d79737d8ae53fafd927"><td class="mdescLeft">&#160;</td><td class="mdescRight">Освобождает память, выделенную под фигуру.  <br /></td></tr>
+<tr class="separator:a88ba5e3b1a4e9d79737d8ae53fafd927"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02b31eee0979e10be35da90f8a115a72" id="r_a02b31eee0979e10be35da90f8a115a72"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a02b31eee0979e10be35da90f8a115a72">DeleteField</a> (int ***copy)</td></tr>
+<tr class="memdesc:a02b31eee0979e10be35da90f8a115a72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Освобождает память, выделенную под поле.  <br /></td></tr>
+<tr class="separator:a02b31eee0979e10be35da90f8a115a72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d44e2f23a94929f77bd22190ba5a0cf" id="r_a7d44e2f23a94929f77bd22190ba5a0cf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d44e2f23a94929f77bd22190ba5a0cf">Curtsy</a> (int **field, int **figure, int i)</td></tr>
+<tr class="memdesc:a7d44e2f23a94929f77bd22190ba5a0cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Пытается опустить фигуру вниз.  <br /></td></tr>
+<tr class="separator:a7d44e2f23a94929f77bd22190ba5a0cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab159a32d41414c368abe0b54fc0089af" id="r_ab159a32d41414c368abe0b54fc0089af"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab159a32d41414c368abe0b54fc0089af">RotateCols</a> (int **field, int **figure)</td></tr>
+<tr class="memdesc:ab159a32d41414c368abe0b54fc0089af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Поворачивает фигуру по часовой стрелке.  <br /></td></tr>
+<tr class="separator:ab159a32d41414c368abe0b54fc0089af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b0698435caa0a3a5465a0c7c178d421" id="r_a3b0698435caa0a3a5465a0c7c178d421"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3b0698435caa0a3a5465a0c7c178d421">MoveCols</a> (int **field, int **figure, int i)</td></tr>
+<tr class="memdesc:a3b0698435caa0a3a5465a0c7c178d421"><td class="mdescLeft">&#160;</td><td class="mdescRight">Поворачивает фигуру по часовой стрелке.  <br /></td></tr>
+<tr class="separator:a3b0698435caa0a3a5465a0c7c178d421"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b780a1bf0bc32d6b9674f7316914874" id="r_a1b780a1bf0bc32d6b9674f7316914874"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b780a1bf0bc32d6b9674f7316914874">Scoring</a> (<a class="el" href="struct_game_info__t.html">GameInfo_t</a> *tetris)</td></tr>
+<tr class="memdesc:a1b780a1bf0bc32d6b9674f7316914874"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обновляет счёт и уровень игрока в зависимости от удалённых строк.  <br /></td></tr>
+<tr class="separator:a1b780a1bf0bc32d6b9674f7316914874"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a565f18bd6a9738161da477a72537949a" id="r_a565f18bd6a9738161da477a72537949a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a565f18bd6a9738161da477a72537949a">FileScoreInput</a> (char *name, <a class="el" href="struct_game_info__t.html">GameInfo_t</a> *info)</td></tr>
+<tr class="memdesc:a565f18bd6a9738161da477a72537949a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Сохраняет рекорд в файл, если он был побит.  <br /></td></tr>
+<tr class="separator:a565f18bd6a9738161da477a72537949a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a540d773842db1391445c4dddee2f8191" id="r_a540d773842db1391445c4dddee2f8191"><td class="memItemLeft" align="right" valign="top">int **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a540d773842db1391445c4dddee2f8191">CreateField</a> ()</td></tr>
+<tr class="memdesc:a540d773842db1391445c4dddee2f8191"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создаёт и инициализирует игровое поле.  <br /></td></tr>
+<tr class="separator:a540d773842db1391445c4dddee2f8191"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04034df2c2af99068af97f1aae87127a" id="r_a04034df2c2af99068af97f1aae87127a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a04034df2c2af99068af97f1aae87127a">HelloState</a> (<a class="el" href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9">UserAction_t</a> signal, <a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a> *state)</td></tr>
+<tr class="memdesc:a04034df2c2af99068af97f1aae87127a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обработка состояния Hello.  <br /></td></tr>
+<tr class="separator:a04034df2c2af99068af97f1aae87127a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcbda171c6086db4ccc6d6002caa024d" id="r_abcbda171c6086db4ccc6d6002caa024d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abcbda171c6086db4ccc6d6002caa024d">SpawnState</a> (<a class="el" href="struct_game_info__t.html">GameInfo_t</a> *info, <a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a> *state)</td></tr>
+<tr class="memdesc:abcbda171c6086db4ccc6d6002caa024d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обрабатывает появление новой фигуры.  <br /></td></tr>
+<tr class="separator:abcbda171c6086db4ccc6d6002caa024d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e3e20d41ea012bda137d8b72497937d" id="r_a4e3e20d41ea012bda137d8b72497937d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e3e20d41ea012bda137d8b72497937d">MovingState</a> (<a class="el" href="struct_game_info__t.html">GameInfo_t</a> *info, <a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a> *state, <a class="el" href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9">UserAction_t</a> signal)</td></tr>
+<tr class="memdesc:a4e3e20d41ea012bda137d8b72497937d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обрабатывает активное движение фигуры по полю.  <br /></td></tr>
+<tr class="separator:a4e3e20d41ea012bda137d8b72497937d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98d6d71cca9d81dec70097f4f9ad342a" id="r_a98d6d71cca9d81dec70097f4f9ad342a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a98d6d71cca9d81dec70097f4f9ad342a">AttachingState</a> (<a class="el" href="struct_game_info__t.html">GameInfo_t</a> *info, <a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a> *state)</td></tr>
+<tr class="memdesc:a98d6d71cca9d81dec70097f4f9ad342a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обрабатывает "приклеивание" фигуры к полю.  <br /></td></tr>
+<tr class="separator:a98d6d71cca9d81dec70097f4f9ad342a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5739bbfa26639144ab691e879d6b6d4" id="r_ad5739bbfa26639144ab691e879d6b6d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad5739bbfa26639144ab691e879d6b6d4">GameOverState</a> (<a class="el" href="struct_game_info__t.html">GameInfo_t</a> *info, <a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a> *state, <a class="el" href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9">UserAction_t</a> signal)</td></tr>
+<tr class="memdesc:ad5739bbfa26639144ab691e879d6b6d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Состояние проигрыша.  <br /></td></tr>
+<tr class="separator:ad5739bbfa26639144ab691e879d6b6d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d3dff37cc1b6c31f39e37f2eaf94759" id="r_a9d3dff37cc1b6c31f39e37f2eaf94759"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d3dff37cc1b6c31f39e37f2eaf94759">JustState</a> (<a class="el" href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9">UserAction_t</a> signal, <a class="el" href="struct_game_info__t.html">GameInfo_t</a> *info, bool hold)</td></tr>
+<tr class="memdesc:a9d3dff37cc1b6c31f39e37f2eaf94759"><td class="mdescLeft">&#160;</td><td class="mdescRight">Основной обработчик конечного автомата игры.  <br /></td></tr>
+<tr class="separator:a9d3dff37cc1b6c31f39e37f2eaf94759"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61dd9c744f782f4a3967c59a3c0e07d2" id="r_a61dd9c744f782f4a3967c59a3c0e07d2"><td class="memItemLeft" align="right" valign="top">int **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61dd9c744f782f4a3967c59a3c0e07d2">UpdateFigure</a> ()</td></tr>
+<tr class="memdesc:a61dd9c744f782f4a3967c59a3c0e07d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает статическую фигуру (можно использовать как singleton).  <br /></td></tr>
+<tr class="separator:a61dd9c744f782f4a3967c59a3c0e07d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a6e5c8bd8080ec12a102e527569ad58" id="r_a7a6e5c8bd8080ec12a102e527569ad58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7a6e5c8bd8080ec12a102e527569ad58">ZeroingAll</a> (<a class="el" href="struct_game_info__t.html">GameInfo_t</a> *tetris)</td></tr>
+<tr class="memdesc:a7a6e5c8bd8080ec12a102e527569ad58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обнуляет данные игры и поле.  <br /></td></tr>
+<tr class="separator:a7a6e5c8bd8080ec12a102e527569ad58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a645c26bde04373c6026f1532f7863f9d" id="r_a645c26bde04373c6026f1532f7863f9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_game_info__t.html">GameInfo_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a645c26bde04373c6026f1532f7863f9d">GetSetInfo</a> (<a class="el" href="struct_game_info__t.html">GameInfo_t</a> *info, int push)</td></tr>
+<tr class="memdesc:a645c26bde04373c6026f1532f7863f9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Позволяет получить или задать текущее состояние игры.  <br /></td></tr>
+<tr class="separator:a645c26bde04373c6026f1532f7863f9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef3504a6b3b632fc1bccc6faac99abfc" id="r_aef3504a6b3b632fc1bccc6faac99abfc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef3504a6b3b632fc1bccc6faac99abfc">InitTetris</a> (<a class="el" href="struct_game_info__t.html">GameInfo_t</a> *tetris)</td></tr>
+<tr class="memdesc:aef3504a6b3b632fc1bccc6faac99abfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициализация структуры <a class="el" href="struct_game_info__t.html" title="Структура, содержащая текущее состояние игры.">GameInfo_t</a>.  <br /></td></tr>
+<tr class="separator:aef3504a6b3b632fc1bccc6faac99abfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><p>Заголовочный файл с бэкенд-логикой тетриса: обработка игрового поля, фигур и состояний. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8h_source.html">backend.h</a></p>
+</div><h2 class="groupheader">Макросы</h2>
+<a id="ae0e3badb51583d9218fe56b5f51c1ecc" name="ae0e3badb51583d9218fe56b5f51c1ecc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0e3badb51583d9218fe56b5f51c1ecc">&#9670;&#160;</a></span>BAD_ARGUMENT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BAD_ARGUMENT&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Код ошибки аргумента </p>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8h_source.html">backend.h</a> строка <a class="el" href="backend_8h_source.html#l00044">44</a></p>
+
+</div>
+</div>
+<a id="ab95aa986509de505fb54b0d2c2b5a019" name="ab95aa986509de505fb54b0d2c2b5a019"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab95aa986509de505fb54b0d2c2b5a019">&#9670;&#160;</a></span>CELL_EMPTY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CELL_EMPTY&#160;&#160;&#160;'.'</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Символ пустой ячейки. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8h_source.html">backend.h</a> строка <a class="el" href="backend_8h_source.html#l00030">30</a></p>
+
+</div>
+</div>
+<a id="a958788fcb5525a553495debc0042ef20" name="a958788fcb5525a553495debc0042ef20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a958788fcb5525a553495debc0042ef20">&#9670;&#160;</a></span>CELL_FILLED</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CELL_FILLED&#160;&#160;&#160;'I'</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Символ занятой ячейки. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8h_source.html">backend.h</a> строка <a class="el" href="backend_8h_source.html#l00032">32</a></p>
+
+</div>
+</div>
+<a id="a21d4c366220cb9ec2b450fcc1bb1a1b5" name="a21d4c366220cb9ec2b450fcc1bb1a1b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21d4c366220cb9ec2b450fcc1bb1a1b5">&#9670;&#160;</a></span>COLLIDE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define COLLIDE&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Флаг столкновения. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8h_source.html">backend.h</a> строка <a class="el" href="backend_8h_source.html#l00042">42</a></p>
+
+</div>
+</div>
+<a id="a0e21c77a1d541961ebf6501ec58be3dc" name="a0e21c77a1d541961ebf6501ec58be3dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e21c77a1d541961ebf6501ec58be3dc">&#9670;&#160;</a></span>COUNTCOORDINATE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define COUNTCOORDINATE&#160;&#160;&#160;5</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Количество координат в фигуре (центральная + 4 блока). </p>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8h_source.html">backend.h</a> строка <a class="el" href="backend_8h_source.html#l00024">24</a></p>
+
+</div>
+</div>
+<a id="a120e89fb2a09b7f5294e94a0f292d740" name="a120e89fb2a09b7f5294e94a0f292d740"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a120e89fb2a09b7f5294e94a0f292d740">&#9670;&#160;</a></span>COUNTDIMENSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define COUNTDIMENSION&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Размерность координат (x, y). </p>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8h_source.html">backend.h</a> строка <a class="el" href="backend_8h_source.html#l00028">28</a></p>
+
+</div>
+</div>
+<a id="a75c281462c172ae33073839cd6870c41" name="a75c281462c172ae33073839cd6870c41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75c281462c172ae33073839cd6870c41">&#9670;&#160;</a></span>COUNTFIGURE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define COUNTFIGURE&#160;&#160;&#160;7</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Количество разных фигур </p>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8h_source.html">backend.h</a> строка <a class="el" href="backend_8h_source.html#l00026">26</a></p>
+
+</div>
+</div>
+<a id="a2b02d1d55a784582a45aa3d28df2b2aa" name="a2b02d1d55a784582a45aa3d28df2b2aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b02d1d55a784582a45aa3d28df2b2aa">&#9670;&#160;</a></span>FALL_DELAY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FALL_DELAY&#160;&#160;&#160;50000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Задержка между падениями (в миллисекундах). </p>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8h_source.html">backend.h</a> строка <a class="el" href="backend_8h_source.html#l00034">34</a></p>
+
+</div>
+</div>
+<a id="a6a83dc415ae5e205183f0488b46228c4" name="a6a83dc415ae5e205183f0488b46228c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a83dc415ae5e205183f0488b46228c4">&#9670;&#160;</a></span>MAXCOLS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAXCOLS&#160;&#160;&#160;10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Количество столбцов игрового поля. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8h_source.html">backend.h</a> строка <a class="el" href="backend_8h_source.html#l00022">22</a></p>
+
+</div>
+</div>
+<a id="a5defaa6a67c0db00483fb376caf78bd0" name="a5defaa6a67c0db00483fb376caf78bd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5defaa6a67c0db00483fb376caf78bd0">&#9670;&#160;</a></span>MAXROWS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAXROWS&#160;&#160;&#160;20</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Количество строк игрового поля. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8h_source.html">backend.h</a> строка <a class="el" href="backend_8h_source.html#l00020">20</a></p>
+
+</div>
+</div>
+<a id="a96818d1211164e5497a6b5505564a591" name="a96818d1211164e5497a6b5505564a591"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96818d1211164e5497a6b5505564a591">&#9670;&#160;</a></span>PULL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PULL&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Флаг для получения информации. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8h_source.html">backend.h</a> строка <a class="el" href="backend_8h_source.html#l00038">38</a></p>
+
+</div>
+</div>
+<a id="a431b92b32ec924789b2be268651a3fdd" name="a431b92b32ec924789b2be268651a3fdd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a431b92b32ec924789b2be268651a3fdd">&#9670;&#160;</a></span>PUSH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PUSH&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Флаг для записи информации. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8h_source.html">backend.h</a> строка <a class="el" href="backend_8h_source.html#l00040">40</a></p>
+
+</div>
+</div>
+<a id="a95e1b11928cfc24a5ccd0346db14ac6b" name="a95e1b11928cfc24a5ccd0346db14ac6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95e1b11928cfc24a5ccd0346db14ac6b">&#9670;&#160;</a></span>QUIT_DELAY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define QUIT_DELAY&#160;&#160;&#160;6000000 * 10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Задержка перед выходом из игры после поражения. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8h_source.html">backend.h</a> строка <a class="el" href="backend_8h_source.html#l00036">36</a></p>
+
+</div>
+</div>
+<h2 class="groupheader">Перечисления</h2>
+<a id="a2aab568cd1f02e7cd9fd6c7f87e361d1" name="a2aab568cd1f02e7cd9fd6c7f87e361d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2aab568cd1f02e7cd9fd6c7f87e361d1">&#9670;&#160;</a></span>FSM</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Состояния конечного автомата игры. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Элементы перечислений</th></tr><tr><td class="fieldname"><a id="a2aab568cd1f02e7cd9fd6c7f87e361d1aaa91a7c5a479ef5add68c761703fbaee" name="a2aab568cd1f02e7cd9fd6c7f87e361d1aaa91a7c5a479ef5add68c761703fbaee"></a>Spawn&#160;</td><td class="fielddoc"><p>Спавн новой фигуры. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a2aab568cd1f02e7cd9fd6c7f87e361d1ace38a563425aa1722759240461351f90" name="a2aab568cd1f02e7cd9fd6c7f87e361d1ace38a563425aa1722759240461351f90"></a>Moving&#160;</td><td class="fielddoc"><p>Движение текущей фигуры. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a2aab568cd1f02e7cd9fd6c7f87e361d1a5a7ee45908134ef42da0d15d31e092b7" name="a2aab568cd1f02e7cd9fd6c7f87e361d1a5a7ee45908134ef42da0d15d31e092b7"></a>Attaching&#160;</td><td class="fielddoc"><p>Прикрепление фигуры к полю. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a2aab568cd1f02e7cd9fd6c7f87e361d1ae2724ba71a1a0daaa937dd3ac38e53e4" name="a2aab568cd1f02e7cd9fd6c7f87e361d1ae2724ba71a1a0daaa937dd3ac38e53e4"></a>GameOver&#160;</td><td class="fielddoc"><p>Состояние конца игры. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a2aab568cd1f02e7cd9fd6c7f87e361d1a13b9787b5b0fa1ed149bbe28b122207e" name="a2aab568cd1f02e7cd9fd6c7f87e361d1a13b9787b5b0fa1ed149bbe28b122207e"></a>Goodbye&#160;</td><td class="fielddoc"><p>Финальное завершение игры. </p>
+</td></tr>
+</table>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8h_source.html">backend.h</a> строка <a class="el" href="backend_8h_source.html#l00049">49</a></p>
+
+</div>
+</div>
+<h2 class="groupheader">Функции</h2>
+<a id="a98d6d71cca9d81dec70097f4f9ad342a" name="a98d6d71cca9d81dec70097f4f9ad342a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98d6d71cca9d81dec70097f4f9ad342a">&#9670;&#160;</a></span>AttachingState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AttachingState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_game_info__t.html">GameInfo_t</a> *</td>          <td class="paramname"><span class="paramname"><em>info</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a> *</td>          <td class="paramname"><span class="paramname"><em>state</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Обрабатывает "приклеивание" фигуры к полю. </p>
+<p>Если фигура на самой верхней строке — игра закончена. Иначе — начисляются очки, обновляется уровень и переходим в Spawn.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">info</td><td>Указатель на состояние игры. </td></tr>
+    <tr><td class="paramname">state</td><td>Указатель на текущее состояние автомата. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="just__state_8c_source.html">just_state.c</a> строка <a class="el" href="just__state_8c_source.html#l00086">86</a></p>
+
+</div>
+</div>
+<a id="a9ed581f5dfd685f6fbefadaece946bc7" name="a9ed581f5dfd685f6fbefadaece946bc7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ed581f5dfd685f6fbefadaece946bc7">&#9670;&#160;</a></span>CheckCollision()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CheckCollision </td>
+          <td>(</td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>field</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>figure</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Проверяет возможные столкновения фигуры с полем. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>Игровое поле. </td></tr>
+    <tr><td class="paramname">figure</td><td>Проверяемая фигура. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>1 при столкновении, иначе 0. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00215">215</a></p>
+
+</div>
+</div>
+<a id="ab297eed34f2fbded5b3122e30e5b6ba5" name="ab297eed34f2fbded5b3122e30e5b6ba5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab297eed34f2fbded5b3122e30e5b6ba5">&#9670;&#160;</a></span>CopyFigure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CopyFigure </td>
+          <td>(</td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>dest</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>src</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Копирует координаты одной фигуры в другую. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dest</td><td>Массив-приёмник. </td></tr>
+    <tr><td class="paramname">src</td><td>Массив-источник. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00202">202</a></p>
+
+</div>
+</div>
+<a id="af9b49936ae5777dad07ba76554091543" name="af9b49936ae5777dad07ba76554091543"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9b49936ae5777dad07ba76554091543">&#9670;&#160;</a></span>CreateCopy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ** CreateCopy </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Выделяет память под координаты фигуры. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Указатель на двумерный массив координат, или NULL при ошибке выделения. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00235">235</a></p>
+
+</div>
+</div>
+<a id="a540d773842db1391445c4dddee2f8191" name="a540d773842db1391445c4dddee2f8191"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a540d773842db1391445c4dddee2f8191">&#9670;&#160;</a></span>CreateField()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ** CreateField </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Создаёт и инициализирует игровое поле. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Указатель на поле, или NULL при ошибке выделения. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00258">258</a></p>
+
+</div>
+</div>
+<a id="a7d44e2f23a94929f77bd22190ba5a0cf" name="a7d44e2f23a94929f77bd22190ba5a0cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d44e2f23a94929f77bd22190ba5a0cf">&#9670;&#160;</a></span>Curtsy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Curtsy </td>
+          <td>(</td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>field</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>figure</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>i</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Пытается опустить фигуру вниз. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>Игровое поле. </td></tr>
+    <tr><td class="paramname">figure</td><td>Фигура для перемещения. </td></tr>
+    <tr><td class="paramname">i</td><td>Количество строк для смещения (обычно 1). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>1 если столкновение или выход за границы, иначе 0. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00037">37</a></p>
+
+</div>
+</div>
+<a id="a88ba5e3b1a4e9d79737d8ae53fafd927" name="a88ba5e3b1a4e9d79737d8ae53fafd927"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88ba5e3b1a4e9d79737d8ae53fafd927">&#9670;&#160;</a></span>DeleteCopy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int DeleteCopy </td>
+          <td>(</td>
+          <td class="paramtype">int ***</td>          <td class="paramname"><span class="paramname"><em>copy</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Освобождает память, выделенную под фигуру. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">copy</td><td>Адрес указателя на фигуру. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>0 при успешном освобождении. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00286">286</a></p>
+
+</div>
+</div>
+<a id="a02b31eee0979e10be35da90f8a115a72" name="a02b31eee0979e10be35da90f8a115a72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02b31eee0979e10be35da90f8a115a72">&#9670;&#160;</a></span>DeleteField()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int DeleteField </td>
+          <td>(</td>
+          <td class="paramtype">int ***</td>          <td class="paramname"><span class="paramname"><em>copy</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Освобождает память, выделенную под поле. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">copy</td><td>Адрес указателя на поле. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>0 при успешном освобождении. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00300">300</a></p>
+
+</div>
+</div>
+<a id="a098cf9d4ae3131615866cd8cf6698153" name="a098cf9d4ae3131615866cd8cf6698153"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a098cf9d4ae3131615866cd8cf6698153">&#9670;&#160;</a></span>FigureDown()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int FigureDown </td>
+          <td>(</td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>field</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>figure</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Проверяет, достигла ли фигура низа или столкновения. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>Игровое поле. </td></tr>
+    <tr><td class="paramname">figure</td><td>Фигура. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>1 если падение должно прекратиться, иначе 0. </dd></dl>
+<p>!!!</p>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00186">186</a></p>
+
+</div>
+</div>
+<a id="a0e5027dbabb199f7ab535a5cc0f8e812" name="a0e5027dbabb199f7ab535a5cc0f8e812"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e5027dbabb199f7ab535a5cc0f8e812">&#9670;&#160;</a></span>Figuring()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Figuring </td>
+          <td>(</td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>figure</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Заполняет массив координатами фигуры по индексу. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">figure</td><td>Указатель на массив координат фигуры. </td></tr>
+    <tr><td class="paramname">index</td><td>Индекс фигуры из списка figure_home. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00021">21</a></p>
+
+</div>
+</div>
+<a id="ab8548d955d54fa4895fefa5c6d1897bc" name="ab8548d955d54fa4895fefa5c6d1897bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8548d955d54fa4895fefa5c6d1897bc">&#9670;&#160;</a></span>FileScore()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int FileScore </td>
+          <td>(</td>
+          <td class="paramtype">char *</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_game_info__t.html">GameInfo_t</a> *</td>          <td class="paramname"><span class="paramname"><em>info</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Загружает рекорд игрока из файла и обновляет high_score. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Имя пользователя. </td></tr>
+    <tr><td class="paramname">info</td><td>Указатель на структуру игры. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>0 при успешной загрузке. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00158">158</a></p>
+
+</div>
+</div>
+<a id="a565f18bd6a9738161da477a72537949a" name="a565f18bd6a9738161da477a72537949a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a565f18bd6a9738161da477a72537949a">&#9670;&#160;</a></span>FileScoreInput()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int FileScoreInput </td>
+          <td>(</td>
+          <td class="paramtype">char *</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_game_info__t.html">GameInfo_t</a> *</td>          <td class="paramname"><span class="paramname"><em>info</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Сохраняет рекорд в файл, если он был побит. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Имя пользователя. </td></tr>
+    <tr><td class="paramname">info</td><td>Структура с результатом. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>0 при успешной записи. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00394">394</a></p>
+
+</div>
+</div>
+<a id="ad5739bbfa26639144ab691e879d6b6d4" name="ad5739bbfa26639144ab691e879d6b6d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5739bbfa26639144ab691e879d6b6d4">&#9670;&#160;</a></span>GameOverState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GameOverState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_game_info__t.html">GameInfo_t</a> *</td>          <td class="paramname"><span class="paramname"><em>info</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a> *</td>          <td class="paramname"><span class="paramname"><em>state</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9">UserAction_t</a></td>          <td class="paramname"><span class="paramname"><em>signal</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Состояние проигрыша. </p>
+<p>Ожидает либо перезапуска, либо выхода.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">info</td><td>Указатель на структуру игры. </td></tr>
+    <tr><td class="paramname">state</td><td>Указатель на текущее состояние автомата. </td></tr>
+    <tr><td class="paramname">signal</td><td>Ввод пользователя. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="just__state_8c_source.html">just_state.c</a> строка <a class="el" href="just__state_8c_source.html#l00111">111</a></p>
+
+</div>
+</div>
+<a id="a645c26bde04373c6026f1532f7863f9d" name="a645c26bde04373c6026f1532f7863f9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a645c26bde04373c6026f1532f7863f9d">&#9670;&#160;</a></span>GetSetInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_game_info__t.html">GameInfo_t</a> GetSetInfo </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_game_info__t.html">GameInfo_t</a> *</td>          <td class="paramname"><span class="paramname"><em>info</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>push</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Позволяет получить или задать текущее состояние игры. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">info</td><td>Структура с текущим состоянием (по значению или по указателю). </td></tr>
+    <tr><td class="paramname">push</td><td>1 — сохранить состояние, 0 — получить. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Копия текущего состояния. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00447">447</a></p>
+
+</div>
+</div>
+<a id="a04034df2c2af99068af97f1aae87127a" name="a04034df2c2af99068af97f1aae87127a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04034df2c2af99068af97f1aae87127a">&#9670;&#160;</a></span>HelloState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void HelloState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9">UserAction_t</a></td>          <td class="paramname"><span class="paramname"><em>signal</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a> *</td>          <td class="paramname"><span class="paramname"><em>state</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Обработка состояния Hello. </p>
+<p>Если пользователь нажимает Terminate — переходит в GameOver. Если нажимает Action (Enter) — переходит в Spawn.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">signal</td><td>Входной сигнал пользователя. </td></tr>
+    <tr><td class="paramname">state</td><td>Указатель на текущее состояние автомата. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="just__state_8c_source.html">just_state.c</a> строка <a class="el" href="just__state_8c_source.html#l00012">12</a></p>
+
+</div>
+</div>
+<a id="aef3504a6b3b632fc1bccc6faac99abfc" name="aef3504a6b3b632fc1bccc6faac99abfc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef3504a6b3b632fc1bccc6faac99abfc">&#9670;&#160;</a></span>InitTetris()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int InitTetris </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_game_info__t.html">GameInfo_t</a> *</td>          <td class="paramname"><span class="paramname"><em>tetris</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Инициализация структуры <a class="el" href="struct_game_info__t.html" title="Структура, содержащая текущее состояние игры.">GameInfo_t</a>. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tetris</td><td>Указатель на структуру для инициализации. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>0 при успехе, 1 при ошибке выделения памяти. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00463">463</a></p>
+
+</div>
+</div>
+<a id="a9d3dff37cc1b6c31f39e37f2eaf94759" name="a9d3dff37cc1b6c31f39e37f2eaf94759"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d3dff37cc1b6c31f39e37f2eaf94759">&#9670;&#160;</a></span>JustState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a> JustState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9">UserAction_t</a></td>          <td class="paramname"><span class="paramname"><em>signal</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_game_info__t.html">GameInfo_t</a> *</td>          <td class="paramname"><span class="paramname"><em>info</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>hold</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Основной обработчик конечного автомата игры. </p>
+<p>В зависимости от текущего состояния вызывает соответствующую функцию.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">signal</td><td>Сигнал от пользователя (ввод). </td></tr>
+    <tr><td class="paramname">info</td><td>Указатель на игровое состояние. </td></tr>
+    <tr><td class="paramname">hold</td><td>Было ли удержание клавиши. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Текущее состояние автомата. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="just__state_8c_source.html">just_state.c</a> строка <a class="el" href="just__state_8c_source.html#l00135">135</a></p>
+
+</div>
+</div>
+<a id="a3b0698435caa0a3a5465a0c7c178d421" name="a3b0698435caa0a3a5465a0c7c178d421"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b0698435caa0a3a5465a0c7c178d421">&#9670;&#160;</a></span>MoveCols()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int MoveCols </td>
+          <td>(</td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>field</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>figure</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>i</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Поворачивает фигуру по часовой стрелке. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>Игровое поле. </td></tr>
+    <tr><td class="paramname">figure</td><td>Фигура. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>1 при невозможности поворота, иначе 0. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00342">342</a></p>
+
+</div>
+</div>
+<a id="a4e3e20d41ea012bda137d8b72497937d" name="a4e3e20d41ea012bda137d8b72497937d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e3e20d41ea012bda137d8b72497937d">&#9670;&#160;</a></span>MovingState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MovingState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_game_info__t.html">GameInfo_t</a> *</td>          <td class="paramname"><span class="paramname"><em>info</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a> *</td>          <td class="paramname"><span class="paramname"><em>state</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9">UserAction_t</a></td>          <td class="paramname"><span class="paramname"><em>signal</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Обрабатывает активное движение фигуры по полю. </p>
+<p>Перемещение, поворот, падение, переход к приклеиванию.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">info</td><td>Указатель на состояние игры. </td></tr>
+    <tr><td class="paramname">state</td><td>Указатель на состояние автомата. </td></tr>
+    <tr><td class="paramname">signal</td><td>Действие игрока. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="just__state_8c_source.html">just_state.c</a> строка <a class="el" href="just__state_8c_source.html#l00051">51</a></p>
+
+</div>
+</div>
+<a id="ab159a32d41414c368abe0b54fc0089af" name="ab159a32d41414c368abe0b54fc0089af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab159a32d41414c368abe0b54fc0089af">&#9670;&#160;</a></span>RotateCols()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RotateCols </td>
+          <td>(</td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>field</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>figure</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Поворачивает фигуру по часовой стрелке. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>Игровое поле. </td></tr>
+    <tr><td class="paramname">figure</td><td>Фигура. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>1 при невозможности поворота, иначе 0. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00316">316</a></p>
+
+</div>
+</div>
+<a id="a1b780a1bf0bc32d6b9674f7316914874" name="a1b780a1bf0bc32d6b9674f7316914874"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b780a1bf0bc32d6b9674f7316914874">&#9670;&#160;</a></span>Scoring()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Scoring </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_game_info__t.html">GameInfo_t</a> *</td>          <td class="paramname"><span class="paramname"><em>tetris</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Обновляет счёт и уровень игрока в зависимости от удалённых строк. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tetris</td><td>Указатель на игровое состояние. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>0 при успешном обновлении. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00363">363</a></p>
+
+</div>
+</div>
+<a id="abcbda171c6086db4ccc6d6002caa024d" name="abcbda171c6086db4ccc6d6002caa024d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcbda171c6086db4ccc6d6002caa024d">&#9670;&#160;</a></span>SpawnState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SpawnState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_game_info__t.html">GameInfo_t</a> *</td>          <td class="paramname"><span class="paramname"><em>info</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a2aab568cd1f02e7cd9fd6c7f87e361d1">FSM</a> *</td>          <td class="paramname"><span class="paramname"><em>state</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Обрабатывает появление новой фигуры. </p>
+<p>Выбирает следующую и текущую фигуры, устанавливает их в поле.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">info</td><td>Указатель на структуру состояния игры. </td></tr>
+    <tr><td class="paramname">state</td><td>Указатель на текущее состояние автомата. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="just__state_8c_source.html">just_state.c</a> строка <a class="el" href="just__state_8c_source.html#l00028">28</a></p>
+
+</div>
+</div>
+<a id="a61609035d90a44818709130551770a1f" name="a61609035d90a44818709130551770a1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61609035d90a44818709130551770a1f">&#9670;&#160;</a></span>StringDel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int StringDel </td>
+          <td>(</td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>field</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Удаляет заполненные строки и сдвигает остальные вниз. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>Игровое поле. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Количество удалённых строк. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00126">126</a></p>
+
+</div>
+</div>
+<a id="a9ff972b8421849428383479d7ab42d2b" name="a9ff972b8421849428383479d7ab42d2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ff972b8421849428383479d7ab42d2b">&#9670;&#160;</a></span>SubFigure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int SubFigure </td>
+          <td>(</td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>field</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>figure</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Удаляет фигуру с поля. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>Игровое поле. </td></tr>
+    <tr><td class="paramname">figure</td><td>Фигура. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>0. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00107">107</a></p>
+
+</div>
+</div>
+<a id="a5752919a95d754c38df9f87ca5c62e05" name="a5752919a95d754c38df9f87ca5c62e05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5752919a95d754c38df9f87ca5c62e05">&#9670;&#160;</a></span>SumFigure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int SumFigure </td>
+          <td>(</td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>field</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>figure</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Размещает фигуру на поле, если возможно. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>Игровое поле. </td></tr>
+    <tr><td class="paramname">figure</td><td>Фигура. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>1 при столкновении или выходе за границы, иначе 0. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00078">78</a></p>
+
+</div>
+</div>
+<a id="a61dd9c744f782f4a3967c59a3c0e07d2" name="a61dd9c744f782f4a3967c59a3c0e07d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61dd9c744f782f4a3967c59a3c0e07d2">&#9670;&#160;</a></span>UpdateFigure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ** UpdateFigure </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Возвращает статическую фигуру (можно использовать как singleton). </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Указатель на фигуру. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00414">414</a></p>
+
+</div>
+</div>
+<a id="a7a6e5c8bd8080ec12a102e527569ad58" name="a7a6e5c8bd8080ec12a102e527569ad58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a6e5c8bd8080ec12a102e527569ad58">&#9670;&#160;</a></span>ZeroingAll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ZeroingAll </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_game_info__t.html">GameInfo_t</a> *</td>          <td class="paramname"><span class="paramname"><em>tetris</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Обнуляет данные игры и поле. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tetris</td><td>Структура игры. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00430">430</a></p>
+
+</div>
+</div>
+<a id="ae4095c00014129a0eaa65435910b38ba" name="ae4095c00014129a0eaa65435910b38ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4095c00014129a0eaa65435910b38ba">&#9670;&#160;</a></span>ZeroingTemp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ZeroingTemp </td>
+          <td>(</td>
+          <td class="paramtype">int **</td>          <td class="paramname"><span class="paramname"><em>field</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Очищает поле, заполняя его точками. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>Указатель на игровое поле. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="backend_8c_source.html">backend.c</a> строка <a class="el" href="backend_8c_source.html#l00063">63</a></p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="backend_8h.html">backend.h</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

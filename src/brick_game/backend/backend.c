@@ -37,7 +37,11 @@ void Figuring(int **figure, int index) {  // не изменено
 int Curtsy(int **field, int **figure, int i) {  // бэк спуск фигуры
   int clop = 0;
   int **temp_figure = CreateCopy();
+  if (temp_figure==NULL){
+    clop = BAD_MALLOC;
+  } else {
   CopyFigure(temp_figure, figure);
+  }
   if (i < 1) {
     clop = BAD_ARGUMENT;
   }
@@ -317,18 +321,15 @@ int RotateCols(int **field, int **figure) {
   int clop = 0;
   int **temp_figure = CreateCopy();
   CopyFigure(temp_figure, figure);
-
   for (int k = 1; k < COUNTCOORDINATE; k++) {
     int temp_x = temp_figure[k][0];
     temp_figure[k][0] = -temp_figure[k][1];
     temp_figure[k][1] = temp_x;
   }
-
   clop = CheckCollision(field, temp_figure);
   if (!clop) {
     CopyFigure(figure, temp_figure);
   }
-
   DeleteCopy(&temp_figure);
   return clop;
 }
@@ -342,6 +343,7 @@ int RotateCols(int **field, int **figure) {
 int MoveCols(int **field, int **figure, int i) {
   int clop = 0;
   int **temp_figure = CreateCopy();
+  if (temp_figure!=NULL){
   CopyFigure(temp_figure, figure);
 
   temp_figure[0][0] += i;
@@ -351,6 +353,7 @@ int MoveCols(int **field, int **figure, int i) {
   }
 
   DeleteCopy(&temp_figure);
+  }
   return clop;
 }
 
@@ -418,7 +421,6 @@ int **UpdateFigure() {
     figure = CreateCopy();
     flag = 0;
   }
-  // figure = CreateCopy();
   return figure;
 }
 

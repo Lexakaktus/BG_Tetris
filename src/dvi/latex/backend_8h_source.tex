@@ -1,0 +1,89 @@
+\doxysection{backend.\+h}
+\hypertarget{backend_8h_source}{}\label{backend_8h_source}\index{inc/backend.h@{inc/backend.h}}
+\mbox{\hyperlink{backend_8h}{См. документацию.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ BACKEND\_H}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ BACKEND\_H}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <time.h>}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lib__specification_8h}{lib\_specification.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00020}\mbox{\hyperlink{backend_8h_a5defaa6a67c0db00483fb376caf78bd0}{00020}}\ \textcolor{preprocessor}{\#define\ MAXROWS\ 20}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00022}\mbox{\hyperlink{backend_8h_a6a83dc415ae5e205183f0488b46228c4}{00022}}\ \textcolor{preprocessor}{\#define\ MAXCOLS\ 10}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00024}\mbox{\hyperlink{backend_8h_a0e21c77a1d541961ebf6501ec58be3dc}{00024}}\ \textcolor{preprocessor}{\#define\ COUNTCOORDINATE\ 5}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00026}\mbox{\hyperlink{backend_8h_a75c281462c172ae33073839cd6870c41}{00026}}\ \textcolor{preprocessor}{\#define\ COUNTFIGURE\ 7}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00028}\mbox{\hyperlink{backend_8h_a120e89fb2a09b7f5294e94a0f292d740}{00028}}\ \textcolor{preprocessor}{\#define\ COUNTDIMENSION\ 2}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00030}\mbox{\hyperlink{backend_8h_ab95aa986509de505fb54b0d2c2b5a019}{00030}}\ \textcolor{preprocessor}{\#define\ CELL\_EMPTY\ '.'}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00032}\mbox{\hyperlink{backend_8h_a958788fcb5525a553495debc0042ef20}{00032}}\ \textcolor{preprocessor}{\#define\ CELL\_FILLED\ 'I'}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00034}\mbox{\hyperlink{backend_8h_a2b02d1d55a784582a45aa3d28df2b2aa}{00034}}\ \textcolor{preprocessor}{\#define\ FALL\_DELAY\ 50000\ }\textcolor{comment}{//\ 0,5\ sec}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00036}\mbox{\hyperlink{backend_8h_a95e1b11928cfc24a5ccd0346db14ac6b}{00036}}\ \#define\ QUIT\_DELAY\ 6000000\ *\ 10}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00038}\mbox{\hyperlink{backend_8h_a96818d1211164e5497a6b5505564a591}{00038}}\ \textcolor{preprocessor}{\#define\ PULL\ 0}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00040}\mbox{\hyperlink{backend_8h_a431b92b32ec924789b2be268651a3fdd}{00040}}\ \textcolor{preprocessor}{\#define\ PUSH\ 1}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00042}\mbox{\hyperlink{backend_8h_a21d4c366220cb9ec2b450fcc1bb1a1b5}{00042}}\ \textcolor{preprocessor}{\#define\ COLLIDE\ 1}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00044}\mbox{\hyperlink{backend_8h_ae0e3badb51583d9218fe56b5f51c1ecc}{00044}}\ \textcolor{preprocessor}{\#define\ BAD\_ARGUMENT\ 2\ }\textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00049}\mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{00049}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00050}00050\ \ \ Hello,\ \textcolor{comment}{//\ 0\ ///<\ Приветственный\ экран.}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00051}\mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1aaa91a7c5a479ef5add68c761703fbaee}{00051}}\ \ \ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1aaa91a7c5a479ef5add68c761703fbaee}{Spawn}},}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00052}\mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1ace38a563425aa1722759240461351f90}{00052}}\ \ \ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1ace38a563425aa1722759240461351f90}{Moving}},}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00053}\mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1a5a7ee45908134ef42da0d15d31e092b7}{00053}}\ \ \ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1a5a7ee45908134ef42da0d15d31e092b7}{Attaching}},}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00054}00054\ \ \ \textcolor{comment}{//\ \ \ Paus,}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00055}\mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1ae2724ba71a1a0daaa937dd3ac38e53e4}{00055}}\ \ \ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1ae2724ba71a1a0daaa937dd3ac38e53e4}{GameOver}},}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00056}\mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1a13b9787b5b0fa1ed149bbe28b122207e}{00056}}\ \ \ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1a13b9787b5b0fa1ed149bbe28b122207e}{Goodbye}}\ }
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00057}00057\ \}\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}};}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00059}00059\ \textcolor{comment}{//\ ===\ Основная\ логика\ поля\ и\ фигур\ ===}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00061}00061\ \textcolor{comment}{//\ прибавление\ фигуры\ к\ полю\ перед\ отрисовкой}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00062}00062\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{backend_8h_a5752919a95d754c38df9f87ca5c62e05}{SumFigure}}(\textcolor{keywordtype}{int}\ **field,\ \textcolor{keywordtype}{int}\ **figure);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00063}00063\ \textcolor{comment}{//\ вычитание\ фигуры\ из\ поля\ обратноd}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00064}00064\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{backend_8h_a9ff972b8421849428383479d7ab42d2b}{SubFigure}}(\textcolor{keywordtype}{int}\ **field,\ \textcolor{keywordtype}{int}\ **figure);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00065}00065\ \textcolor{comment}{//\ обнуление\ поля\ для\ отрисовки(да\ и\ другого\ при\ желании)}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00066}00066\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{backend_8h_ae4095c00014129a0eaa65435910b38ba}{ZeroingTemp}}(\textcolor{keywordtype}{int}\ **field);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00067}00067\ \textcolor{comment}{//\ заполнение\ следующей\ и\ текущей\ фигур\ изначальными\ //}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00068}00068\ \textcolor{comment}{//\ координатами\ (позже\ усложнить\ до\ одной\ из\ 7ми\ фигур)}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00069}00069\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{backend_8h_a0e5027dbabb199f7ab535a5cc0f8e812}{Figuring}}(\textcolor{keywordtype}{int}\ **figure,\ \textcolor{keywordtype}{int}\ index);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00071}00071\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{backend_8h_a61609035d90a44818709130551770a1f}{StringDel}}(\textcolor{keywordtype}{int}\ **field);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00072}00072\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{backend_8h_ab8548d955d54fa4895fefa5c6d1897bc}{FileScore}}(\textcolor{keywordtype}{char}\ *name,\ \mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *info);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00073}00073\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{backend_8h_a098cf9d4ae3131615866cd8cf6698153}{FigureDown}}(\textcolor{keywordtype}{int}\ **field,\ \textcolor{keywordtype}{int}\ **figure);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00075}00075\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{backend_8h_a9ed581f5dfd685f6fbefadaece946bc7}{CheckCollision}}(\textcolor{keywordtype}{int}\ **field,\ \textcolor{keywordtype}{int}\ **figure);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00076}00076\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{backend_8h_ab297eed34f2fbded5b3122e30e5b6ba5}{CopyFigure}}(\textcolor{keywordtype}{int}\ **dest,\ \textcolor{keywordtype}{int}\ **src);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00077}00077\ \textcolor{keywordtype}{int}\ **\mbox{\hyperlink{backend_8h_af9b49936ae5777dad07ba76554091543}{CreateCopy}}();}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00078}00078\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{backend_8h_a88ba5e3b1a4e9d79737d8ae53fafd927}{DeleteCopy}}(\textcolor{keywordtype}{int}\ ***copy);\ \textcolor{comment}{//\ where\ deletefield?}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00079}00079\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{backend_8h_a02b31eee0979e10be35da90f8a115a72}{DeleteField}}(\textcolor{keywordtype}{int}\ ***copy);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00080}00080\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{backend_8h_a7d44e2f23a94929f77bd22190ba5a0cf}{Curtsy}}(\textcolor{keywordtype}{int}\ **field,\ \textcolor{keywordtype}{int}\ **figure,\ \textcolor{keywordtype}{int}\ i);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00081}00081\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{backend_8h_ab159a32d41414c368abe0b54fc0089af}{RotateCols}}(\textcolor{keywordtype}{int}\ **field,\ \textcolor{keywordtype}{int}\ **figure);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00082}00082\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{backend_8h_a3b0698435caa0a3a5465a0c7c178d421}{MoveCols}}(\textcolor{keywordtype}{int}\ **field,\ \textcolor{keywordtype}{int}\ **figure,\ \textcolor{keywordtype}{int}\ i);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00083}00083\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{backend_8h_a1b780a1bf0bc32d6b9674f7316914874}{Scoring}}(\mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *tetris);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00084}00084\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{backend_8h_a565f18bd6a9738161da477a72537949a}{FileScoreInput}}(\textcolor{keywordtype}{char}\ *name,\ \mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *info);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00085}00085\ \textcolor{keywordtype}{int}\ **\mbox{\hyperlink{backend_8h_a540d773842db1391445c4dddee2f8191}{CreateField}}();}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00087}00087\ \textcolor{comment}{//\ ===\ Состояния\ конечного\ автомата\ ===}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00089}00089\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{backend_8h_a04034df2c2af99068af97f1aae87127a}{HelloState}}(\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{UserAction\_t}}\ signal,\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}\ *state);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00090}00090\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{backend_8h_abcbda171c6086db4ccc6d6002caa024d}{SpawnState}}(\mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *info,\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}\ *state);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00091}00091\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{backend_8h_a4e3e20d41ea012bda137d8b72497937d}{MovingState}}(\mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *info,\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}\ *state,\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{UserAction\_t}}\ signal);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00092}00092\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{backend_8h_a98d6d71cca9d81dec70097f4f9ad342a}{AttachingState}}(\mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *info,\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}\ *state);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00093}00093\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{backend_8h_ad5739bbfa26639144ab691e879d6b6d4}{GameOverState}}(\mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *info,\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}\ *state,\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{UserAction\_t}}\ signal);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00094}00094\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}\ \mbox{\hyperlink{backend_8h_a9d3dff37cc1b6c31f39e37f2eaf94759}{JustState}}(\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{UserAction\_t}}\ signal,\ \mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *info,\ \textcolor{keywordtype}{bool}\ hold);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00097}00097\ \textcolor{comment}{//\ ===\ Глобальные\ данные\ и\ инициализация\ ===}}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00099}00099\ \textcolor{keywordtype}{int}\ **\mbox{\hyperlink{backend_8h_a61dd9c744f782f4a3967c59a3c0e07d2}{UpdateFigure}}();}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00100}00100\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{backend_8h_a7a6e5c8bd8080ec12a102e527569ad58}{ZeroingAll}}(\mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *tetris);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00101}00101\ \mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ \mbox{\hyperlink{backend_8h_a645c26bde04373c6026f1532f7863f9d}{GetSetInfo}}(\mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *info,\ \textcolor{keywordtype}{int}\ push);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00102}00102\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{backend_8h_aef3504a6b3b632fc1bccc6faac99abfc}{InitTetris}}(\mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *tetris);}
+\DoxyCodeLine{\Hypertarget{backend_8h_source_l00103}00103\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ BACKEND\_H}}
+
+\end{DoxyCode}

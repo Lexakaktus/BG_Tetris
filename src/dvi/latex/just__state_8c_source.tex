@@ -1,0 +1,116 @@
+\doxysection{just\+\_\+state.\+c}
+\hypertarget{just__state_8c_source}{}\label{just__state_8c_source}\index{brick\_game/backend/just\_state.c@{brick\_game/backend/just\_state.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{backend_8h}{../../inc/backend.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00012}\mbox{\hyperlink{backend_8h_a04034df2c2af99068af97f1aae87127a}{00012}}\ \textcolor{keywordtype}{void}\ HelloState(\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{UserAction\_t}}\ signal,\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}\ *state)\ \{\ }
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00013}00013\ \ \ \textcolor{keywordflow}{if}\ (signal\ ==\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9aaf166713f3d14b30bee8f0ad5a09c4cb}{Terminate}})\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00014}00014\ \ \ \ \ *state\ =\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1ae2724ba71a1a0daaa937dd3ac38e53e4}{GameOver}};}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00015}00015\ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (signal\ ==\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9a3887649be5130f60dd3e7a6eb8e9f142}{Action}})\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00016}00016\ \ \ \ \ *state\ =\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1aaa91a7c5a479ef5add68c761703fbaee}{Spawn}};}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00017}00017\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00018}00018\ \}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00028}\mbox{\hyperlink{backend_8h_abcbda171c6086db4ccc6d6002caa024d}{00028}}\ \textcolor{keywordtype}{void}\ SpawnState(\mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *info,\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}\ *state)\ \{\ }
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00029}00029\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ random\ =\ -\/1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00030}00030\ \ \ \textcolor{keywordtype}{int}\ **figure\ =\ UpdateFigure();}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00031}00031\ \ \ \textcolor{keywordflow}{if}\ (random\ ==\ -\/1)\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00032}00032\ \ \ \ \ random\ =\ rand()\ \%\ \mbox{\hyperlink{backend_8h_a75c281462c172ae33073839cd6870c41}{COUNTFIGURE}};}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00033}00033\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00034}00034\ \ \ Figuring(figure,\ random);}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00035}00035\ \ \ random\ =\ rand()\ \%\ \mbox{\hyperlink{backend_8h_a75c281462c172ae33073839cd6870c41}{COUNTFIGURE}};}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00036}00036\ \ \ Figuring(info-\/>\mbox{\hyperlink{struct_game_info__t_ab897112aa413eac6657970ef2a873026}{next}},\ random);}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00037}00037\ \ \ SumFigure(info-\/>\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}},\ figure);}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00038}00038\ \ \ *state\ =\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1ace38a563425aa1722759240461351f90}{Moving}};\ \textcolor{comment}{/*\ code\ */}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00039}00039\ \}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00051}\mbox{\hyperlink{backend_8h_a4e3e20d41ea012bda137d8b72497937d}{00051}}\ \textcolor{keywordtype}{void}\ MovingState(\mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *info,\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}\ *state,\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{UserAction\_t}}\ signal)\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00052}00052\ \ \ GetSetInfo(info,\ \mbox{\hyperlink{backend_8h_a96818d1211164e5497a6b5505564a591}{PULL}});}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00053}00053\ \ \ \textcolor{keyword}{static}\ clock\_t\ last\_fall\_time\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00054}00054\ \ \ \textcolor{keywordtype}{int}\ **figure\ =\ UpdateFigure();}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00055}00055\ \ \ clock\_t\ current\_time\ =\ clock();\ }
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00056}00056\ \ \ SubFigure(info-\/>\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}},\ figure);}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00057}00057\ \ \ \textcolor{keywordflow}{if}\ (signal\ ==\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9a9d4d8b0b72fc2659da772d761a3c5ecb}{Left}})\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00058}00058\ \ \ \ \ MoveCols(info-\/>\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}},\ figure,\ -\/1);}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00059}00059\ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (signal\ ==\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9ad48f7af8c070184f3774c8e85854eb66}{Right}})\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00060}00060\ \ \ \ \ MoveCols(info-\/>\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}},\ figure,\ 1);}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00061}00061\ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (signal\ ==\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9a3887649be5130f60dd3e7a6eb8e9f142}{Action}})\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00062}00062\ \ \ \ \ RotateCols(info-\/>\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}},\ figure);}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00063}00063\ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (signal\ ==\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9abcf8c79e9a5f5f9d606fb35645a0fb27}{Down}})\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00064}00064\ \ \ \ \ \textcolor{keywordflow}{while}\ (Curtsy(info-\/>\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}},\ figure,\ 1)\ ==\ 0);}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00065}00065\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00066}00066\ \ \ \textcolor{keywordflow}{if}\ ((current\_time\ -\/\ last\_fall\_time)\ >=}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00067}00067\ \ \ \ \ \ \ ((clock\_t)(\mbox{\hyperlink{backend_8h_a2b02d1d55a784582a45aa3d28df2b2aa}{FALL\_DELAY}}\ -\/\ (3000\ *\ info-\/>\mbox{\hyperlink{struct_game_info__t_a2ab1763e0a25ced7b4e086e987396444}{level}}))))\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00068}00068\ \ \ \ \ Curtsy(info-\/>\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}},\ figure,\ 1);\ }
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00069}00069\ \ \ \ \ last\_fall\_time\ =\ current\_time;\ \ }
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00070}00070\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00071}00071\ \ \ \textcolor{keywordflow}{if}\ (FigureDown(info-\/>\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}},\ figure)\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00072}00072\ \ \ \ \ *state\ =\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1a5a7ee45908134ef42da0d15d31e092b7}{Attaching}};}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00073}00073\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00074}00074\ \ \ SumFigure(info-\/>\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}},\ figure);}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00075}00075\ \}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00086}\mbox{\hyperlink{backend_8h_a98d6d71cca9d81dec70097f4f9ad342a}{00086}}\ \textcolor{keywordtype}{void}\ AttachingState(\mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *info,\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}\ *state)\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00087}00087\ \ \ \textcolor{keywordflow}{if}\ (info-\/>\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}}[0][5]\ ==\ \textcolor{charliteral}{'I'})\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00088}00088\ \ \ \ \ *state\ =\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1ae2724ba71a1a0daaa937dd3ac38e53e4}{GameOver}};}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00089}00089\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00090}00090\ \ \ \ \ Scoring(info);}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00091}00091\ \ \ \ \ \textcolor{keywordflow}{if}\ (info-\/>\mbox{\hyperlink{struct_game_info__t_a2ab1763e0a25ced7b4e086e987396444}{level}}\ <}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00092}00092\ \ \ \ \ \ \ \ \ 10)\ \{\ \ \textcolor{comment}{//\ поправить,\ может\ привести\ к\ багу\ с\ временно\ 11ым\ уровнем}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00093}00093\ \ \ \ \ \ \ info-\/>\mbox{\hyperlink{struct_game_info__t_a2ab1763e0a25ced7b4e086e987396444}{level}}\ =\ info-\/>\mbox{\hyperlink{struct_game_info__t_a4a6b1b290cd3e129bf78992964cf4136}{score}}\ /\ 600;}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00094}00094\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00095}00095\ \ \ \ \ \ \ info-\/>\mbox{\hyperlink{struct_game_info__t_a2ab1763e0a25ced7b4e086e987396444}{level}}\ =\ 10;}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00096}00096\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00097}00097\ \ \ \ \ GetSetInfo(info,\ \mbox{\hyperlink{backend_8h_a431b92b32ec924789b2be268651a3fdd}{PUSH}});\ \ \textcolor{comment}{//\ не\ в\ хедере!!!}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00098}00098\ \ \ \ \ *state\ =\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1aaa91a7c5a479ef5add68c761703fbaee}{Spawn}};}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00099}00099\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00100}00100\ \}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00111}\mbox{\hyperlink{backend_8h_ad5739bbfa26639144ab691e879d6b6d4}{00111}}\ \textcolor{keywordtype}{void}\ GameOverState(\mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *info,\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}\ *state,\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{UserAction\_t}}\ signal)\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00112}00112\ \ \ \textcolor{keyword}{static}\ clock\_t\ lose\_time\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00113}00113\ \ \ clock\_t\ current\_time\ =\ clock();}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00114}00114\ \ \ \textcolor{keywordflow}{if}\ (lose\_time\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00115}00115\ \ \ \ \ lose\_time\ =\ current\_time;}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00116}00116\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00117}00117\ \ \ \textcolor{keywordflow}{if}\ (signal\ ==\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9abd5f9c956752ce4dc707b4624b3a36f7}{Start}})\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00118}00118\ \ \ \ \ ZeroingAll(info);}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00119}00119\ \ \ \ \ *state\ =\ Hello;}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00120}00120\ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (signal\ ==\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9aaf166713f3d14b30bee8f0ad5a09c4cb}{Terminate}}\ ||\ current\_time\ -\/\ lose\_time\ >\ \mbox{\hyperlink{backend_8h_a95e1b11928cfc24a5ccd0346db14ac6b}{QUIT\_DELAY}})\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00121}00121\ \ \ \ \ *state\ =\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1a13b9787b5b0fa1ed149bbe28b122207e}{Goodbye}};}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00122}00122\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00123}00123\ \}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00135}\mbox{\hyperlink{backend_8h_a9d3dff37cc1b6c31f39e37f2eaf94759}{00135}}\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}\ JustState(\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{UserAction\_t}}\ signal,\ \mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ *info,\ \textcolor{keywordtype}{bool}\ hold)\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00136}00136\ \ \ hold=0;}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00137}00137\ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}\ state\ =\ Hello;}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00138}00138\ \ \ GetSetInfo(info,\ \mbox{\hyperlink{backend_8h_a96818d1211164e5497a6b5505564a591}{PULL}});}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00139}00139\ \ \ \textcolor{keywordflow}{switch}\ (state)\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00140}00140\ \ \ \ \ \textcolor{keywordflow}{case}\ Hello:}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00141}00141\ \ \ \ \ \ \ HelloState(signal,\ \&state);}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00142}00142\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00143}00143\ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1aaa91a7c5a479ef5add68c761703fbaee}{Spawn}}:}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00144}00144\ \ \ \ \ \ \ SpawnState(info,\ \&state);}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00145}00145\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00146}00146\ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1ace38a563425aa1722759240461351f90}{Moving}}:}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00147}00147\ \ \ \ \ \ \ MovingState(info,\ \&state,\ signal);}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00148}00148\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00149}00149\ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1a5a7ee45908134ef42da0d15d31e092b7}{Attaching}}:}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00150}00150\ \ \ \ \ \ \ AttachingState(info,\ \&state);}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00151}00151\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00152}00152\ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1ae2724ba71a1a0daaa937dd3ac38e53e4}{GameOver}}:}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00153}00153\ \ \ \ \ \ \ \textcolor{comment}{/*\ code\ */}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00155}00155\ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00156}00156\ \ \ \ \ \ \ GameOverState(info,\ \&state,\ signal);}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00157}00157\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00158}00158\ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00159}00159\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (hold)\ \{}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00160}00160\ \ \ \ \ \ \ \ \ ;}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00161}00161\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00162}00162\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00163}00163\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00164}00164\ \ \ \textcolor{keywordflow}{return}\ state;}
+\DoxyCodeLine{\Hypertarget{just__state_8c_source_l00165}00165\ \}}
+
+\end{DoxyCode}

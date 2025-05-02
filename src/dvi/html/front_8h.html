@@ -1,0 +1,502 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>BrickGame Тетрис: Файл inc/front.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">BrickGame Тетрис
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Поиск" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('front_8h.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Макросы</a> &#124;
+<a href="#func-members">Функции</a>  </div>
+  <div class="headertitle"><div class="title">Файл front.h</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Заголовочный файл с функциями интерфейса для отображения Tetris с использованием ncurses.  
+<a href="#details">Подробнее...</a></p>
+<div class="textblock"><code>#include &lt;ncurses.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="lib__specification_8h_source.html">lib_specification.h</a>&quot;</code><br />
+</div>
+<p><a href="front_8h_source.html">См. исходные тексты.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Макросы</h2></td></tr>
+<tr class="memitem:a5defaa6a67c0db00483fb376caf78bd0" id="r_a5defaa6a67c0db00483fb376caf78bd0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5defaa6a67c0db00483fb376caf78bd0">MAXROWS</a>&#160;&#160;&#160;20</td></tr>
+<tr class="memdesc:a5defaa6a67c0db00483fb376caf78bd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Количество строк игрового поля.  <br /></td></tr>
+<tr class="separator:a5defaa6a67c0db00483fb376caf78bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5defaa6a67c0db00483fb376caf78bd0" id="r_a5defaa6a67c0db00483fb376caf78bd0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5defaa6a67c0db00483fb376caf78bd0">MAXROWS</a>&#160;&#160;&#160;20</td></tr>
+<tr class="memdesc:a5defaa6a67c0db00483fb376caf78bd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Количество строк игрового поля.  <br /></td></tr>
+<tr class="separator:a5defaa6a67c0db00483fb376caf78bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a83dc415ae5e205183f0488b46228c4" id="r_a6a83dc415ae5e205183f0488b46228c4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6a83dc415ae5e205183f0488b46228c4">MAXCOLS</a>&#160;&#160;&#160;10</td></tr>
+<tr class="memdesc:a6a83dc415ae5e205183f0488b46228c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Количество столбцов игрового поля.  <br /></td></tr>
+<tr class="separator:a6a83dc415ae5e205183f0488b46228c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e21c77a1d541961ebf6501ec58be3dc" id="r_a0e21c77a1d541961ebf6501ec58be3dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0e21c77a1d541961ebf6501ec58be3dc">COUNTCOORDINATE</a>&#160;&#160;&#160;5</td></tr>
+<tr class="memdesc:a0e21c77a1d541961ebf6501ec58be3dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Количество координат в фигуре.  <br /></td></tr>
+<tr class="separator:a0e21c77a1d541961ebf6501ec58be3dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75c281462c172ae33073839cd6870c41" id="r_a75c281462c172ae33073839cd6870c41"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a75c281462c172ae33073839cd6870c41">COUNTFIGURE</a>&#160;&#160;&#160;7</td></tr>
+<tr class="memdesc:a75c281462c172ae33073839cd6870c41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Количество различных фигур.  <br /></td></tr>
+<tr class="separator:a75c281462c172ae33073839cd6870c41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a120e89fb2a09b7f5294e94a0f292d740" id="r_a120e89fb2a09b7f5294e94a0f292d740"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a120e89fb2a09b7f5294e94a0f292d740">COUNTDIMENSION</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:a120e89fb2a09b7f5294e94a0f292d740"><td class="mdescLeft">&#160;</td><td class="mdescRight">Количество измерений (x, y)  <br /></td></tr>
+<tr class="separator:a120e89fb2a09b7f5294e94a0f292d740"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Функции</h2></td></tr>
+<tr class="memitem:ad57b9077691d084d675893056f57abe8" id="r_ad57b9077691d084d675893056f57abe8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9">UserAction_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad57b9077691d084d675893056f57abe8">Uzvering</a> (<a class="el" href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9">UserAction_t</a> action, bool *hold)</td></tr>
+<tr class="memdesc:ad57b9077691d084d675893056f57abe8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обрабатывает ввод пользователя с клавиатуры.  <br /></td></tr>
+<tr class="separator:ad57b9077691d084d675893056f57abe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19f2d330911a36d0ce3985e6f4193a3f" id="r_a19f2d330911a36d0ce3985e6f4193a3f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a19f2d330911a36d0ce3985e6f4193a3f">InfoPrint</a> (WINDOW *info_window, <a class="el" href="struct_game_info__t.html">GameInfo_t</a> tetris, char *name)</td></tr>
+<tr class="memdesc:a19f2d330911a36d0ce3985e6f4193a3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отображает дополнительную информацию об игре.  <br /></td></tr>
+<tr class="separator:a19f2d330911a36d0ce3985e6f4193a3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0961309c4bbae77cec58e1d2c627afec" id="r_a0961309c4bbae77cec58e1d2c627afec"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0961309c4bbae77cec58e1d2c627afec">NewFigurePrint</a> (WINDOW *info_window, <a class="el" href="struct_game_info__t.html">GameInfo_t</a> tetris)</td></tr>
+<tr class="memdesc:a0961309c4bbae77cec58e1d2c627afec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отображает следующую фигуру.  <br /></td></tr>
+<tr class="separator:a0961309c4bbae77cec58e1d2c627afec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8fd3cf9181aa8ce99a9be0a59678473" id="r_aa8fd3cf9181aa8ce99a9be0a59678473"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa8fd3cf9181aa8ce99a9be0a59678473">FieldPrint</a> (WINDOW *board, <a class="el" href="struct_game_info__t.html">GameInfo_t</a> tetris)</td></tr>
+<tr class="memdesc:aa8fd3cf9181aa8ce99a9be0a59678473"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отображает основное поле игры.  <br /></td></tr>
+<tr class="separator:aa8fd3cf9181aa8ce99a9be0a59678473"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa23e28ca412ceeed8a60499496e56b6e" id="r_aa23e28ca412ceeed8a60499496e56b6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa23e28ca412ceeed8a60499496e56b6e">Draw</a> (WINDOW **board, WINDOW **info_window)</td></tr>
+<tr class="memdesc:aa23e28ca412ceeed8a60499496e56b6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициализирует и рисует интерфейс: поле и информационную панель.  <br /></td></tr>
+<tr class="separator:aa23e28ca412ceeed8a60499496e56b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63c1f7a6ca12ad1a16062196f1c0d416" id="r_a63c1f7a6ca12ad1a16062196f1c0d416"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a63c1f7a6ca12ad1a16062196f1c0d416">GamePrint</a> (WINDOW *board, WINDOW *info_window, <a class="el" href="struct_game_info__t.html">GameInfo_t</a> tetris, char *name)</td></tr>
+<tr class="memdesc:a63c1f7a6ca12ad1a16062196f1c0d416"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отрисовывает всю игровую информацию.  <br /></td></tr>
+<tr class="separator:a63c1f7a6ca12ad1a16062196f1c0d416"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><p>Заголовочный файл с функциями интерфейса для отображения Tetris с использованием ncurses. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="front_8h_source.html">front.h</a></p>
+</div><h2 class="groupheader">Макросы</h2>
+<a id="a0e21c77a1d541961ebf6501ec58be3dc" name="a0e21c77a1d541961ebf6501ec58be3dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e21c77a1d541961ebf6501ec58be3dc">&#9670;&#160;</a></span>COUNTCOORDINATE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define COUNTCOORDINATE&#160;&#160;&#160;5</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Количество координат в фигуре. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="front_8h_source.html">front.h</a> строка <a class="el" href="front_8h_source.html#l00019">19</a></p>
+
+</div>
+</div>
+<a id="a120e89fb2a09b7f5294e94a0f292d740" name="a120e89fb2a09b7f5294e94a0f292d740"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a120e89fb2a09b7f5294e94a0f292d740">&#9670;&#160;</a></span>COUNTDIMENSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define COUNTDIMENSION&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Количество измерений (x, y) </p>
+
+<p class="definition">См. определение в файле <a class="el" href="front_8h_source.html">front.h</a> строка <a class="el" href="front_8h_source.html#l00023">23</a></p>
+
+</div>
+</div>
+<a id="a75c281462c172ae33073839cd6870c41" name="a75c281462c172ae33073839cd6870c41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75c281462c172ae33073839cd6870c41">&#9670;&#160;</a></span>COUNTFIGURE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define COUNTFIGURE&#160;&#160;&#160;7</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Количество различных фигур. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="front_8h_source.html">front.h</a> строка <a class="el" href="front_8h_source.html#l00021">21</a></p>
+
+</div>
+</div>
+<a id="a6a83dc415ae5e205183f0488b46228c4" name="a6a83dc415ae5e205183f0488b46228c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a83dc415ae5e205183f0488b46228c4">&#9670;&#160;</a></span>MAXCOLS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAXCOLS&#160;&#160;&#160;10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Количество столбцов игрового поля. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="front_8h_source.html">front.h</a> строка <a class="el" href="front_8h_source.html#l00017">17</a></p>
+
+</div>
+</div>
+<a id="a5defaa6a67c0db00483fb376caf78bd0" name="a5defaa6a67c0db00483fb376caf78bd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5defaa6a67c0db00483fb376caf78bd0">&#9670;&#160;</a></span>MAXROWS <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAXROWS&#160;&#160;&#160;20</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Количество строк игрового поля. </p>
+<p>Количество столбцов игрового поля. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="front_8h_source.html">front.h</a> строка <a class="el" href="front_8h_source.html#l00013">13</a></p>
+
+</div>
+</div>
+<a id="a5defaa6a67c0db00483fb376caf78bd0" name="a5defaa6a67c0db00483fb376caf78bd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5defaa6a67c0db00483fb376caf78bd0">&#9670;&#160;</a></span>MAXROWS <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAXROWS&#160;&#160;&#160;20</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Количество строк игрового поля. </p>
+<p>Количество столбцов игрового поля. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="front_8h_source.html">front.h</a> строка <a class="el" href="front_8h_source.html#l00013">13</a></p>
+
+</div>
+</div>
+<h2 class="groupheader">Функции</h2>
+<a id="aa23e28ca412ceeed8a60499496e56b6e" name="aa23e28ca412ceeed8a60499496e56b6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa23e28ca412ceeed8a60499496e56b6e">&#9670;&#160;</a></span>Draw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Draw </td>
+          <td>(</td>
+          <td class="paramtype">WINDOW **</td>          <td class="paramname"><span class="paramname"><em>board</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">WINDOW **</td>          <td class="paramname"><span class="paramname"><em>info_window</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Инициализирует и рисует интерфейс: поле и информационную панель. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">board</td><td>Указатель на окно поля. </td></tr>
+    <tr><td class="paramname">info_window</td><td>Указатель на окно информации. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="front_8c_source.html">front.c</a> строка <a class="el" href="front_8c_source.html#l00119">119</a></p>
+
+</div>
+</div>
+<a id="aa8fd3cf9181aa8ce99a9be0a59678473" name="aa8fd3cf9181aa8ce99a9be0a59678473"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8fd3cf9181aa8ce99a9be0a59678473">&#9670;&#160;</a></span>FieldPrint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int FieldPrint </td>
+          <td>(</td>
+          <td class="paramtype">WINDOW *</td>          <td class="paramname"><span class="paramname"><em>board</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_game_info__t.html">GameInfo_t</a></td>          <td class="paramname"><span class="paramname"><em>tetris</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Отображает основное поле игры. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">board</td><td>Окно ncurses с полем. </td></tr>
+    <tr><td class="paramname">tetris</td><td>Текущее состояние игры. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>0 при успехе. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="front_8c_source.html">front.c</a> строка <a class="el" href="front_8c_source.html#l00090">90</a></p>
+
+</div>
+</div>
+<a id="a63c1f7a6ca12ad1a16062196f1c0d416" name="a63c1f7a6ca12ad1a16062196f1c0d416"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63c1f7a6ca12ad1a16062196f1c0d416">&#9670;&#160;</a></span>GamePrint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int GamePrint </td>
+          <td>(</td>
+          <td class="paramtype">WINDOW *</td>          <td class="paramname"><span class="paramname"><em>board</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">WINDOW *</td>          <td class="paramname"><span class="paramname"><em>info_window</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_game_info__t.html">GameInfo_t</a></td>          <td class="paramname"><span class="paramname"><em>tetris</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *</td>          <td class="paramname"><span class="paramname"><em>name</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Отрисовывает всю игровую информацию. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">board</td><td>Окно поля. </td></tr>
+    <tr><td class="paramname">info_window</td><td>Окно информации. </td></tr>
+    <tr><td class="paramname">tetris</td><td>Структура с состоянием игры. </td></tr>
+    <tr><td class="paramname">name</td><td>Имя игрока. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>0 при успехе. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="front_8c_source.html">front.c</a> строка <a class="el" href="front_8c_source.html#l00147">147</a></p>
+
+</div>
+</div>
+<a id="a19f2d330911a36d0ce3985e6f4193a3f" name="a19f2d330911a36d0ce3985e6f4193a3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19f2d330911a36d0ce3985e6f4193a3f">&#9670;&#160;</a></span>InfoPrint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int InfoPrint </td>
+          <td>(</td>
+          <td class="paramtype">WINDOW *</td>          <td class="paramname"><span class="paramname"><em>info_window</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_game_info__t.html">GameInfo_t</a></td>          <td class="paramname"><span class="paramname"><em>tetris</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *</td>          <td class="paramname"><span class="paramname"><em>name</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Отображает дополнительную информацию об игре. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">info_window</td><td>Окно ncurses для информации. </td></tr>
+    <tr><td class="paramname">tetris</td><td>Текущее состояние игры. </td></tr>
+    <tr><td class="paramname">name</td><td>Имя игрока. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>0 при успехе. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="front_8c_source.html">front.c</a> строка <a class="el" href="front_8c_source.html#l00069">69</a></p>
+
+</div>
+</div>
+<a id="a0961309c4bbae77cec58e1d2c627afec" name="a0961309c4bbae77cec58e1d2c627afec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0961309c4bbae77cec58e1d2c627afec">&#9670;&#160;</a></span>NewFigurePrint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int NewFigurePrint </td>
+          <td>(</td>
+          <td class="paramtype">WINDOW *</td>          <td class="paramname"><span class="paramname"><em>info_window</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_game_info__t.html">GameInfo_t</a></td>          <td class="paramname"><span class="paramname"><em>tetris</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Отображает следующую фигуру. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">info_window</td><td>Окно ncurses для информации. </td></tr>
+    <tr><td class="paramname">tetris</td><td>Текущее состояние игры. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>0 при успехе. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="front_8c_source.html">front.c</a> строка <a class="el" href="front_8c_source.html#l00051">51</a></p>
+
+</div>
+</div>
+<a id="ad57b9077691d084d675893056f57abe8" name="ad57b9077691d084d675893056f57abe8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad57b9077691d084d675893056f57abe8">&#9670;&#160;</a></span>Uzvering()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9">UserAction_t</a> Uzvering </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="lib__specification_8h.html#a7ba289d7b97db30e0b7041ca2cef75a9">UserAction_t</a></td>          <td class="paramname"><span class="paramname"><em>action</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool *</td>          <td class="paramname"><span class="paramname"><em>hold</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Обрабатывает ввод пользователя с клавиатуры. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">action</td><td>Предыдущее действие пользователя. </td></tr>
+    <tr><td class="paramname">hold</td><td>Указатель на флаг "зажатия" клавиши. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Новое действие пользователя. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="front_8c_source.html">front.c</a> строка <a class="el" href="front_8c_source.html#l00003">3</a></p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="front_8h.html">front.h</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

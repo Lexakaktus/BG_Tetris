@@ -1,5 +1,15 @@
 #include "../../inc/backend.h"
-void HelloState(UserAction_t signal, FSM *state) {  // not include!!!
+
+/**
+ * @brief Обработка состояния Hello.
+ *
+ * Если пользователь нажимает Terminate — переходит в GameOver.
+ * Если нажимает Action (Enter) — переходит в Spawn.
+ *
+ * @param signal Входной сигнал пользователя.
+ * @param state Указатель на текущее состояние автомата.
+ */
+void HelloState(UserAction_t signal, FSM *state) { 
   if (signal == Terminate) {
     *state = GameOver;
   } else if (signal == Action) {
@@ -7,10 +17,19 @@ void HelloState(UserAction_t signal, FSM *state) {  // not include!!!
   }
 }
 
-void SpawnState(GameInfo_t *info, FSM *state) {  // not include!!!
-  static int random = -1;                          // наблюдаем
+/**
+ * @brief Обрабатывает появление новой фигуры.
+ *
+ * Выбирает следующую и текущую фигуры, устанавливает их в поле.
+ *
+ * @param info Указатель на структуру состояния игры.
+ * @param state Указатель на текущее состояние автомата.
+ */
+void SpawnState(GameInfo_t *info, FSM *state) { 
+  static int random = -1;                       
   int **figure = UpdateFigure();
   if (random == -1) {
+    random = rand() % COUNTFIGURE;
     random = rand() % COUNTFIGURE;
   }
   Figuring(figure, random);
@@ -20,27 +39,35 @@ void SpawnState(GameInfo_t *info, FSM *state) {  // not include!!!
   *state = Moving; /* code */
 }
 
+
+/**
+ * @brief Обрабатывает активное движение фигуры по полю.
+ *
+ * Перемещение, поворот, падение, переход к приклеиванию.
+ *
+ * @param info Указатель на состояние игры.
+ * @param state Указатель на состояние автомата.
+ * @param signal Действие игрока.
+ */
 void MovingState(GameInfo_t *info, FSM *state, UserAction_t signal) {
   GetSetInfo(info, PULL);
   static clock_t last_fall_time = 0;
   int **figure = UpdateFigure();
-  clock_t current_time = clock();  // обновление времени с последнего падения
+  clock_t current_time = clock(); 
   SubFigure(info->field, figure);
   if (signal == Left) {
     MoveCols(info->field, figure, -1);
   } else if (signal == Right) {
-    //   info->field[19][9]='R';
     MoveCols(info->field, figure, 1);
   } else if (signal == Action) {
-    // info->field[19][9]='B';
     RotateCols(info->field, figure);
   } else if (signal == Down) {
     while (Curtsy(info->field, figure, 1) == 0);
   }
   if ((current_time - last_fall_time) >=
       ((clock_t)(FALL_DELAY - (3000 * info->level)))) {
-    Curtsy(info->field, figure, 1);  // Спускаем фигуру вниз
-    last_fall_time = current_time;  // Обновляем время последнего падения
+    Curtsy(info->field, figure, 1); 
+    last_fall_time = current_time;  
   }
   if (FigureDown(info->field, figure) != 0) {
     *state = Attaching;
@@ -48,6 +75,15 @@ void MovingState(GameInfo_t *info, FSM *state, UserAction_t signal) {
   SumFigure(info->field, figure);
 }
 
+/**
+ * @brief Обрабатывает "приклеивание" фигуры к полю.
+ *
+ * Если фигура на самой верхней строке — игра закончена.
+ * Иначе — начисляются очки, обновляется уровень и переходим в Spawn.
+ *
+ * @param info Указатель на состояние игры.
+ * @param state Указатель на текущее состояние автомата.
+ */
 void AttachingState(GameInfo_t *info, FSM *state) {
   if (info->field[0][5] == 'I') {
     *state = GameOver;
@@ -64,15 +100,22 @@ void AttachingState(GameInfo_t *info, FSM *state) {
   }
 }
 
+/**
+ * @brief Состояние проигрыша.
+ *
+ * Ожидает либо перезапуска, либо выхода.
+ *
+ * @param info Указатель на структуру игры.
+ * @param state Указатель на текущее состояние автомата.
+ * @param signal Ввод пользователя.
+ */
 void GameOverState(GameInfo_t *info, FSM *state, UserAction_t signal) {
-  // info->field[19][9]='G';
   static clock_t lose_time = 0;
   clock_t current_time = clock();
   if (lose_time == 0) {
     lose_time = current_time;
   }
   if (signal == Start) {
-    // info->score=0;
     ZeroingAll(info);
     *state = Hello;
   } else if (signal == Terminate || current_time - lose_time > QUIT_DELAY) {
@@ -80,6 +123,16 @@ void GameOverState(GameInfo_t *info, FSM *state, UserAction_t signal) {
   }
 }
 
+/**
+ * @brief Основной обработчик конечного автомата игры.
+ *
+ * В зависимости от текущего состояния вызывает соответствующую функцию.
+ *
+ * @param signal Сигнал от пользователя (ввод).
+ * @param info Указатель на игровое состояние.
+ * @param hold Было ли удержание клавиши.
+ * @return Текущее состояние автомата.
+ */
 FSM JustState(UserAction_t signal, GameInfo_t *info, bool hold) {
   hold=0;
   static FSM state = Hello;
@@ -89,7 +142,6 @@ FSM JustState(UserAction_t signal, GameInfo_t *info, bool hold) {
       HelloState(signal, &state);
       break;
     case Spawn:
-      // если спавнится одна и та же первая фигура добавить ещё этап рандома
       SpawnState(info, &state);
       break;
     case Moving:

@@ -1,5 +1,12 @@
 #include "../../inc/backend.h"
 #include "../../inc/front.h"
+
+/**
+ * @brief Получает или устанавливает текущее состояние конечного автомата.
+ *
+ * @param state Указатель на переменную состояния.
+ * @param push Если 1 — устанавливает состояние, если 0 — возвращает текущее.
+ */
 void get_state(FSM *state, int push) {
   static FSM stat = -1;
   if (push) {
@@ -9,6 +16,15 @@ void get_state(FSM *state, int push) {
   }
 }
 
+
+/**
+ * @brief Обрабатывает пользовательский ввод.
+ *
+ * Управляет состоянием игры: пауза, завершение, передаёт действие в автомата состояний.
+ *
+ * @param action Событие, вызванное нажатием клавиши пользователем.
+ * @param hold Было ли удержание клавиши (не используется пока).
+ */
 void userInput(UserAction_t action, bool hold) {  // not declaration
   GameInfo_t game_info = GetSetInfo(&game_info, PULL);
   FSM state=Hello;
@@ -21,11 +37,18 @@ void userInput(UserAction_t action, bool hold) {  // not declaration
   if (action == Terminate) {
     state = Goodbye;
   }
-
   GetSetInfo(&game_info, PUSH);
   get_state(&state, PUSH);
 }
 
+
+/**
+ * @brief Возвращает актуальное состояние игры.
+ *
+ * Используется для фронтенда: обновляет отображение игры.
+ *
+ * @return Текущий `GameInfo_t`.
+ */
 GameInfo_t updateCurrentState() {
   GameInfo_t info_t;
   //  GetSetInfo(&info_t, PULL);
@@ -33,6 +56,14 @@ GameInfo_t updateCurrentState() {
   return GetSetInfo(&info_t, PULL);
 }
 
+
+/**
+ * @brief Главная точка входа в игру.
+ *
+ * Инициализирует ncurses, структуру игры, обрабатывает цикл ввода/рендеринга.
+ *
+ * @return Код завершения (0).
+ */
 int main(void) {
   WINDOW *board, *info_field;
   Draw(&board, &info_field);
@@ -49,7 +80,6 @@ int main(void) {
     signal = Uzvering(signal, &hold);
     userInput(signal, hold);
     get_state(&state, PULL);
-    // JustState(UserAction_t signal, GameInfo_t * info, bool hold );
     GamePrint(board, info_field, updateCurrentState(), "user");  // char *name
   }
 

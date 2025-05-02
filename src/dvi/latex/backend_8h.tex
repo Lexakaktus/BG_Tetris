@@ -1,0 +1,981 @@
+\doxysection{Файл inc/backend.h}
+\hypertarget{backend_8h}{}\label{backend_8h}\index{inc/backend.h@{inc/backend.h}}
+
+
+Заголовочный файл с бэкенд-\/логикой тетриса\+: обработка игрового поля, фигур и состояний.  
+
+
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include "{}lib\+\_\+specification.\+h"{}}\newline
+\doxysubsubsection*{Макросы}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{backend_8h_a5defaa6a67c0db00483fb376caf78bd0}{MAXROWS}}~20
+\begin{DoxyCompactList}\small\item\em Количество строк игрового поля. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{backend_8h_a6a83dc415ae5e205183f0488b46228c4}{MAXCOLS}}~10
+\begin{DoxyCompactList}\small\item\em Количество столбцов игрового поля. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{backend_8h_a0e21c77a1d541961ebf6501ec58be3dc}{COUNTCOORDINATE}}~5
+\begin{DoxyCompactList}\small\item\em Количество координат в фигуре (центральная + 4 блока). \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{backend_8h_a75c281462c172ae33073839cd6870c41}{COUNTFIGURE}}~7
+\begin{DoxyCompactList}\small\item\em Количество разных фигур \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{backend_8h_a120e89fb2a09b7f5294e94a0f292d740}{COUNTDIMENSION}}~2
+\begin{DoxyCompactList}\small\item\em Размерность координат (x, y). \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{backend_8h_ab95aa986509de505fb54b0d2c2b5a019}{CELL\+\_\+\+EMPTY}}~\textquotesingle{}.\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em Символ пустой ячейки. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{backend_8h_a958788fcb5525a553495debc0042ef20}{CELL\+\_\+\+FILLED}}~\textquotesingle{}I\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em Символ занятой ячейки. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{backend_8h_a2b02d1d55a784582a45aa3d28df2b2aa}{FALL\+\_\+\+DELAY}}~50000
+\begin{DoxyCompactList}\small\item\em Задержка между падениями (в миллисекундах). \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{backend_8h_a95e1b11928cfc24a5ccd0346db14ac6b}{QUIT\+\_\+\+DELAY}}~6000000 \texorpdfstring{$\ast$}{*} 10
+\begin{DoxyCompactList}\small\item\em Задержка перед выходом из игры после поражения. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{backend_8h_a96818d1211164e5497a6b5505564a591}{PULL}}~0
+\begin{DoxyCompactList}\small\item\em Флаг для получения информации. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{backend_8h_a431b92b32ec924789b2be268651a3fdd}{PUSH}}~1
+\begin{DoxyCompactList}\small\item\em Флаг для записи информации. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{backend_8h_a21d4c366220cb9ec2b450fcc1bb1a1b5}{COLLIDE}}~1
+\begin{DoxyCompactList}\small\item\em Флаг столкновения. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{backend_8h_ae0e3badb51583d9218fe56b5f51c1ecc}{BAD\+\_\+\+ARGUMENT}}~2
+\begin{DoxyCompactList}\small\item\em Код ошибки аргумента \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Перечисления}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}} \{ \newline
+{\bfseries Hello}
+, \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1aaa91a7c5a479ef5add68c761703fbaee}{Spawn}}
+, \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1ace38a563425aa1722759240461351f90}{Moving}}
+, \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1a5a7ee45908134ef42da0d15d31e092b7}{Attaching}}
+, \newline
+\mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1ae2724ba71a1a0daaa937dd3ac38e53e4}{Game\+Over}}
+, \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1a13b9787b5b0fa1ed149bbe28b122207e}{Goodbye}}
+ \}
+\begin{DoxyCompactList}\small\item\em Состояния конечного автомата игры. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Функции}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{backend_8h_a5752919a95d754c38df9f87ca5c62e05}{Sum\+Figure}} (int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}field, int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}figure)
+\begin{DoxyCompactList}\small\item\em Размещает фигуру на поле, если возможно. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{backend_8h_a9ff972b8421849428383479d7ab42d2b}{Sub\+Figure}} (int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}field, int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}figure)
+\begin{DoxyCompactList}\small\item\em Удаляет фигуру с поля. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{backend_8h_ae4095c00014129a0eaa65435910b38ba}{Zeroing\+Temp}} (int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}field)
+\begin{DoxyCompactList}\small\item\em Очищает поле, заполняя его точками. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{backend_8h_a0e5027dbabb199f7ab535a5cc0f8e812}{Figuring}} (int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}figure, int index)
+\begin{DoxyCompactList}\small\item\em Заполняет массив координатами фигуры по индексу. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{backend_8h_a61609035d90a44818709130551770a1f}{String\+Del}} (int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}field)
+\begin{DoxyCompactList}\small\item\em Удаляет заполненные строки и сдвигает остальные вниз. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{backend_8h_ab8548d955d54fa4895fefa5c6d1897bc}{File\+Score}} (char \texorpdfstring{$\ast$}{*}name, \mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}info)
+\begin{DoxyCompactList}\small\item\em Загружает рекорд игрока из файла и обновляет high\+\_\+score. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{backend_8h_a098cf9d4ae3131615866cd8cf6698153}{Figure\+Down}} (int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}field, int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}figure)
+\begin{DoxyCompactList}\small\item\em Проверяет, достигла ли фигура низа или столкновения. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{backend_8h_a9ed581f5dfd685f6fbefadaece946bc7}{Check\+Collision}} (int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}field, int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}figure)
+\begin{DoxyCompactList}\small\item\em Проверяет возможные столкновения фигуры с полем. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{backend_8h_ab297eed34f2fbded5b3122e30e5b6ba5}{Copy\+Figure}} (int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}dest, int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}src)
+\begin{DoxyCompactList}\small\item\em Копирует координаты одной фигуры в другую. \end{DoxyCompactList}\item 
+int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{backend_8h_af9b49936ae5777dad07ba76554091543}{Create\+Copy}} ()
+\begin{DoxyCompactList}\small\item\em Выделяет память под координаты фигуры. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{backend_8h_a88ba5e3b1a4e9d79737d8ae53fafd927}{Delete\+Copy}} (int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}copy)
+\begin{DoxyCompactList}\small\item\em Освобождает память, выделенную под фигуру. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{backend_8h_a02b31eee0979e10be35da90f8a115a72}{Delete\+Field}} (int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}copy)
+\begin{DoxyCompactList}\small\item\em Освобождает память, выделенную под поле. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{backend_8h_a7d44e2f23a94929f77bd22190ba5a0cf}{Curtsy}} (int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}field, int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}figure, int i)
+\begin{DoxyCompactList}\small\item\em Пытается опустить фигуру вниз. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{backend_8h_ab159a32d41414c368abe0b54fc0089af}{Rotate\+Cols}} (int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}field, int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}figure)
+\begin{DoxyCompactList}\small\item\em Поворачивает фигуру по часовой стрелке. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{backend_8h_a3b0698435caa0a3a5465a0c7c178d421}{Move\+Cols}} (int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}field, int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}figure, int i)
+\begin{DoxyCompactList}\small\item\em Поворачивает фигуру по часовой стрелке. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{backend_8h_a1b780a1bf0bc32d6b9674f7316914874}{Scoring}} (\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}tetris)
+\begin{DoxyCompactList}\small\item\em Обновляет счёт и уровень игрока в зависимости от удалённых строк. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{backend_8h_a565f18bd6a9738161da477a72537949a}{File\+Score\+Input}} (char \texorpdfstring{$\ast$}{*}name, \mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}info)
+\begin{DoxyCompactList}\small\item\em Сохраняет рекорд в файл, если он был побит. \end{DoxyCompactList}\item 
+int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{backend_8h_a540d773842db1391445c4dddee2f8191}{Create\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Создаёт и инициализирует игровое поле. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{backend_8h_a04034df2c2af99068af97f1aae87127a}{Hello\+State}} (\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}} signal, \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}} \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em Обработка состояния Hello. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{backend_8h_abcbda171c6086db4ccc6d6002caa024d}{Spawn\+State}} (\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}info, \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}} \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em Обрабатывает появление новой фигуры. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{backend_8h_a4e3e20d41ea012bda137d8b72497937d}{Moving\+State}} (\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}info, \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}} \texorpdfstring{$\ast$}{*}state, \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}} signal)
+\begin{DoxyCompactList}\small\item\em Обрабатывает активное движение фигуры по полю. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{backend_8h_a98d6d71cca9d81dec70097f4f9ad342a}{Attaching\+State}} (\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}info, \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}} \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em Обрабатывает "{}приклеивание"{} фигуры к полю. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{backend_8h_ad5739bbfa26639144ab691e879d6b6d4}{Game\+Over\+State}} (\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}info, \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}} \texorpdfstring{$\ast$}{*}state, \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}} signal)
+\begin{DoxyCompactList}\small\item\em Состояние проигрыша. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}} \mbox{\hyperlink{backend_8h_a9d3dff37cc1b6c31f39e37f2eaf94759}{Just\+State}} (\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}} signal, \mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}info, bool hold)
+\begin{DoxyCompactList}\small\item\em Основной обработчик конечного автомата игры. \end{DoxyCompactList}\item 
+int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{backend_8h_a61dd9c744f782f4a3967c59a3c0e07d2}{Update\+Figure}} ()
+\begin{DoxyCompactList}\small\item\em Возвращает статическую фигуру (можно использовать как singleton). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{backend_8h_a7a6e5c8bd8080ec12a102e527569ad58}{Zeroing\+All}} (\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}tetris)
+\begin{DoxyCompactList}\small\item\em Обнуляет данные игры и поле. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \mbox{\hyperlink{backend_8h_a645c26bde04373c6026f1532f7863f9d}{Get\+Set\+Info}} (\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}info, int push)
+\begin{DoxyCompactList}\small\item\em Позволяет получить или задать текущее состояние игры. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{backend_8h_aef3504a6b3b632fc1bccc6faac99abfc}{Init\+Tetris}} (\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}tetris)
+\begin{DoxyCompactList}\small\item\em Инициализация структуры \doxylink{struct_game_info__t}{Game\+Info\+\_\+t}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Заголовочный файл с бэкенд-\/логикой тетриса\+: обработка игрового поля, фигур и состояний. 
+
+
+
+См. определение в файле \mbox{\hyperlink{backend_8h_source}{backend.\+h}}
+
+
+
+\doxysubsection{Макросы}
+\Hypertarget{backend_8h_ae0e3badb51583d9218fe56b5f51c1ecc}\index{backend.h@{backend.h}!BAD\_ARGUMENT@{BAD\_ARGUMENT}}
+\index{BAD\_ARGUMENT@{BAD\_ARGUMENT}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{BAD\_ARGUMENT}{BAD\_ARGUMENT}}
+{\footnotesize\ttfamily \label{backend_8h_ae0e3badb51583d9218fe56b5f51c1ecc} 
+\#define BAD\+\_\+\+ARGUMENT~2}
+
+
+
+Код ошибки аргумента 
+
+
+
+См. определение в файле \mbox{\hyperlink{backend_8h_source}{backend.\+h}} строка \mbox{\hyperlink{backend_8h_source_l00044}{44}}
+
+\Hypertarget{backend_8h_ab95aa986509de505fb54b0d2c2b5a019}\index{backend.h@{backend.h}!CELL\_EMPTY@{CELL\_EMPTY}}
+\index{CELL\_EMPTY@{CELL\_EMPTY}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{CELL\_EMPTY}{CELL\_EMPTY}}
+{\footnotesize\ttfamily \label{backend_8h_ab95aa986509de505fb54b0d2c2b5a019} 
+\#define CELL\+\_\+\+EMPTY~\textquotesingle{}.\textquotesingle{}}
+
+
+
+Символ пустой ячейки. 
+
+
+
+См. определение в файле \mbox{\hyperlink{backend_8h_source}{backend.\+h}} строка \mbox{\hyperlink{backend_8h_source_l00030}{30}}
+
+\Hypertarget{backend_8h_a958788fcb5525a553495debc0042ef20}\index{backend.h@{backend.h}!CELL\_FILLED@{CELL\_FILLED}}
+\index{CELL\_FILLED@{CELL\_FILLED}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{CELL\_FILLED}{CELL\_FILLED}}
+{\footnotesize\ttfamily \label{backend_8h_a958788fcb5525a553495debc0042ef20} 
+\#define CELL\+\_\+\+FILLED~\textquotesingle{}I\textquotesingle{}}
+
+
+
+Символ занятой ячейки. 
+
+
+
+См. определение в файле \mbox{\hyperlink{backend_8h_source}{backend.\+h}} строка \mbox{\hyperlink{backend_8h_source_l00032}{32}}
+
+\Hypertarget{backend_8h_a21d4c366220cb9ec2b450fcc1bb1a1b5}\index{backend.h@{backend.h}!COLLIDE@{COLLIDE}}
+\index{COLLIDE@{COLLIDE}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{COLLIDE}{COLLIDE}}
+{\footnotesize\ttfamily \label{backend_8h_a21d4c366220cb9ec2b450fcc1bb1a1b5} 
+\#define COLLIDE~1}
+
+
+
+Флаг столкновения. 
+
+
+
+См. определение в файле \mbox{\hyperlink{backend_8h_source}{backend.\+h}} строка \mbox{\hyperlink{backend_8h_source_l00042}{42}}
+
+\Hypertarget{backend_8h_a0e21c77a1d541961ebf6501ec58be3dc}\index{backend.h@{backend.h}!COUNTCOORDINATE@{COUNTCOORDINATE}}
+\index{COUNTCOORDINATE@{COUNTCOORDINATE}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{COUNTCOORDINATE}{COUNTCOORDINATE}}
+{\footnotesize\ttfamily \label{backend_8h_a0e21c77a1d541961ebf6501ec58be3dc} 
+\#define COUNTCOORDINATE~5}
+
+
+
+Количество координат в фигуре (центральная + 4 блока). 
+
+
+
+См. определение в файле \mbox{\hyperlink{backend_8h_source}{backend.\+h}} строка \mbox{\hyperlink{backend_8h_source_l00024}{24}}
+
+\Hypertarget{backend_8h_a120e89fb2a09b7f5294e94a0f292d740}\index{backend.h@{backend.h}!COUNTDIMENSION@{COUNTDIMENSION}}
+\index{COUNTDIMENSION@{COUNTDIMENSION}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{COUNTDIMENSION}{COUNTDIMENSION}}
+{\footnotesize\ttfamily \label{backend_8h_a120e89fb2a09b7f5294e94a0f292d740} 
+\#define COUNTDIMENSION~2}
+
+
+
+Размерность координат (x, y). 
+
+
+
+См. определение в файле \mbox{\hyperlink{backend_8h_source}{backend.\+h}} строка \mbox{\hyperlink{backend_8h_source_l00028}{28}}
+
+\Hypertarget{backend_8h_a75c281462c172ae33073839cd6870c41}\index{backend.h@{backend.h}!COUNTFIGURE@{COUNTFIGURE}}
+\index{COUNTFIGURE@{COUNTFIGURE}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{COUNTFIGURE}{COUNTFIGURE}}
+{\footnotesize\ttfamily \label{backend_8h_a75c281462c172ae33073839cd6870c41} 
+\#define COUNTFIGURE~7}
+
+
+
+Количество разных фигур 
+
+
+
+См. определение в файле \mbox{\hyperlink{backend_8h_source}{backend.\+h}} строка \mbox{\hyperlink{backend_8h_source_l00026}{26}}
+
+\Hypertarget{backend_8h_a2b02d1d55a784582a45aa3d28df2b2aa}\index{backend.h@{backend.h}!FALL\_DELAY@{FALL\_DELAY}}
+\index{FALL\_DELAY@{FALL\_DELAY}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{FALL\_DELAY}{FALL\_DELAY}}
+{\footnotesize\ttfamily \label{backend_8h_a2b02d1d55a784582a45aa3d28df2b2aa} 
+\#define FALL\+\_\+\+DELAY~50000}
+
+
+
+Задержка между падениями (в миллисекундах). 
+
+
+
+См. определение в файле \mbox{\hyperlink{backend_8h_source}{backend.\+h}} строка \mbox{\hyperlink{backend_8h_source_l00034}{34}}
+
+\Hypertarget{backend_8h_a6a83dc415ae5e205183f0488b46228c4}\index{backend.h@{backend.h}!MAXCOLS@{MAXCOLS}}
+\index{MAXCOLS@{MAXCOLS}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{MAXCOLS}{MAXCOLS}}
+{\footnotesize\ttfamily \label{backend_8h_a6a83dc415ae5e205183f0488b46228c4} 
+\#define MAXCOLS~10}
+
+
+
+Количество столбцов игрового поля. 
+
+
+
+См. определение в файле \mbox{\hyperlink{backend_8h_source}{backend.\+h}} строка \mbox{\hyperlink{backend_8h_source_l00022}{22}}
+
+\Hypertarget{backend_8h_a5defaa6a67c0db00483fb376caf78bd0}\index{backend.h@{backend.h}!MAXROWS@{MAXROWS}}
+\index{MAXROWS@{MAXROWS}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{MAXROWS}{MAXROWS}}
+{\footnotesize\ttfamily \label{backend_8h_a5defaa6a67c0db00483fb376caf78bd0} 
+\#define MAXROWS~20}
+
+
+
+Количество строк игрового поля. 
+
+
+
+См. определение в файле \mbox{\hyperlink{backend_8h_source}{backend.\+h}} строка \mbox{\hyperlink{backend_8h_source_l00020}{20}}
+
+\Hypertarget{backend_8h_a96818d1211164e5497a6b5505564a591}\index{backend.h@{backend.h}!PULL@{PULL}}
+\index{PULL@{PULL}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{PULL}{PULL}}
+{\footnotesize\ttfamily \label{backend_8h_a96818d1211164e5497a6b5505564a591} 
+\#define PULL~0}
+
+
+
+Флаг для получения информации. 
+
+
+
+См. определение в файле \mbox{\hyperlink{backend_8h_source}{backend.\+h}} строка \mbox{\hyperlink{backend_8h_source_l00038}{38}}
+
+\Hypertarget{backend_8h_a431b92b32ec924789b2be268651a3fdd}\index{backend.h@{backend.h}!PUSH@{PUSH}}
+\index{PUSH@{PUSH}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{PUSH}{PUSH}}
+{\footnotesize\ttfamily \label{backend_8h_a431b92b32ec924789b2be268651a3fdd} 
+\#define PUSH~1}
+
+
+
+Флаг для записи информации. 
+
+
+
+См. определение в файле \mbox{\hyperlink{backend_8h_source}{backend.\+h}} строка \mbox{\hyperlink{backend_8h_source_l00040}{40}}
+
+\Hypertarget{backend_8h_a95e1b11928cfc24a5ccd0346db14ac6b}\index{backend.h@{backend.h}!QUIT\_DELAY@{QUIT\_DELAY}}
+\index{QUIT\_DELAY@{QUIT\_DELAY}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{QUIT\_DELAY}{QUIT\_DELAY}}
+{\footnotesize\ttfamily \label{backend_8h_a95e1b11928cfc24a5ccd0346db14ac6b} 
+\#define QUIT\+\_\+\+DELAY~6000000 \texorpdfstring{$\ast$}{*} 10}
+
+
+
+Задержка перед выходом из игры после поражения. 
+
+
+
+См. определение в файле \mbox{\hyperlink{backend_8h_source}{backend.\+h}} строка \mbox{\hyperlink{backend_8h_source_l00036}{36}}
+
+
+
+\doxysubsection{Перечисления}
+\Hypertarget{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}\index{backend.h@{backend.h}!FSM@{FSM}}
+\index{FSM@{FSM}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{FSM}{FSM}}
+{\footnotesize\ttfamily \label{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1} 
+enum \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}}
+
+
+
+Состояния конечного автомата игры. 
+
+\begin{DoxyEnumFields}[2]{Элементы перечислений}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Spawn@{Spawn}!backend.h@{backend.h}}\index{backend.h@{backend.h}!Spawn@{Spawn}}}\Hypertarget{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1aaa91a7c5a479ef5add68c761703fbaee}\label{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1aaa91a7c5a479ef5add68c761703fbaee} 
+Spawn&Спавн новой фигуры. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Moving@{Moving}!backend.h@{backend.h}}\index{backend.h@{backend.h}!Moving@{Moving}}}\Hypertarget{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1ace38a563425aa1722759240461351f90}\label{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1ace38a563425aa1722759240461351f90} 
+Moving&Движение текущей фигуры. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Attaching@{Attaching}!backend.h@{backend.h}}\index{backend.h@{backend.h}!Attaching@{Attaching}}}\Hypertarget{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1a5a7ee45908134ef42da0d15d31e092b7}\label{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1a5a7ee45908134ef42da0d15d31e092b7} 
+Attaching&Прикрепление фигуры к полю. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{GameOver@{GameOver}!backend.h@{backend.h}}\index{backend.h@{backend.h}!GameOver@{GameOver}}}\Hypertarget{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1ae2724ba71a1a0daaa937dd3ac38e53e4}\label{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1ae2724ba71a1a0daaa937dd3ac38e53e4} 
+Game\+Over&Состояние конца игры. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Goodbye@{Goodbye}!backend.h@{backend.h}}\index{backend.h@{backend.h}!Goodbye@{Goodbye}}}\Hypertarget{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1a13b9787b5b0fa1ed149bbe28b122207e}\label{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1a13b9787b5b0fa1ed149bbe28b122207e} 
+Goodbye&Финальное завершение игры. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8h_source}{backend.\+h}} строка \mbox{\hyperlink{backend_8h_source_l00049}{49}}
+
+
+
+\doxysubsection{Функции}
+\Hypertarget{backend_8h_a98d6d71cca9d81dec70097f4f9ad342a}\index{backend.h@{backend.h}!AttachingState@{AttachingState}}
+\index{AttachingState@{AttachingState}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{AttachingState()}{AttachingState()}}
+{\footnotesize\ttfamily \label{backend_8h_a98d6d71cca9d81dec70097f4f9ad342a} 
+void Attaching\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{info}{, }\item[{\mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}} \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Обрабатывает "{}приклеивание"{} фигуры к полю. 
+
+Если фигура на самой верхней строке — игра закончена. Иначе — начисляются очки, обновляется уровень и переходим в Spawn.
+
+
+\begin{DoxyParams}{Аргументы}
+{\em info} & Указатель на состояние игры. \\
+\hline
+{\em state} & Указатель на текущее состояние автомата. \\
+\hline
+\end{DoxyParams}
+
+
+См. определение в файле \mbox{\hyperlink{just__state_8c_source}{just\+\_\+state.\+c}} строка \mbox{\hyperlink{just__state_8c_source_l00086}{86}}
+
+\Hypertarget{backend_8h_a9ed581f5dfd685f6fbefadaece946bc7}\index{backend.h@{backend.h}!CheckCollision@{CheckCollision}}
+\index{CheckCollision@{CheckCollision}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{CheckCollision()}{CheckCollision()}}
+{\footnotesize\ttfamily \label{backend_8h_a9ed581f5dfd685f6fbefadaece946bc7} 
+int Check\+Collision (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{field}{, }\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{figure}{}\end{DoxyParamCaption})}
+
+
+
+Проверяет возможные столкновения фигуры с полем. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em field} & Игровое поле. \\
+\hline
+{\em figure} & Проверяемая фигура. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+1 при столкновении, иначе 0. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00215}{215}}
+
+\Hypertarget{backend_8h_ab297eed34f2fbded5b3122e30e5b6ba5}\index{backend.h@{backend.h}!CopyFigure@{CopyFigure}}
+\index{CopyFigure@{CopyFigure}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{CopyFigure()}{CopyFigure()}}
+{\footnotesize\ttfamily \label{backend_8h_ab297eed34f2fbded5b3122e30e5b6ba5} 
+void Copy\+Figure (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{dest}{, }\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{src}{}\end{DoxyParamCaption})}
+
+
+
+Копирует координаты одной фигуры в другую. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em dest} & Массив-\/приёмник. \\
+\hline
+{\em src} & Массив-\/источник. \\
+\hline
+\end{DoxyParams}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00202}{202}}
+
+\Hypertarget{backend_8h_af9b49936ae5777dad07ba76554091543}\index{backend.h@{backend.h}!CreateCopy@{CreateCopy}}
+\index{CreateCopy@{CreateCopy}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{CreateCopy()}{CreateCopy()}}
+{\footnotesize\ttfamily \label{backend_8h_af9b49936ae5777dad07ba76554091543} 
+int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} Create\+Copy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Выделяет память под координаты фигуры. 
+
+\begin{DoxyReturn}{Возвращает}
+Указатель на двумерный массив координат, или NULL при ошибке выделения. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00235}{235}}
+
+\Hypertarget{backend_8h_a540d773842db1391445c4dddee2f8191}\index{backend.h@{backend.h}!CreateField@{CreateField}}
+\index{CreateField@{CreateField}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{CreateField()}{CreateField()}}
+{\footnotesize\ttfamily \label{backend_8h_a540d773842db1391445c4dddee2f8191} 
+int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} Create\+Field (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Создаёт и инициализирует игровое поле. 
+
+\begin{DoxyReturn}{Возвращает}
+Указатель на поле, или NULL при ошибке выделения. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00258}{258}}
+
+\Hypertarget{backend_8h_a7d44e2f23a94929f77bd22190ba5a0cf}\index{backend.h@{backend.h}!Curtsy@{Curtsy}}
+\index{Curtsy@{Curtsy}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{Curtsy()}{Curtsy()}}
+{\footnotesize\ttfamily \label{backend_8h_a7d44e2f23a94929f77bd22190ba5a0cf} 
+int Curtsy (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{field}{, }\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{figure}{, }\item[{int}]{i}{}\end{DoxyParamCaption})}
+
+
+
+Пытается опустить фигуру вниз. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em field} & Игровое поле. \\
+\hline
+{\em figure} & Фигура для перемещения. \\
+\hline
+{\em i} & Количество строк для смещения (обычно 1). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+1 если столкновение или выход за границы, иначе 0. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00037}{37}}
+
+\Hypertarget{backend_8h_a88ba5e3b1a4e9d79737d8ae53fafd927}\index{backend.h@{backend.h}!DeleteCopy@{DeleteCopy}}
+\index{DeleteCopy@{DeleteCopy}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{DeleteCopy()}{DeleteCopy()}}
+{\footnotesize\ttfamily \label{backend_8h_a88ba5e3b1a4e9d79737d8ae53fafd927} 
+int Delete\+Copy (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{copy}{}\end{DoxyParamCaption})}
+
+
+
+Освобождает память, выделенную под фигуру. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em copy} & Адрес указателя на фигуру. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+0 при успешном освобождении. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00286}{286}}
+
+\Hypertarget{backend_8h_a02b31eee0979e10be35da90f8a115a72}\index{backend.h@{backend.h}!DeleteField@{DeleteField}}
+\index{DeleteField@{DeleteField}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{DeleteField()}{DeleteField()}}
+{\footnotesize\ttfamily \label{backend_8h_a02b31eee0979e10be35da90f8a115a72} 
+int Delete\+Field (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{copy}{}\end{DoxyParamCaption})}
+
+
+
+Освобождает память, выделенную под поле. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em copy} & Адрес указателя на поле. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+0 при успешном освобождении. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00300}{300}}
+
+\Hypertarget{backend_8h_a098cf9d4ae3131615866cd8cf6698153}\index{backend.h@{backend.h}!FigureDown@{FigureDown}}
+\index{FigureDown@{FigureDown}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{FigureDown()}{FigureDown()}}
+{\footnotesize\ttfamily \label{backend_8h_a098cf9d4ae3131615866cd8cf6698153} 
+int Figure\+Down (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{field}{, }\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{figure}{}\end{DoxyParamCaption})}
+
+
+
+Проверяет, достигла ли фигура низа или столкновения. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em field} & Игровое поле. \\
+\hline
+{\em figure} & Фигура. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+1 если падение должно прекратиться, иначе 0. 
+\end{DoxyReturn}
+!!!
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00186}{186}}
+
+\Hypertarget{backend_8h_a0e5027dbabb199f7ab535a5cc0f8e812}\index{backend.h@{backend.h}!Figuring@{Figuring}}
+\index{Figuring@{Figuring}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{Figuring()}{Figuring()}}
+{\footnotesize\ttfamily \label{backend_8h_a0e5027dbabb199f7ab535a5cc0f8e812} 
+void Figuring (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{figure}{, }\item[{int}]{index}{}\end{DoxyParamCaption})}
+
+
+
+Заполняет массив координатами фигуры по индексу. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em figure} & Указатель на массив координат фигуры. \\
+\hline
+{\em index} & Индекс фигуры из списка figure\+\_\+home. \\
+\hline
+\end{DoxyParams}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00021}{21}}
+
+\Hypertarget{backend_8h_ab8548d955d54fa4895fefa5c6d1897bc}\index{backend.h@{backend.h}!FileScore@{FileScore}}
+\index{FileScore@{FileScore}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{FileScore()}{FileScore()}}
+{\footnotesize\ttfamily \label{backend_8h_ab8548d955d54fa4895fefa5c6d1897bc} 
+int File\+Score (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{info}{}\end{DoxyParamCaption})}
+
+
+
+Загружает рекорд игрока из файла и обновляет high\+\_\+score. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em name} & Имя пользователя. \\
+\hline
+{\em info} & Указатель на структуру игры. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+0 при успешной загрузке. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00158}{158}}
+
+\Hypertarget{backend_8h_a565f18bd6a9738161da477a72537949a}\index{backend.h@{backend.h}!FileScoreInput@{FileScoreInput}}
+\index{FileScoreInput@{FileScoreInput}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{FileScoreInput()}{FileScoreInput()}}
+{\footnotesize\ttfamily \label{backend_8h_a565f18bd6a9738161da477a72537949a} 
+int File\+Score\+Input (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{info}{}\end{DoxyParamCaption})}
+
+
+
+Сохраняет рекорд в файл, если он был побит. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em name} & Имя пользователя. \\
+\hline
+{\em info} & Структура с результатом. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+0 при успешной записи. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00394}{394}}
+
+\Hypertarget{backend_8h_ad5739bbfa26639144ab691e879d6b6d4}\index{backend.h@{backend.h}!GameOverState@{GameOverState}}
+\index{GameOverState@{GameOverState}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{GameOverState()}{GameOverState()}}
+{\footnotesize\ttfamily \label{backend_8h_ad5739bbfa26639144ab691e879d6b6d4} 
+void Game\+Over\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{info}{, }\item[{\mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}}}]{signal}{}\end{DoxyParamCaption})}
+
+
+
+Состояние проигрыша. 
+
+Ожидает либо перезапуска, либо выхода.
+
+
+\begin{DoxyParams}{Аргументы}
+{\em info} & Указатель на структуру игры. \\
+\hline
+{\em state} & Указатель на текущее состояние автомата. \\
+\hline
+{\em signal} & Ввод пользователя. \\
+\hline
+\end{DoxyParams}
+
+
+См. определение в файле \mbox{\hyperlink{just__state_8c_source}{just\+\_\+state.\+c}} строка \mbox{\hyperlink{just__state_8c_source_l00111}{111}}
+
+\Hypertarget{backend_8h_a645c26bde04373c6026f1532f7863f9d}\index{backend.h@{backend.h}!GetSetInfo@{GetSetInfo}}
+\index{GetSetInfo@{GetSetInfo}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{GetSetInfo()}{GetSetInfo()}}
+{\footnotesize\ttfamily \label{backend_8h_a645c26bde04373c6026f1532f7863f9d} 
+\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} Get\+Set\+Info (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{info}{, }\item[{int}]{push}{}\end{DoxyParamCaption})}
+
+
+
+Позволяет получить или задать текущее состояние игры. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em info} & Структура с текущим состоянием (по значению или по указателю). \\
+\hline
+{\em push} & 1 — сохранить состояние, 0 — получить. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+Копия текущего состояния. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00447}{447}}
+
+\Hypertarget{backend_8h_a04034df2c2af99068af97f1aae87127a}\index{backend.h@{backend.h}!HelloState@{HelloState}}
+\index{HelloState@{HelloState}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{HelloState()}{HelloState()}}
+{\footnotesize\ttfamily \label{backend_8h_a04034df2c2af99068af97f1aae87127a} 
+void Hello\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}}}]{signal}{, }\item[{\mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}} \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Обработка состояния Hello. 
+
+Если пользователь нажимает Terminate — переходит в Game\+Over. Если нажимает Action (Enter) — переходит в Spawn.
+
+
+\begin{DoxyParams}{Аргументы}
+{\em signal} & Входной сигнал пользователя. \\
+\hline
+{\em state} & Указатель на текущее состояние автомата. \\
+\hline
+\end{DoxyParams}
+
+
+См. определение в файле \mbox{\hyperlink{just__state_8c_source}{just\+\_\+state.\+c}} строка \mbox{\hyperlink{just__state_8c_source_l00012}{12}}
+
+\Hypertarget{backend_8h_aef3504a6b3b632fc1bccc6faac99abfc}\index{backend.h@{backend.h}!InitTetris@{InitTetris}}
+\index{InitTetris@{InitTetris}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{InitTetris()}{InitTetris()}}
+{\footnotesize\ttfamily \label{backend_8h_aef3504a6b3b632fc1bccc6faac99abfc} 
+int Init\+Tetris (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tetris}{}\end{DoxyParamCaption})}
+
+
+
+Инициализация структуры \doxylink{struct_game_info__t}{Game\+Info\+\_\+t}. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em tetris} & Указатель на структуру для инициализации. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+0 при успехе, 1 при ошибке выделения памяти. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00463}{463}}
+
+\Hypertarget{backend_8h_a9d3dff37cc1b6c31f39e37f2eaf94759}\index{backend.h@{backend.h}!JustState@{JustState}}
+\index{JustState@{JustState}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{JustState()}{JustState()}}
+{\footnotesize\ttfamily \label{backend_8h_a9d3dff37cc1b6c31f39e37f2eaf94759} 
+\mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}} Just\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}}}]{signal}{, }\item[{\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{info}{, }\item[{bool}]{hold}{}\end{DoxyParamCaption})}
+
+
+
+Основной обработчик конечного автомата игры. 
+
+В зависимости от текущего состояния вызывает соответствующую функцию.
+
+
+\begin{DoxyParams}{Аргументы}
+{\em signal} & Сигнал от пользователя (ввод). \\
+\hline
+{\em info} & Указатель на игровое состояние. \\
+\hline
+{\em hold} & Было ли удержание клавиши. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+Текущее состояние автомата. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{just__state_8c_source}{just\+\_\+state.\+c}} строка \mbox{\hyperlink{just__state_8c_source_l00135}{135}}
+
+\Hypertarget{backend_8h_a3b0698435caa0a3a5465a0c7c178d421}\index{backend.h@{backend.h}!MoveCols@{MoveCols}}
+\index{MoveCols@{MoveCols}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{MoveCols()}{MoveCols()}}
+{\footnotesize\ttfamily \label{backend_8h_a3b0698435caa0a3a5465a0c7c178d421} 
+int Move\+Cols (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{field}{, }\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{figure}{, }\item[{int}]{i}{}\end{DoxyParamCaption})}
+
+
+
+Поворачивает фигуру по часовой стрелке. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em field} & Игровое поле. \\
+\hline
+{\em figure} & Фигура. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+1 при невозможности поворота, иначе 0. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00342}{342}}
+
+\Hypertarget{backend_8h_a4e3e20d41ea012bda137d8b72497937d}\index{backend.h@{backend.h}!MovingState@{MovingState}}
+\index{MovingState@{MovingState}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{MovingState()}{MovingState()}}
+{\footnotesize\ttfamily \label{backend_8h_a4e3e20d41ea012bda137d8b72497937d} 
+void Moving\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{info}{, }\item[{\mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{User\+Action\+\_\+t}}}]{signal}{}\end{DoxyParamCaption})}
+
+
+
+Обрабатывает активное движение фигуры по полю. 
+
+Перемещение, поворот, падение, переход к приклеиванию.
+
+
+\begin{DoxyParams}{Аргументы}
+{\em info} & Указатель на состояние игры. \\
+\hline
+{\em state} & Указатель на состояние автомата. \\
+\hline
+{\em signal} & Действие игрока. \\
+\hline
+\end{DoxyParams}
+
+
+См. определение в файле \mbox{\hyperlink{just__state_8c_source}{just\+\_\+state.\+c}} строка \mbox{\hyperlink{just__state_8c_source_l00051}{51}}
+
+\Hypertarget{backend_8h_ab159a32d41414c368abe0b54fc0089af}\index{backend.h@{backend.h}!RotateCols@{RotateCols}}
+\index{RotateCols@{RotateCols}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{RotateCols()}{RotateCols()}}
+{\footnotesize\ttfamily \label{backend_8h_ab159a32d41414c368abe0b54fc0089af} 
+int Rotate\+Cols (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{field}{, }\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{figure}{}\end{DoxyParamCaption})}
+
+
+
+Поворачивает фигуру по часовой стрелке. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em field} & Игровое поле. \\
+\hline
+{\em figure} & Фигура. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+1 при невозможности поворота, иначе 0. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00316}{316}}
+
+\Hypertarget{backend_8h_a1b780a1bf0bc32d6b9674f7316914874}\index{backend.h@{backend.h}!Scoring@{Scoring}}
+\index{Scoring@{Scoring}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{Scoring()}{Scoring()}}
+{\footnotesize\ttfamily \label{backend_8h_a1b780a1bf0bc32d6b9674f7316914874} 
+int Scoring (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tetris}{}\end{DoxyParamCaption})}
+
+
+
+Обновляет счёт и уровень игрока в зависимости от удалённых строк. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em tetris} & Указатель на игровое состояние. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+0 при успешном обновлении. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00363}{363}}
+
+\Hypertarget{backend_8h_abcbda171c6086db4ccc6d6002caa024d}\index{backend.h@{backend.h}!SpawnState@{SpawnState}}
+\index{SpawnState@{SpawnState}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{SpawnState()}{SpawnState()}}
+{\footnotesize\ttfamily \label{backend_8h_abcbda171c6086db4ccc6d6002caa024d} 
+void Spawn\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{info}{, }\item[{\mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}} \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Обрабатывает появление новой фигуры. 
+
+Выбирает следующую и текущую фигуры, устанавливает их в поле.
+
+
+\begin{DoxyParams}{Аргументы}
+{\em info} & Указатель на структуру состояния игры. \\
+\hline
+{\em state} & Указатель на текущее состояние автомата. \\
+\hline
+\end{DoxyParams}
+
+
+См. определение в файле \mbox{\hyperlink{just__state_8c_source}{just\+\_\+state.\+c}} строка \mbox{\hyperlink{just__state_8c_source_l00028}{28}}
+
+\Hypertarget{backend_8h_a61609035d90a44818709130551770a1f}\index{backend.h@{backend.h}!StringDel@{StringDel}}
+\index{StringDel@{StringDel}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{StringDel()}{StringDel()}}
+{\footnotesize\ttfamily \label{backend_8h_a61609035d90a44818709130551770a1f} 
+int String\+Del (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{field}{}\end{DoxyParamCaption})}
+
+
+
+Удаляет заполненные строки и сдвигает остальные вниз. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em field} & Игровое поле. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+Количество удалённых строк. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00126}{126}}
+
+\Hypertarget{backend_8h_a9ff972b8421849428383479d7ab42d2b}\index{backend.h@{backend.h}!SubFigure@{SubFigure}}
+\index{SubFigure@{SubFigure}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{SubFigure()}{SubFigure()}}
+{\footnotesize\ttfamily \label{backend_8h_a9ff972b8421849428383479d7ab42d2b} 
+int Sub\+Figure (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{field}{, }\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{figure}{}\end{DoxyParamCaption})}
+
+
+
+Удаляет фигуру с поля. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em field} & Игровое поле. \\
+\hline
+{\em figure} & Фигура. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+0. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00107}{107}}
+
+\Hypertarget{backend_8h_a5752919a95d754c38df9f87ca5c62e05}\index{backend.h@{backend.h}!SumFigure@{SumFigure}}
+\index{SumFigure@{SumFigure}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{SumFigure()}{SumFigure()}}
+{\footnotesize\ttfamily \label{backend_8h_a5752919a95d754c38df9f87ca5c62e05} 
+int Sum\+Figure (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{field}{, }\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{figure}{}\end{DoxyParamCaption})}
+
+
+
+Размещает фигуру на поле, если возможно. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em field} & Игровое поле. \\
+\hline
+{\em figure} & Фигура. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+1 при столкновении или выходе за границы, иначе 0. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00078}{78}}
+
+\Hypertarget{backend_8h_a61dd9c744f782f4a3967c59a3c0e07d2}\index{backend.h@{backend.h}!UpdateFigure@{UpdateFigure}}
+\index{UpdateFigure@{UpdateFigure}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{UpdateFigure()}{UpdateFigure()}}
+{\footnotesize\ttfamily \label{backend_8h_a61dd9c744f782f4a3967c59a3c0e07d2} 
+int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} Update\+Figure (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Возвращает статическую фигуру (можно использовать как singleton). 
+
+\begin{DoxyReturn}{Возвращает}
+Указатель на фигуру. 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00414}{414}}
+
+\Hypertarget{backend_8h_a7a6e5c8bd8080ec12a102e527569ad58}\index{backend.h@{backend.h}!ZeroingAll@{ZeroingAll}}
+\index{ZeroingAll@{ZeroingAll}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{ZeroingAll()}{ZeroingAll()}}
+{\footnotesize\ttfamily \label{backend_8h_a7a6e5c8bd8080ec12a102e527569ad58} 
+void Zeroing\+All (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_game_info__t}{Game\+Info\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{tetris}{}\end{DoxyParamCaption})}
+
+
+
+Обнуляет данные игры и поле. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em tetris} & Структура игры. \\
+\hline
+\end{DoxyParams}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00430}{430}}
+
+\Hypertarget{backend_8h_ae4095c00014129a0eaa65435910b38ba}\index{backend.h@{backend.h}!ZeroingTemp@{ZeroingTemp}}
+\index{ZeroingTemp@{ZeroingTemp}!backend.h@{backend.h}}
+\doxysubsubsection{\texorpdfstring{ZeroingTemp()}{ZeroingTemp()}}
+{\footnotesize\ttfamily \label{backend_8h_ae4095c00014129a0eaa65435910b38ba} 
+void Zeroing\+Temp (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{field}{}\end{DoxyParamCaption})}
+
+
+
+Очищает поле, заполняя его точками. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em field} & Указатель на игровое поле. \\
+\hline
+\end{DoxyParams}
+
+
+См. определение в файле \mbox{\hyperlink{backend_8c_source}{backend.\+c}} строка \mbox{\hyperlink{backend_8c_source_l00063}{63}}
+

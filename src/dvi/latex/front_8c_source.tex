@@ -1,0 +1,158 @@
+\doxysection{front.\+c}
+\hypertarget{front_8c_source}{}\label{front_8c_source}\index{gui/cli/front.c@{gui/cli/front.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{front_8h}{../../inc/front.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00003}\mbox{\hyperlink{front_8h_ad57b9077691d084d675893056f57abe8}{00003}}\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{UserAction\_t}}\ Uzvering(}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00004}00004\ \ \ \ \ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{UserAction\_t}}\ action,}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00005}00005\ \ \ \ \ \textcolor{keywordtype}{bool}\ *hold)\ \{\ }
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00006}00006\ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{UserAction\_t}}\ push;\ \ \textcolor{comment}{//=action;}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00007}00007\ \ \ push\ =\ action;}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00008}00008\ \ \ \textcolor{keywordtype}{int}\ a\ =\ getch();}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00009}00009\ \ \ \textcolor{comment}{//\ if\ (action\ !=\ Pause)\ \{}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00010}00010\ \ \ \textcolor{keywordflow}{switch}\ (a)\ \{}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00011}00011\ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'a'}:}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00012}00012\ \ \ \ \ \textcolor{keywordflow}{case}\ KEY\_LEFT:}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00013}00013\ \ \ \ \ \ \ action\ =\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9a9d4d8b0b72fc2659da772d761a3c5ecb}{Left}};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00014}00014\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00015}00015\ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'d'}:}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00016}00016\ \ \ \ \ \textcolor{keywordflow}{case}\ KEY\_RIGHT:}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00017}00017\ \ \ \ \ \ \ action\ =\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9ad48f7af8c070184f3774c8e85854eb66}{Right}};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00018}00018\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00019}00019\ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'p'}:}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00020}00020\ \ \ \ \ \ \ action\ =\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9adaba8aa0fcd8a87c25fec7d916c789e7}{Pause}};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00021}00021\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00022}00022\ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'q'}:}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00023}00023\ \ \ \ \ \ \ action\ =\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9aaf166713f3d14b30bee8f0ad5a09c4cb}{Terminate}};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00024}00024\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00025}00025\ \ \ \ \ \textcolor{keywordflow}{case}\ 27:\ \ \textcolor{comment}{//\ escape}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00026}00026\ \ \ \ \ \ \ action\ =\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9aaf166713f3d14b30bee8f0ad5a09c4cb}{Terminate}};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00027}00027\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00028}00028\ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'\(\backslash\)n'}:}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00029}00029\ \ \ \ \ \ \ action\ =\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9a3887649be5130f60dd3e7a6eb8e9f142}{Action}};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00030}00030\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00031}00031\ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'s'}:}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00032}00032\ \ \ \ \ \textcolor{keywordflow}{case}\ KEY\_DOWN:}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00033}00033\ \ \ \ \ \ \ action\ =\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9abcf8c79e9a5f5f9d606fb35645a0fb27}{Down}};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00034}00034\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'}:}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00036}00036\ \ \ \ \ \ \ action\ =\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9abd5f9c956752ce4dc707b4624b3a36f7}{Start}};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00037}00037\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00038}00038\ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'w'}:}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00039}00039\ \ \ \ \ \textcolor{keywordflow}{case}\ KEY\_UP:}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00040}00040\ \ \ \ \ \ \ action\ =\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9a57a7edcbc04d6175683383cad5c3e0a2}{Up}};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00041}00041\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00042}00042\ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00043}00043\ \ \ \ \ \ \ action\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00044}00044\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00045}00045\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00046}00046\ \ \ *hold\ =\ (push\ ==\ action\ \&\&\ push\ !=\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9a57a7edcbc04d6175683383cad5c3e0a2}{Up}});}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00047}00047\ \ \ \textcolor{keywordflow}{return}\ action;}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00048}00048\ \}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00051}\mbox{\hyperlink{front_8h_a0961309c4bbae77cec58e1d2c627afec}{00051}}\ \textcolor{keywordtype}{int}\ NewFigurePrint(WINDOW\ *info\_window,\ \mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ tetris)\ \{\ \ \textcolor{comment}{//\ фронт}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00052}00052\ \ \ \textcolor{keywordtype}{int}\ x\ =\ tetris.\mbox{\hyperlink{struct_game_info__t_ab897112aa413eac6657970ef2a873026}{next}}[0][0]\ -\/\ 3;}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00053}00053\ \ \ \textcolor{keywordtype}{int}\ y\ =\ tetris.\mbox{\hyperlink{struct_game_info__t_ab897112aa413eac6657970ef2a873026}{next}}[0][1]\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00055}00055\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <\ \mbox{\hyperlink{backend_8h_a0e21c77a1d541961ebf6501ec58be3dc}{COUNTCOORDINATE}};\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00056}00056\ \ \ \ \ \textcolor{comment}{//\ \ wclrtoeol(info\_window);}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00057}00057\ \ \ \ \ mvwprintw(info\_window,\ i,\ 1,\ \textcolor{stringliteral}{"{}\%c\ \ \ "{}},\ \textcolor{charliteral}{'\ '});}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00058}00058\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00059}00059\ \ \ mvwprintw(info\_window,\ y,\ x,\ \textcolor{stringliteral}{"{}\%c"{}},\ \textcolor{charliteral}{'*'});}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00060}00060\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 2;\ i\ <\ \mbox{\hyperlink{backend_8h_a0e21c77a1d541961ebf6501ec58be3dc}{COUNTCOORDINATE}};\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00061}00061\ \ \ \ \ \textcolor{comment}{//\ \ wclrtoeol(info\_window);}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00062}00062\ \ \ \ \ \textcolor{comment}{//\ mvwprintw(info\_window,\ y+tetris.next[i][1],\ 1,\ "{}\%c\ \ \ "{},\ '\ ');}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00063}00063\ \ \ \ \ mvwprintw(info\_window,\ y\ +\ tetris.\mbox{\hyperlink{struct_game_info__t_ab897112aa413eac6657970ef2a873026}{next}}[i][1],\ x\ +\ tetris.\mbox{\hyperlink{struct_game_info__t_ab897112aa413eac6657970ef2a873026}{next}}[i][0],\ \textcolor{stringliteral}{"{}\%c"{}},}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{charliteral}{'*'});}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00065}00065\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00066}00066\ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00067}00067\ \}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00069}\mbox{\hyperlink{front_8h_a19f2d330911a36d0ce3985e6f4193a3f}{00069}}\ \textcolor{keywordtype}{int}\ InfoPrint(WINDOW\ *info\_window,\ \mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ tetris,\ \textcolor{keywordtype}{char}\ *name)\ \{}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00070}00070\ \ \ \textcolor{comment}{//\ wclear(info\_window);}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00071}00071\ \ \ box(info\_window,\ 0,\ 0);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00072}00072\ \ \ }
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00073}00073\ \ \ \textcolor{comment}{//\ clear();}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00074}00074\ \ \ \textcolor{comment}{//\ wrefresh(info\_window);}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00075}00075\ \ \ NewFigurePrint(info\_window,\ tetris);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00077}00077\ \ \ mvwprintw(info\_window,\ 7,\ 1,\ \textcolor{stringliteral}{"{}\%s"{}},\ \textcolor{stringliteral}{"{}score"{}});}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00078}00078\ \ \ mvwprintw(info\_window,\ 8,\ 2,\ \textcolor{stringliteral}{"{}\%d"{}},\ tetris.\mbox{\hyperlink{struct_game_info__t_a4a6b1b290cd3e129bf78992964cf4136}{score}});}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00079}00079\ \ \ mvwprintw(info\_window,\ 10,\ 1,\ \textcolor{stringliteral}{"{}\%s"{}},\ \textcolor{stringliteral}{"{}username"{}});}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00080}00080\ \ \ mvwprintw(info\_window,\ 11,\ 2,\ \textcolor{stringliteral}{"{}\%s"{}},\ name);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00081}00081\ \ \ mvwprintw(info\_window,\ 13,\ 1,\ \textcolor{stringliteral}{"{}\%s"{}},\ \textcolor{stringliteral}{"{}highScor"{}});}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00082}00082\ \ \ mvwprintw(info\_window,\ 14,\ 3,\ \textcolor{stringliteral}{"{}\%d"{}},\ tetris.\mbox{\hyperlink{struct_game_info__t_ac93cabe631d5d173fa35714719336c4f}{high\_score}});}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00083}00083\ \ \ mvwprintw(info\_window,\ 5,\ 1,\ \textcolor{stringliteral}{"{}\%s"{}},\ \textcolor{stringliteral}{"{}LEVEL"{}});}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00084}00084\ \ \ mvwprintw(info\_window,\ 6,\ 3,\ \textcolor{stringliteral}{"{}\%d"{}},\ tetris.\mbox{\hyperlink{struct_game_info__t_a2ab1763e0a25ced7b4e086e987396444}{level}});}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00085}00085\ \ \ wrefresh(info\_window);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00086}00086\ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00087}00087\ \}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00089}00089\ \textcolor{comment}{//\ енто\ чисто\ отрисовка}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00090}\mbox{\hyperlink{front_8h_aa8fd3cf9181aa8ce99a9be0a59678473}{00090}}\ \textcolor{keywordtype}{int}\ FieldPrint(WINDOW\ *board,\ \mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ tetris)\ \{}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00091}00091\ \ \ wmove(board,\ 0,\ 0);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00092}00092\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{backend_8h_a5defaa6a67c0db00483fb376caf78bd0}{MAXROWS}};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00093}00093\ \ \ \ \ \ \ \ i++)\ \{\ \ \textcolor{comment}{//\ первая\ печать\ \ поля\ //gjlhfpevtdftncz\ x,y}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00094}00094\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ \mbox{\hyperlink{backend_8h_a6a83dc415ae5e205183f0488b46228c4}{MAXCOLS}};\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00095}00095\ \ \ \ \ \ \ \textcolor{comment}{//\ printw("{}\%c\%c"{},\ temp\_field[i][j],\ temp\_field[i][j]);}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00096}00096\ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (tetris.\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}}[i][j])\ \{}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00097}00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'.'}:\ \ \textcolor{comment}{//\ Пример:\ символ\ 'X'\ печатается\ красным}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ wattron(board,\ COLOR\_PAIR(1));}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ wprintw(board,\ \textcolor{stringliteral}{"{}\%c\%c"{}},\ tetris.\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}}[i][j],\ tetris.\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}}[i][j]);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ wattroff(board,\ COLOR\_PAIR(1));}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00102}00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'I'}:\ \ \textcolor{comment}{//\ Пример:\ символ\ 'O'\ печатается\ зеленым}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ wattron(board,\ COLOR\_PAIR(2));}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ wprintw(board,\ \textcolor{stringliteral}{"{}\%c\%c"{}},\ tetris.\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}}[i][j],\ tetris.\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}}[i][j]);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ wattroff(board,\ COLOR\_PAIR(2));}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00107}00107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \ \textcolor{comment}{//\ Другие\ символы\ печатаются\ желтым}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ wattron(board,\ COLOR\_PAIR(3));}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ wprintw(board,\ \textcolor{stringliteral}{"{}\%c\%c"{}},\ tetris.\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}}[i][j],\ tetris.\mbox{\hyperlink{struct_game_info__t_adf83a667bbdb2ab6f7110b4f394bb294}{field}}[i][j]);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ wattroff(board,\ COLOR\_PAIR(3));}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00112}00112\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00113}00113\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00114}00114\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00115}00115\ \ \ wrefresh(board);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00116}00116\ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00117}00117\ \}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00119}\mbox{\hyperlink{front_8h_aa23e28ca412ceeed8a60499496e56b6e}{00119}}\ \textcolor{keywordtype}{void}\ Draw(WINDOW\ **board,\ WINDOW\ **info\_window)\ \{}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00120}00120\ \ \ initscr();}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00121}00121\ \ \ timeout(1);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00122}00122\ \ \ curs\_set(0);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00123}00123\ \ \ keypad(stdscr,\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00124}00124\ \ \ noecho();}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00126}00126\ \ \ \textcolor{comment}{//\ Создаем\ игровое\ поле}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00127}00127\ \ \ *board\ =\ newwin(20,\ 20,\ 0,\ 0);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00128}00128\ \ \ box(*board,\ 0,\ 0);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00129}00129\ \ \ mvwaddstr(*board,\ 2,\ 3,\ \textcolor{stringliteral}{"{}Hello,\ enter"{}});}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00130}00130\ \ \ mvwaddstr(*board,\ 3,\ 3,\ \textcolor{stringliteral}{"{}your\ username"{}});}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00131}00131\ \ \ mvwaddstr(*board,\ 6,\ 1,\ \textcolor{stringliteral}{"{}Pss,\ the\ SQUARE\ "{}});}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00132}00132\ \ \ mvwaddstr(*board,\ 7,\ 3,\ \textcolor{stringliteral}{"{}\ ...rotates...\ "{}});}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00133}00133\ \ \ wrefresh(*board);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00135}00135\ \ \ \textcolor{comment}{//\ Создаем\ информационное\ поле}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00136}00136\ \ \ *info\_window\ =\ newwin(20,\ 13,\ 0,\ 21);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00137}00137\ \ \ box(*info\_window,\ 0,\ 0);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00138}00138\ \ \ wrefresh(*info\_window);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00140}00140\ \ \ \textcolor{comment}{//\ Цвета}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00141}00141\ \ \ start\_color();}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00142}00142\ \ \ init\_pair(1,\ COLOR\_RED,\ COLOR\_BLACK);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00143}00143\ \ \ init\_pair(2,\ COLOR\_GREEN,\ COLOR\_BLACK);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00144}00144\ \ \ init\_pair(3,\ COLOR\_YELLOW,\ COLOR\_BLACK);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00145}00145\ \}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00147}\mbox{\hyperlink{front_8h_a63c1f7a6ca12ad1a16062196f1c0d416}{00147}}\ \textcolor{keywordtype}{int}\ GamePrint(WINDOW\ *board,\ WINDOW\ *info\_window,\ \mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ tetris,\ \textcolor{keywordtype}{char}\ *name)\ \{}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00148}00148\ \ \ FieldPrint(board,\ tetris);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00149}00149\ \ \ InfoPrint(info\_window,\ tetris,\ name);}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00150}00150\ \ \ \textcolor{comment}{//\ refresh();}}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00151}00151\ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{front_8c_source_l00152}00152\ \}}
+
+\end{DoxyCode}

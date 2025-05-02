@@ -1,0 +1,71 @@
+\doxysection{tetris.\+c}
+\hypertarget{tetris_8c_source}{}\label{tetris_8c_source}\index{brick\_game/tetris/tetris.c@{brick\_game/tetris/tetris.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{backend_8h}{../../inc/backend.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{front_8h}{../../inc/front.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00010}00010\ \textcolor{keywordtype}{void}\ get\_state(\mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}\ *state,\ \textcolor{keywordtype}{int}\ push)\ \{}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00011}00011\ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}\ stat\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00012}00012\ \ \ \textcolor{keywordflow}{if}\ (push)\ \{}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00013}00013\ \ \ \ \ stat\ =\ *state;}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00014}00014\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00015}00015\ \ \ \ \ *state\ =\ stat;}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00016}00016\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00017}00017\ \}}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00028}\mbox{\hyperlink{lib__specification_8h_ab961f91e569a34b6984536633126257a}{00028}}\ \textcolor{keywordtype}{void}\ userInput(\mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{UserAction\_t}}\ action,\ \textcolor{keywordtype}{bool}\ hold)\ \{\ \ \textcolor{comment}{//\ not\ declaration}}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00029}00029\ \ \ \mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ game\_info\ =\ GetSetInfo(\&game\_info,\ \mbox{\hyperlink{backend_8h_a96818d1211164e5497a6b5505564a591}{PULL}});}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00030}00030\ \ \ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}\ state=Hello;}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00031}00031\ \ \ \textcolor{keywordflow}{if}\ (!(state\ ==\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1a13b9787b5b0fa1ed149bbe28b122207e}{Goodbye}}\ ||\ game\_info.\mbox{\hyperlink{struct_game_info__t_ae4acd421e39427d7922856b5f43ba1bd}{pause}}))\ \{}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00032}00032\ \ \ \ \ state\ =\ JustState(action,\ \&game\_info,\ hold);}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00033}00033\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00034}00034\ \ \ \textcolor{keywordflow}{if}\ (action\ ==\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9adaba8aa0fcd8a87c25fec7d916c789e7}{Pause}})\ \{}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00035}00035\ \ \ \ \ game\_info.\mbox{\hyperlink{struct_game_info__t_ae4acd421e39427d7922856b5f43ba1bd}{pause}}\ =\ !game\_info.\mbox{\hyperlink{struct_game_info__t_ae4acd421e39427d7922856b5f43ba1bd}{pause}};}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00036}00036\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00037}00037\ \ \ \textcolor{keywordflow}{if}\ (action\ ==\ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9aaf166713f3d14b30bee8f0ad5a09c4cb}{Terminate}})\ \{}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00038}00038\ \ \ \ \ state\ =\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1a13b9787b5b0fa1ed149bbe28b122207e}{Goodbye}};}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00039}00039\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00040}00040\ \ \ GetSetInfo(\&game\_info,\ \mbox{\hyperlink{backend_8h_a431b92b32ec924789b2be268651a3fdd}{PUSH}});}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00041}00041\ \ \ get\_state(\&state,\ \mbox{\hyperlink{backend_8h_a431b92b32ec924789b2be268651a3fdd}{PUSH}});}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00042}00042\ \}}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00052}\mbox{\hyperlink{lib__specification_8h_afd5762991a9248a0b4192983fd786a8f}{00052}}\ \mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ updateCurrentState()\ \{}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00053}00053\ \ \ \mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ info\_t;}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00054}00054\ \ \ \textcolor{comment}{//\ \ GetSetInfo(\&info\_t,\ PULL);}}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00056}00056\ \ \ \textcolor{keywordflow}{return}\ GetSetInfo(\&info\_t,\ \mbox{\hyperlink{backend_8h_a96818d1211164e5497a6b5505564a591}{PULL}});}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00057}00057\ \}}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00067}00067\ \textcolor{keywordtype}{int}\ main(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00068}00068\ \ \ WINDOW\ *board,\ *info\_field;}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00069}00069\ \ \ Draw(\&board,\ \&info\_field);}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00070}00070\ \ \ srand(time(NULL));}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00071}00071\ \ \ }
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00072}00072\ \ \ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1}{FSM}}\ state\ =\ Hello;}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00073}00073\ \ \ \mbox{\hyperlink{lib__specification_8h_a7ba289d7b97db30e0b7041ca2cef75a9}{UserAction\_t}}\ signal\ =\ ERR;}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00075}00075\ \ \ \mbox{\hyperlink{struct_game_info__t}{GameInfo\_t}}\ tetris;}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00076}00076\ \ \ InitTetris(\&tetris);}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00077}00077\ \ \ GetSetInfo(\&tetris,\ \mbox{\hyperlink{backend_8h_a431b92b32ec924789b2be268651a3fdd}{PUSH}});}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00078}00078\ \ \ \textcolor{keywordflow}{while}\ (state\ !=\ \mbox{\hyperlink{backend_8h_a2aab568cd1f02e7cd9fd6c7f87e361d1a13b9787b5b0fa1ed149bbe28b122207e}{Goodbye}})\ \{}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00079}00079\ \ \ \ \ \textcolor{keywordtype}{bool}\ hold\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00080}00080\ \ \ \ \ signal\ =\ Uzvering(signal,\ \&hold);}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00081}00081\ \ \ \ \ userInput(signal,\ hold);}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00082}00082\ \ \ \ \ get\_state(\&state,\ \mbox{\hyperlink{backend_8h_a96818d1211164e5497a6b5505564a591}{PULL}});}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00083}00083\ \ \ \ \ GamePrint(board,\ info\_field,\ updateCurrentState(),\ \textcolor{stringliteral}{"{}user"{}});\ \ \textcolor{comment}{//\ char\ *name}}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00084}00084\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00086}00086\ \ \ FileScoreInput(\textcolor{stringliteral}{"{}user"{}},\ \&tetris);}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00088}00088\ \ \ endwin();}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00089}00089\ \ \ printf(\textcolor{stringliteral}{"{}\%s\ \%s\ \%d\(\backslash\)n"{}},\ \textcolor{stringliteral}{"{}user"{}},\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}},\ tetris.\mbox{\hyperlink{struct_game_info__t_ac93cabe631d5d173fa35714719336c4f}{high\_score}});\ \ \ \ \textcolor{comment}{//\ убрать}}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00090}00090\ \ \ printf(\textcolor{stringliteral}{"{}\%s\ \%d"{}},\ \textcolor{stringliteral}{"{}you\ lose\(\backslash\)nyour\ score:\ "{}},\ tetris.\mbox{\hyperlink{struct_game_info__t_a4a6b1b290cd3e129bf78992964cf4136}{score}});\ \ \textcolor{comment}{//\ убрать}}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00092}00092\ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{tetris_8c_source_l00093}00093\ \}}
+
+\end{DoxyCode}

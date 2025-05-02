@@ -359,6 +359,7 @@ START_TEST(test_FileScores) {
   GameInfo_t tetris;
   InitTetris(&tetris);
   GetSetInfo(&tetris, PUSH);
+  tetris.score = 3000;
   tetris.high_score = 3000;
   FileScoreInput("test", &tetris);
   tetris.high_score = 0;
