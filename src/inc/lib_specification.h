@@ -4,21 +4,21 @@
 #include <stdbool.h>
 
 typedef enum {
-  Start,  // 0
+  Start, // 0
   Pause,
   Terminate,
   Left,
   Right,
   Up,
   Down,
-  Action  // 7
+  Action // 7
 } UserAction_t;
 
 typedef struct {
-  int** field;     /// поле для отрисовки
-  int** next;      /// следующая фигура
-  int score;       /// счёт игры
-  int high_score;  /// счёт из файла "ИмяИгрока" или максимальный в игре
+  int **field;    /// поле для отрисовки
+  int **next;     /// следующая фигура
+  int score;      /// счёт игры
+  int high_score; /// счёт из файла "ИмяИгрока" или максимальный в игре
   int level;
   int speed;
   int pause;
@@ -27,4 +27,4 @@ typedef struct {
 void userInput(UserAction_t action, bool hold);
 GameInfo_t updateCurrentState();
 
-#endif  // LIB_SPECIFICATION_H
+#endif // LIB_SPECIFICATION_H

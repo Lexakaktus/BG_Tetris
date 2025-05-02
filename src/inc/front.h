@@ -11,7 +11,7 @@
 #define COUNTFIGURE 7
 #define COUNTDIMENSION 2
 
-UserAction_t Uzvering(UserAction_t action, bool *hold);  // void userInput
+UserAction_t Uzvering(UserAction_t action, bool *hold); // void userInput
 int InfoPrint(WINDOW *info_window, GameInfo_t tetris, char *name);
 int NewFigurePrint(WINDOW *info_window, GameInfo_t tetris);
 int FieldPrint(WINDOW *board, GameInfo_t tetris);
@@ -19,4 +19,4 @@ void Draw(WINDOW **board, WINDOW **info_window);
 int GamePrint(WINDOW *board, WINDOW *info_window, GameInfo_t tetris,
               char *name);
 
-#endif  // FRONT_H
+#endif // FRONT_H

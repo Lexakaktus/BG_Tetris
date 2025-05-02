@@ -1,18 +1,14 @@
-#include <check.h>
-#include <stdlib.h>
-#include <string.h>
 
-#include "inc/backend.h"
-#include "inc/lib_specification.h"
+#include "test.h"
 
 static const int figure_home[COUNTFIGURE][COUNTCOORDINATE][2] /*{x,y}*/ = {
-    {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},   //   -.
-    {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}},   // |  I
-    {{5, 0}, {0, 0}, {0, 1}, {1, 0}, {-1, 0}},   // .|.
-    {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 0}},    /// ::
-    {{5, 0}, {0, 0}, {-1, 0}, {-1, 1}, {1, 0}},  // .-
-    {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {-1, 0}},   // Z
-    {{5, 0}, {0, 0}, {0, 1}, {-1, 1}, {1, 0}}    //! Z
+    {{5, 0}, {0, 0}, {1, 0}, {-1, 0}, {1, 1}},  //   -.
+    {{5, 1}, {0, 0}, {0, 1}, {0, 2}, {0, -1}},  // |  I
+    {{5, 0}, {0, 0}, {0, 1}, {1, 0}, {-1, 0}},  // .|.
+    {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 0}},   /// ::
+    {{5, 0}, {0, 0}, {-1, 0}, {-1, 1}, {1, 0}}, // .-
+    {{5, 0}, {0, 0}, {0, 1}, {1, 1}, {-1, 0}},  // Z
+    {{5, 0}, {0, 0}, {0, 1}, {-1, 1}, {1, 0}}   //! Z
 };
 
 START_TEST(test_Figuring) {
@@ -44,7 +40,6 @@ START_TEST(test_ZeroingTemp) {
 }
 END_TEST
 
-
 START_TEST(test_SumFigure) {
   int **field = CreateField();
   int **figure = CreateCopy();
@@ -73,7 +68,7 @@ START_TEST(test_moveCols) {
   int **figure = CreateCopy();
   Figuring(figure, 3);
   int clop = MoveCols(field, figure, 1);
-  ck_assert_int_eq(clop, 0); 
+  ck_assert_int_eq(clop, 0);
   DeleteField(&field);
 }
 END_TEST
@@ -158,30 +153,30 @@ START_TEST(test_figure_Down2) {
   DeleteCopy(&figure);
   DeleteField(&field);
 }
-END_TEST 
+END_TEST
 
 START_TEST(test_Scoring) {
-  GameInfo_t  tetris;
+  GameInfo_t tetris;
   InitTetris(&tetris);
   Scoring(&tetris);
-  for (int i=0;i<1;i++){
-    for (int j=0;j<10;j++){
-      tetris.field[i][j]='I';
+  for (int i = 0; i < 1; i++) {
+    for (int j = 0; j < 10; j++) {
+      tetris.field[i][j] = 'I';
     }
   }
   Scoring(&tetris);
   ck_assert_int_eq(tetris.score, 100);
   DeleteField(&(tetris.field));
 }
-END_TEST 
+END_TEST
 
 START_TEST(test_Scoring_2) {
-  GameInfo_t  tetris;
+  GameInfo_t tetris;
   InitTetris(&tetris);
   Scoring(&tetris);
-  for (int i=0;i<2;i++){
-    for (int j=0;j<10;j++){
-      tetris.field[i][j]='I';
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 10; j++) {
+      tetris.field[i][j] = 'I';
     }
   }
   Scoring(&tetris);
@@ -190,12 +185,12 @@ START_TEST(test_Scoring_2) {
 }
 
 START_TEST(test_Scoring_3) {
-  GameInfo_t  tetris;
+  GameInfo_t tetris;
   InitTetris(&tetris);
   Scoring(&tetris);
-  for (int i=0;i<3;i++){
-    for (int j=0;j<10;j++){
-      tetris.field[i][j]='I';
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 10; j++) {
+      tetris.field[i][j] = 'I';
     }
   }
   Scoring(&tetris);
@@ -204,12 +199,12 @@ START_TEST(test_Scoring_3) {
 }
 
 START_TEST(test_Scoring_4) {
-  GameInfo_t  tetris;
+  GameInfo_t tetris;
   InitTetris(&tetris);
   Scoring(&tetris);
-  for (int i=0;i<4;i++){
-    for (int j=0;j<10;j++){
-      tetris.field[i][j]='I';
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 10; j++) {
+      tetris.field[i][j] = 'I';
     }
   }
   Scoring(&tetris);
@@ -219,11 +214,11 @@ START_TEST(test_Scoring_4) {
 }
 
 START_TEST(test_ZeroingAll) {
-  GameInfo_t  tetris;
+  GameInfo_t tetris;
   InitTetris(&tetris);
-  for (int i=0;i<4;i++){
-    for (int j=0;j<10;j++){
-      tetris.field[i][j]='I';
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 10; j++) {
+      tetris.field[i][j] = 'I';
     }
   }
   Scoring(&tetris);
@@ -235,34 +230,33 @@ START_TEST(test_ZeroingAll) {
 }
 
 START_TEST(test_HelloState) {
-  GameInfo_t  tetris;
+  GameInfo_t tetris;
   InitTetris(&tetris);
   int **figure = UpdateFigure();
   Figuring(figure, 0);
-  // FSM 
-  FSM state =Hello;
-  HelloState(Start, & state);
+  // FSM
+  FSM state = Hello;
+  HelloState(Start, &state);
   ck_assert_int_eq(state, Hello);
-  HelloState(Terminate, & state);
+  HelloState(Terminate, &state);
   ck_assert_int_eq(state, GameOver);
-  HelloState(Action, & state);
+  HelloState(Action, &state);
   ck_assert_int_eq(state, Spawn);
   ZeroingAll(&tetris);
   ck_assert_int_eq(tetris.score, 0);
-  // ck_assert_int_ne(FigureDown(field, figure), 0);
   DeleteCopy(&(tetris.next));
   DeleteField(&(tetris.field));
 }
 
 START_TEST(test_SpawnState) {
-  GameInfo_t  tetris;
+  GameInfo_t tetris;
   InitTetris(&tetris);
 
   int **figure = UpdateFigure();
   Figuring(figure, 0);
-  // FSM 
-  FSM state =Hello;
-  SpawnState(&tetris, & state);
+  // FSM
+  FSM state = Hello;
+  SpawnState(&tetris, &state);
   ck_assert_int_eq(state, Moving);
   // SpawnState(Terminate, & state);
   // ck_assert_int_eq(state, GameOver);
@@ -275,29 +269,24 @@ START_TEST(test_SpawnState) {
   DeleteField(&(tetris.field));
 }
 
-
-
-
-
-
-
 START_TEST(test_MovingState) {
-  GameInfo_t  tetris;
+  GameInfo_t tetris;
   InitTetris(&tetris);
   GetSetInfo(&tetris, PUSH);
   int **figure = UpdateFigure();
   Figuring(figure, 0);
-  FSM state =Hello;
-  MovingState(&tetris, & state, Left);
+  FSM state = Hello;
+  MovingState(&tetris, &state, Left);
   ck_assert_int_eq(tetris.field[0][3], 'I');
-  MovingState(&tetris, & state, Right);
+  MovingState(&tetris, &state, Right);
   ck_assert_int_eq(tetris.field[0][3], '.');
-    // sleep(7);
-  for (volatile long i = 0; i < 100000000; ++i);
-  MovingState(&tetris, & state, Start);
+  // sleep(7);
+  for (volatile long i = 0; i < 100000000; ++i)
+    ;
+  MovingState(&tetris, &state, Start);
   ck_assert_int_eq(tetris.field[1][4], 'I');
-  MovingState(&tetris, & state, Action);
-  MovingState(&tetris, & state, Down);
+  MovingState(&tetris, &state, Action);
+  MovingState(&tetris, &state, Down);
   ck_assert_int_eq(state, Attaching);
   ck_assert_int_eq(tetris.field[19][4], 'I');
   ZeroingAll(&tetris);
@@ -306,22 +295,20 @@ START_TEST(test_MovingState) {
   DeleteField(&(tetris.field));
 }
 
-
-
 START_TEST(test_AttachingState) {
-  GameInfo_t  tetris;
+  GameInfo_t tetris;
   InitTetris(&tetris);
   int **figure = UpdateFigure();
   Figuring(figure, 0);
-  // FSM 
-  FSM state =Hello;
-  AttachingState(&tetris, & state);
+  // FSM
+  FSM state = Hello;
+  AttachingState(&tetris, &state);
   ck_assert_int_eq(state, Spawn);
-  tetris.level=11; ///потом подумать над адекватностью
-  AttachingState(&tetris, & state);
+  tetris.level = 11; /// потом подумать над адекватностью
+  AttachingState(&tetris, &state);
   ck_assert_int_eq(tetris.level, 10);
   tetris.field[0][5] = 'I';
-  AttachingState(&tetris, & state);
+  AttachingState(&tetris, &state);
   ck_assert_int_eq(state, GameOver);
   ZeroingAll(&tetris);
   ck_assert_int_eq(tetris.score, 0);
@@ -330,21 +317,21 @@ START_TEST(test_AttachingState) {
 }
 
 START_TEST(test_JustState) {
-  GameInfo_t  tetris;
+  GameInfo_t tetris;
   InitTetris(&tetris);
   GetSetInfo(&tetris, PUSH);
   int **figure = UpdateFigure();
   Figuring(figure, 0);
-  FSM state =JustState( Action,&tetris,0);
+  FSM state = JustState(Action, &tetris, 0);
   ck_assert_int_eq(state, Spawn);
-  state =JustState( Action,&tetris,0);
+  state = JustState(Action, &tetris, 0);
   ck_assert_int_eq(state, Moving);
-  state =JustState( Down,&tetris,0);
+  state = JustState(Down, &tetris, 0);
   ck_assert_int_eq(state, Attaching);
-  tetris.field[0][5]='I';
-  state =JustState( Down,&tetris,0);
+  tetris.field[0][5] = 'I';
+  state = JustState(Down, &tetris, 0);
   ck_assert_int_eq(state, GameOver);
-  state =JustState( Down,&tetris,0);
+  state = JustState(Down, &tetris, 0);
   ZeroingAll(&tetris);
   ck_assert_int_eq(tetris.score, 0);
   DeleteCopy(&(tetris.next));
@@ -352,15 +339,15 @@ START_TEST(test_JustState) {
 }
 
 START_TEST(test_GameOverState) {
-  GameInfo_t  tetris;
+  GameInfo_t tetris;
   InitTetris(&tetris);
   int **figure = UpdateFigure();
   Figuring(figure, 0);
-  // FSM 
-  FSM state =Hello;
-  GameOverState(&tetris, & state, Terminate);
-  ck_assert_int_eq(state,Goodbye);
-  GameOverState(&tetris, & state, Start);
+  // FSM
+  FSM state = Hello;
+  GameOverState(&tetris, &state, Terminate);
+  ck_assert_int_eq(state, Goodbye);
+  GameOverState(&tetris, &state, Start);
   ck_assert_int_eq(state, Hello);
   ZeroingAll(&tetris);
   ck_assert_int_eq(tetris.score, 0);
@@ -372,22 +359,17 @@ START_TEST(test_FileScores) {
   GameInfo_t tetris;
   InitTetris(&tetris);
   GetSetInfo(&tetris, PUSH);
-  tetris.high_score=3000;
+  tetris.high_score = 3000;
   FileScoreInput("test", &tetris);
-  tetris.high_score=0;
+  tetris.high_score = 0;
   ck_assert_int_eq(tetris.high_score, 0);
-  FileScore("test",&tetris);
+  FileScore("test", &tetris);
   ck_assert_int_eq(tetris.high_score, 3000);
   ZeroingAll(&tetris);
   ck_assert_int_eq(tetris.score, 0);
   DeleteCopy(&(tetris.next));
   DeleteField(&(tetris.field));
 }
-
-
-
-
-
 
 Suite *mozg_suite(void) {
   Suite *suite = suite_create("Mozg");
