@@ -383,6 +383,7 @@ int Scoring(GameInfo_t *tetris) {
   }
   if (tetris->score > tetris->high_score) {
     tetris->high_score = tetris->score;
+    FileScoreInput("user", tetris);
   }
   GetSetInfo(tetris, PUSH);
   return 0;

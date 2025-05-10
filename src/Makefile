@@ -24,7 +24,7 @@ install: clean
 
 uninstall:
 	rm -r build
-play: install
+play: 
 	./build/game
 gcov_report:
 	rm -rf test-temp_tests*.gc* 

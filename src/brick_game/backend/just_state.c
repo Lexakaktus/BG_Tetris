@@ -95,7 +95,7 @@ void AttachingState(GameInfo_t *info, FSM *state) {
     } else {
       info->level = 10;
     }
-    GetSetInfo(info, PUSH);  // не в хедере!!!
+    GetSetInfo(info, PUSH);
     *state = Spawn;
   }
 }
